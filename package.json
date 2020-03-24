@@ -1,0 +1,98 @@
+{
+  "wp_theme_name": "Jelastic Widget",
+  "wp_site_name": "jelastic.com",
+  "name": "jelastic_widget",
+  "version": "2019.05.02",
+  "description": "Jelastic signup widget",
+  "homepage": "https://jelastic.com",
+  "author": {
+    "name": "Vitali Antoniuk",
+    "email": "va@jelastic.com",
+    "url": "https://jelastic.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@git.jelastic.com:va/jelastic-widget.git"
+  },
+  "bugs": {
+    "url": "https://git.jelastic.com/va/jelastic-widget/issues"
+  },
+  "main": "html/index.html",
+  "keywords": [
+    "html",
+    "css",
+    "ES5",
+    "ES6",
+    "JS",
+    "Gulp"
+  ],
+  "browser": {},
+  "scripts": {
+    "start": "SET NODE_ENV=development & gulp serve",
+    "build": "SET NODE_ENV=production & gulp serve"
+  },
+  "lintOptions": {
+    "globals": {
+      "React": false
+    },
+    "esnext": true,
+    "node": true,
+    "bitwise": true,
+    "browser": true,
+    "curly": false,
+    "eqeqeq": true,
+    "forin": true,
+    "immed": true,
+    "indent": 2,
+    "latedef": "nofunc",
+    "newcap": true,
+    "noarg": true,
+    "noempty": true,
+    "nonbsp": true,
+    "nonew": true,
+    "strict": false,
+    "globalstrict": true,
+    "sub": true,
+    "supernew": true,
+    "undef": true,
+    "unused": true
+  },
+  "dependencies": {
+    "@babel/core": "^7.2.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "browser-sync": "^2.26.3",
+    "config": "^3.0.0",
+    "css-mqpacker": "^7.0.0",
+    "cssnano": "^4.1.7",
+    "gulp": "^4.0.1",
+    "gulp-babel": "^8.0.0-beta.2",
+    "gulp-bytediff": "^1.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-filter": "^5.1.0",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-newer": "^1.4.0",
+    "gulp-notify": "^3.2.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-size": "^3.0.0",
+    "gulp-uglify": "^3.0.1",
+    "postcss-combine-duplicated-selectors": "^6.1.0",
+    "postcss-discard-duplicates": "^4.0.2",
+    "postcss-discard-empty": "^4.0.1",
+    "postcss-focus": "^4.0.0",
+    "postcss-preset-env": "^6.4.0",
+    "postcss-single-charset": "^2.0.0",
+    "postcss-unprefix": "^2.1.3"
+  },
+  "devDependencies": {
+    "@babel/preset-es2015": "^7.0.0-beta.53"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "path": {
+    "base": {
+      "src":"assets/",
+      "dest": "./",
+      "desthtml": "./j-calculator/**/*.{html,htm,php}"
+    },
+    "images": {
+      "src": "assets/img/",
+      "srcimg": "assets/img/**/*.{png,jpg,jpeg,gif,svg}",
+      "dest": "./j-calculator/img/"
+    },
+    "styles": {
+      "src": "assets/scss/",
+      "srcfiles": "assets/scss/**/*.scss",
+      "css": "assets/css/",
+      "dest": "./j-calculator/"
+    },
+    "scripts": {
+      "src": "assets/js/",
+      "srcfiles": "assets/js/**/*.js",
+      "dest": "./j-calculator/"
+    }
+  }
+}

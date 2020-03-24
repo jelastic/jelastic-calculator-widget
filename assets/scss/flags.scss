@@ -1,0 +1,2099 @@
+.flag-background {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: contain;
+}
+.flag {
+  font-size: 0;
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 22px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  margin-right: 10px;
+  background-size: cover;
+}
+.flag:before {
+  content: '\00a0';
+}
+.flag-1x {
+  line-height: 1em;
+
+  width: 1.33333333em;
+}
+.flag-2x {
+  line-height: 2em;
+
+  width: 2.66666667em;
+}
+.flag-3x {
+  line-height: 3em;
+
+  width: 4em;
+}
+.flag-4x {
+  line-height: 4em;
+
+  width: 5.33333333em;
+}
+.flag-5x {
+  line-height: 5em;
+
+  width: 6.66666667em;
+}
+.flag-6x {
+  line-height: 6em;
+
+  width: 8em;
+}
+.flag-7x {
+  line-height: 7em;
+
+  width: 9.33333333em;
+}
+.flag-8x {
+  line-height: 8em;
+
+  width: 10.66666667em;
+}
+.flag-9x {
+  line-height: 9em;
+
+  width: 12em;
+}
+.flag-10x {
+  line-height: 10em;
+
+  width: 13.33333333em;
+}
+.flag-rotate-90 {
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+.flag-rotate-180 {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+}
+.flag-rotate-270 {
+  -webkit-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+.flag-flip-horizontal {
+  -webkit-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+}
+.flag-flip-vertical {
+  -webkit-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  transform: scale(1, -1);
+
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);
+}
+:root .flag-rotate-90,
+:root .flag-rotate-180,
+:root .flag-rotate-270,
+:root .flag-flip-horizontal,
+:root .flag-flip-vertical {
+  filter: none;
+}
+// .flag-abw,
+// .flag-aw,
+// .flag-533,
+// .flag-ioc-aru,
+// .flag-fifa-aru {
+//   background-image: url(img/flags/png/abw.png);
+//   background-image: url(img/flags/abw.svg);
+// }
+// .flag-afg,
+// .flag-af,
+// .flag-4,
+// .flag-ioc-afg,
+// .flag-fifa-afg {
+//   background-image: url(img/flags/png/afg.png);
+//   background-image: url(img/flags/afg.svg);
+// }
+// .flag-ago,
+// .flag-ao,
+// .flag-24,
+// .flag-ioc-ang,
+// .flag-fifa-ang {
+//   background-image: url(img/flags/png/ago.png);
+//   background-image: url(img/flags/ago.svg);
+// }
+// .flag-aia,
+// .flag-ai,
+// .flag-660,
+// .flag-ioc-aia,
+// .flag-fifa-aia {
+//   background-image: url(img/flags/png/aia.png);
+//   background-image: url(img/flags/aia.svg);
+// }
+// .flag-ala,
+// .flag-ax,
+// .flag-248,
+// .flag-fifa-ald {
+//   background-image: url(img/flags/png/ala.png);
+//   background-image: url(img/flags/ala.svg);
+// }
+// .flag-alb,
+// .flag-al,
+// .flag-8,
+// .flag-ioc-alb,
+// .flag-fifa-alb {
+//   background-image: url(img/flags/png/alb.png);
+//   background-image: url(img/flags/alb.svg);
+// }
+// .flag-and,
+// .flag-ad,
+// .flag-20,
+// .flag-ioc-and,
+// .flag-fifa-and {
+//   background-image: url(img/flags/png/and.png);
+//   background-image: url(img/flags/and.svg);
+// }
+// .flag-are,
+// .flag-ae,
+// .flag-784,
+// .flag-ioc-uae,
+// .flag-fifa-uae {
+//   background-image: url(img/flags/png/are.png);
+//   background-image: url(img/flags/are.svg);
+// }
+// .flag-arg,
+// .flag-ar,
+// .flag-32,
+// .flag-ioc-arg,
+// .flag-fifa-arg {
+//   background-image: url(img/flags/png/arg.png);
+//   background-image: url(img/flags/arg.svg);
+// }
+// .flag-arm,
+// .flag-am,
+// .flag-51,
+// .flag-ioc-arm,
+// .flag-fifa-arm {
+//   background-image: url(img/flags/png/arm.png);
+//   background-image: url(img/flags/arm.svg);
+// }
+// .flag-asm,
+// .flag-as,
+// .flag-16,
+// .flag-ioc-asa,
+// .flag-fifa-asa {
+//   background-image: url(img/flags/png/asm.png);
+//   background-image: url(img/flags/asm.svg);
+// }
+// .flag-ata,
+// .flag-aq,
+// .flag-10,
+// .flag-fifa-ros {
+//   background-image: url(img/flags/png/ata.png);
+//   background-image: url(img/flags/ata.svg);
+// }
+// .flag-atf,
+// .flag-tf,
+// .flag-260 {
+//   background-image: url(img/flags/png/atf.png);
+//   background-image: url(img/flags/atf.svg);
+// }
+// .flag-atg,
+// .flag-ag,
+// .flag-28,
+// .flag-ioc-ant,
+// .flag-fifa-atg {
+//   background-image: url(img/flags/png/atg.png);
+//   background-image: url(img/flags/atg.svg);
+// }
+.flag-aus,
+.flag-au,
+.flag-36,
+.flag-ioc-aus,
+.flag-fifa-aus {
+  background-image: url(img/flags/png/aus.png);
+  background-image: url(img/flags/aus.svg);
+}
+// .flag-aut,
+// .flag-at,
+// .flag-40,
+// .flag-ioc-aut,
+// .flag-fifa-aut {
+//   background-image: url(img/flags/png/aut.png);
+//   background-image: url(img/flags/aut.svg);
+// }
+// .flag-aze,
+// .flag-az,
+// .flag-31,
+// .flag-ioc-aze,
+// .flag-fifa-aze {
+//   background-image: url(img/flags/png/aze.png);
+//   background-image: url(img/flags/aze.svg);
+// }
+// .flag-bdi,
+// .flag-bi,
+// .flag-108,
+// .flag-ioc-bdi,
+// .flag-fifa-bdi {
+//   background-image: url(img/flags/png/bdi.png);
+//   background-image: url(img/flags/bdi.svg);
+// }
+.flag-bel,
+.flag-be,
+.flag-56,
+.flag-ioc-bel,
+.flag-fifa-bel {
+  background-image: url(img/flags/png/bel.png);
+  background-image: url(img/flags/bel.svg);
+}
+// .flag-ben,
+// .flag-bj,
+// .flag-204,
+// .flag-ioc-ben,
+// .flag-fifa-ben {
+//   background-image: url(img/flags/png/ben.png);
+//   background-image: url(img/flags/ben.svg);
+// }
+// .flag-bes,
+// .flag-bq,
+// .flag-535,
+// .flag-ioc-aho,
+// .flag-fifa-ant {
+//   background-image: url(img/flags/png/bes.png);
+//   background-image: url(img/flags/bes.svg);
+// }
+// .flag-bfa,
+// .flag-bf,
+// .flag-854,
+// .flag-ioc-bur,
+// .flag-fifa-bfa {
+//   background-image: url(img/flags/png/bfa.png);
+//   background-image: url(img/flags/bfa.svg);
+// }
+// .flag-bgd,
+// .flag-bd,
+// .flag-50,
+// .flag-ioc-ban,
+// .flag-fifa-ban {
+//   background-image: url(img/flags/png/bgd.png);
+//   background-image: url(img/flags/bgd.svg);
+// }
+// .flag-bgr,
+// .flag-bg,
+// .flag-100,
+// .flag-ioc-bul,
+// .flag-fifa-bul {
+//   background-image: url(img/flags/png/bgr.png);
+//   background-image: url(img/flags/bgr.svg);
+// }
+// .flag-bhr,
+// .flag-bh,
+// .flag-48,
+// .flag-ioc-brn,
+// .flag-fifa-bhr {
+//   background-image: url(img/flags/png/bhr.png);
+//   background-image: url(img/flags/bhr.svg);
+// }
+// .flag-bhs,
+// .flag-bs,
+// .flag-44,
+// .flag-ioc-bah,
+// .flag-fifa-bah {
+//   background-image: url(img/flags/png/bhs.png);
+//   background-image: url(img/flags/bhs.svg);
+// }
+// .flag-bih,
+// .flag-ba,
+// .flag-70,
+// .flag-ioc-bih,
+// .flag-fifa-bih {
+//   background-image: url(img/flags/png/bih.png);
+//   background-image: url(img/flags/bih.svg);
+// }
+// .flag-blm,
+// .flag-bl,
+// .flag-652 {
+//   background-image: url(img/flags/png/blm.png);
+//   background-image: url(img/flags/blm.svg);
+// }
+.flag-blr,
+.flag-by,
+.flag-112,
+.flag-ioc-blr,
+.flag-fifa-blr {
+  background-image: url(img/flags/png/blr.png);
+  background-image: url(img/flags/blr.svg);
+  background-size: cover;
+  background-position: 0;
+}
+// .flag-blz,
+// .flag-bz,
+// .flag-84,
+// .flag-ioc-biz,
+// .flag-fifa-blz {
+//   background-image: url(img/flags/png/blz.png);
+//   background-image: url(img/flags/blz.svg);
+// }
+// .flag-bmu,
+// .flag-bm,
+// .flag-60,
+// .flag-ioc-ber,
+// .flag-fifa-ber {
+//   background-image: url(img/flags/png/bmu.png);
+//   background-image: url(img/flags/bmu.svg);
+// }
+// .flag-bol,
+// .flag-bo,
+// .flag-68,
+// .flag-ioc-bol,
+// .flag-fifa-bol {
+//   background-image: url(img/flags/png/bol.png);
+//   background-image: url(img/flags/bol.svg);
+// }
+.flag-bra,
+.flag-br,
+.flag-76,
+.flag-ioc-bra,
+.flag-fifa-bra {
+  background-image: url(img/flags/png/bra.png);
+  background-image: url(img/flags/bra.svg);
+}
+// .flag-brb,
+// .flag-bb,
+// .flag-52,
+// .flag-ioc-bar,
+// .flag-fifa-brb {
+//   background-image: url(img/flags/png/brb.png);
+//   background-image: url(img/flags/brb.svg);
+// }
+// .flag-brn,
+// .flag-bn,
+// .flag-96,
+// .flag-ioc-bru,
+// .flag-fifa-bru {
+//   background-image: url(img/flags/png/brn.png);
+//   background-image: url(img/flags/brn.svg);
+// }
+// .flag-btn,
+// .flag-bt,
+// .flag-64,
+// .flag-ioc-bhu,
+// .flag-fifa-bhu {
+//   background-image: url(img/flags/png/btn.png);
+//   background-image: url(img/flags/btn.svg);
+// }
+// .flag-bvt,
+// .flag-bv,
+// .flag-74 {
+//   background-image: url(img/flags/png/bvt.png);
+//   background-image: url(img/flags/bvt.svg);
+// }
+// .flag-bwa,
+// .flag-bw,
+// .flag-72,
+// .flag-ioc-bot,
+// .flag-fifa-bot {
+//   background-image: url(img/flags/png/bwa.png);
+//   background-image: url(img/flags/bwa.svg);
+// }
+// .flag-caf,
+// .flag-cf,
+// .flag-140,
+// .flag-ioc-caf,
+// .flag-fifa-cta {
+//   background-image: url(img/flags/png/caf.png);
+//   background-image: url(img/flags/caf.svg);
+// }
+// .flag-can,
+// .flag-ca,
+// .flag-124,
+// .flag-ioc-can,
+// .flag-fifa-can {
+//   background-image: url(img/flags/png/can.png);
+//   background-image: url(img/flags/can.svg);
+// }
+// .flag-cck,
+// .flag-cc,
+// .flag-166,
+// .flag-fifa-cck {
+//   background-image: url(img/flags/png/cck.png);
+//   background-image: url(img/flags/cck.svg);
+// }
+.flag-che,
+.flag-ch,
+.flag-756,
+.flag-ioc-sui,
+.flag-fifa-sui {
+  background-image: url(img/flags/png/che.png);
+  background-image: url(img/flags/che.svg);
+  background-size: contain;
+  width: 16px;
+}
+// .flag-chl,
+// .flag-cl,
+// .flag-152,
+// .flag-ioc-chi,
+// .flag-fifa-chi {
+//   background-image: url(img/flags/png/chl.png);
+//   background-image: url(img/flags/chl.svg);
+// }
+// .flag-chn,
+// .flag-cn,
+// .flag-156,
+// .flag-ioc-chn,
+// .flag-fifa-chn {
+//   background-image: url(img/flags/png/chn.png);
+//   background-image: url(img/flags/chn.svg);
+// }
+// .flag-civ,
+// .flag-ci,
+// .flag-384,
+// .flag-ioc-civ,
+// .flag-fifa-civ {
+//   background-image: url(img/flags/png/civ.png);
+//   background-image: url(img/flags/civ.svg);
+// }
+// .flag-cmr,
+// .flag-cm,
+// .flag-120,
+// .flag-ioc-cmr,
+// .flag-fifa-cmr {
+//   background-image: url(img/flags/png/cmr.png);
+//   background-image: url(img/flags/cmr.svg);
+// }
+// .flag-cod,
+// .flag-cd,
+// .flag-180,
+// .flag-ioc-cod,
+// .flag-fifa-cod {
+//   background-image: url(img/flags/png/cod.png);
+//   background-image: url(img/flags/cod.svg);
+// }
+// .flag-cog,
+// .flag-cg,
+// .flag-178,
+// .flag-ioc-cgo,
+// .flag-fifa-cgo {
+//   background-image: url(img/flags/png/cog.png);
+//   background-image: url(img/flags/cog.svg);
+// }
+// .flag-cok,
+// .flag-ck,
+// .flag-184,
+// .flag-ioc-cok,
+// .flag-fifa-cok {
+//   background-image: url(img/flags/png/cok.png);
+//   background-image: url(img/flags/cok.svg);
+// }
+// .flag-col,
+// .flag-co,
+// .flag-170,
+// .flag-ioc-col,
+// .flag-fifa-col {
+//   background-image: url(img/flags/png/col.png);
+//   background-image: url(img/flags/col.svg);
+// }
+// .flag-com,
+// .flag-km,
+// .flag-174,
+// .flag-ioc-com,
+// .flag-fifa-com {
+//   background-image: url(img/flags/png/com.png);
+//   background-image: url(img/flags/com.svg);
+// }
+// .flag-cpv,
+// .flag-cv,
+// .flag-132,
+// .flag-ioc-cpv,
+// .flag-fifa-cpv {
+//   background-image: url(img/flags/png/cpv.png);
+//   background-image: url(img/flags/cpv.svg);
+// }
+// .flag-cri,
+// .flag-cr,
+// .flag-188,
+// .flag-ioc-crc,
+// .flag-fifa-crc {
+//   background-image: url(img/flags/png/cri.png);
+//   background-image: url(img/flags/cri.svg);
+// }
+// .flag-cub,
+// .flag-cu,
+// .flag-192,
+// .flag-ioc-cub,
+// .flag-fifa-cub {
+//   background-image: url(img/flags/png/cub.png);
+//   background-image: url(img/flags/cub.svg);
+// }
+// .flag-cuw,
+// .flag-cw,
+// .flag-531 {
+//   background-image: url(img/flags/png/cuw.png);
+//   background-image: url(img/flags/cuw.svg);
+// }
+// .flag-cxr,
+// .flag-cx,
+// .flag-162,
+// .flag-fifa-cxr {
+//   background-image: url(img/flags/png/cxr.png);
+//   background-image: url(img/flags/cxr.svg);
+// }
+// .flag-cym,
+// .flag-ky,
+// .flag-136,
+// .flag-ioc-cay,
+// .flag-fifa-cay {
+//   background-image: url(img/flags/png/cym.png);
+//   background-image: url(img/flags/cym.svg);
+// }
+.flag-cyp,
+.flag-cy,
+.flag-196,
+.flag-ioc-cyp,
+.flag-fifa-cyp {
+  background-image: url(img/flags/png/cyp.png);
+  background-image: url(img/flags/cyp.svg);
+}
+.flag-cze,
+.flag-cz,
+.flag-203,
+.flag-ioc-cze,
+.flag-fifa-cze {
+  background-image: url(img/flags/png/cze.png);
+  background-image: url(img/flags/cze.svg);
+}
+.flag-deu,
+.flag-de,
+.flag-276,
+.flag-ioc-ger,
+.flag-fifa-ger {
+  background-image: url(img/flags/png/deu.png);
+  background-image: url(img/flags/deu.svg);
+}
+// .flag-dji,
+// .flag-dj,
+// .flag-262,
+// .flag-ioc-dji,
+// .flag-fifa-dji {
+//   background-image: url(img/flags/png/dji.png);
+//   background-image: url(img/flags/dji.svg);
+// }
+// .flag-dma,
+// .flag-dm,
+// .flag-212,
+// .flag-ioc-dma,
+// .flag-fifa-dma {
+//   background-image: url(img/flags/png/dma.png);
+//   background-image: url(img/flags/dma.svg);
+// }
+// .flag-dnk,
+// .flag-dk,
+// .flag-208,
+// .flag-ioc-den,
+// .flag-fifa-den {
+//   background-image: url(img/flags/png/dnk.png);
+//   background-image: url(img/flags/dnk.svg);
+// }
+// .flag-dom,
+// .flag-do,
+// .flag-214,
+// .flag-ioc-dom,
+// .flag-fifa-dom {
+//   background-image: url(img/flags/png/dom.png);
+//   background-image: url(img/flags/dom.svg);
+// }
+// .flag-dza,
+// .flag-dz,
+// .flag-12,
+// .flag-ioc-alg,
+// .flag-fifa-alg {
+//   background-image: url(img/flags/png/dza.png);
+//   background-image: url(img/flags/dza.svg);
+// }
+// .flag-ecu,
+// .flag-ec,
+// .flag-218,
+// .flag-ioc-ecu,
+// .flag-fifa-ecu {
+//   background-image: url(img/flags/png/ecu.png);
+//   background-image: url(img/flags/ecu.svg);
+// }
+// .flag-egy,
+// .flag-eg,
+// .flag-818,
+// .flag-ioc-egy,
+// .flag-fifa-egy {
+//   background-image: url(img/flags/png/egy.png);
+//   background-image: url(img/flags/egy.svg);
+// }
+// .flag-eri,
+// .flag-er,
+// .flag-232,
+// .flag-ioc-eri,
+// .flag-fifa-eri {
+//   background-image: url(img/flags/png/eri.png);
+//   background-image: url(img/flags/eri.svg);
+// }
+// // .flag-esh,
+// // .flag-eh,
+// // .flag-732,
+// // .flag-fifa-sah {
+// //   background-image: url(img/flags/png/esh.png);
+// //   // background-image: url(img/flags/esh.svg);
+// // }
+.flag-esp,
+.flag-es,
+.flag-724,
+.flag-ioc-esp,
+.flag-fifa-esp {
+  background-image: url(img/flags/png/esp.png);
+  background-image: url(img/flags/esp.svg);
+}
+.flag-est,
+.flag-ee,
+.flag-233,
+.flag-ioc-est,
+.flag-fifa-est {
+  background-image: url(img/flags/png/est.png);
+  background-image: url(img/flags/est.svg);
+}
+// .flag-eth,
+// .flag-et,
+// .flag-231,
+// .flag-ioc-eth,
+// .flag-fifa-eth {
+//   background-image: url(img/flags/png/eth.png);
+//   background-image: url(img/flags/eth.svg);
+// }
+.flag-fin,
+.flag-fi,
+.flag-246,
+.flag-ioc-fin,
+.flag-fifa-fin {
+  background-image: url(img/flags/png/fin.png);
+  background-image: url(img/flags/fin.svg);
+}
+// .flag-fji,
+// .flag-fj,
+// .flag-242,
+// .flag-ioc-fij,
+// .flag-fifa-fij {
+//   background-image: url(img/flags/png/fji.png);
+//   background-image: url(img/flags/fji.svg);
+// }
+// .flag-flk,
+// .flag-fk,
+// .flag-238,
+// .flag-ioc-flk,
+// .flag-fifa-flk {
+//   background-image: url(img/flags/png/flk.png);
+//   background-image: url(img/flags/flk.svg);
+// }
+.flag-fra,
+.flag-fr,
+.flag-250,
+.flag-ioc-fra,
+.flag-fifa-fra {
+  background-image: url(img/flags/png/fra.png);
+  background-image: url(img/flags/fra.svg);
+}
+// .flag-fro,
+// .flag-fo,
+// .flag-234,
+// .flag-ioc-far,
+// .flag-fifa-fro {
+//   background-image: url(img/flags/png/fro.png);
+//   background-image: url(img/flags/fro.svg);
+// }
+// .flag-fsm,
+// .flag-fm,
+// .flag-583,
+// .flag-ioc-fsm,
+// .flag-fifa-fsm {
+//   background-image: url(img/flags/png/fsm.png);
+//   background-image: url(img/flags/fsm.svg);
+// }
+// .flag-gab,
+// .flag-ga,
+// .flag-266,
+// .flag-ioc-gab,
+// .flag-fifa-gab {
+//   background-image: url(img/flags/png/gab.png);
+//   background-image: url(img/flags/gab.svg);
+// }
+.flag-gbr,
+.flag-gb,
+.flag-826,
+.flag-ioc-gbr {
+  background-image: url(img/flags/png/gbr.png);
+  background-image: url(img/flags/gbr.svg);
+}
+// .flag-geo,
+// .flag-ge,
+// .flag-268,
+// .flag-ioc-geo,
+// .flag-fifa-geo {
+//   background-image: url(img/flags/png/geo.png);
+//   background-image: url(img/flags/geo.svg);
+// }
+// .flag-ggy,
+// .flag-gg,
+// .flag-831,
+// .flag-fifa-gbg {
+//   background-image: url(img/flags/png/ggy.png);
+//   background-image: url(img/flags/ggy.svg);
+// }
+// .flag-gha,
+// .flag-gh,
+// .flag-288,
+// .flag-ioc-gha,
+// .flag-fifa-gha {
+//   background-image: url(img/flags/png/gha.png);
+//   background-image: url(img/flags/gha.svg);
+// }
+// .flag-gib,
+// .flag-gi,
+// .flag-292,
+// .flag-ioc-gib,
+// .flag-fifa-gbz {
+//   background-image: url(img/flags/png/gib.png);
+//   background-image: url(img/flags/gib.svg);
+// }
+// .flag-gin,
+// .flag-gn,
+// .flag-324,
+// .flag-ioc-gui,
+// .flag-fifa-gui {
+//   background-image: url(img/flags/png/gin.png);
+//   background-image: url(img/flags/gin.svg);
+// }
+// .flag-glp,
+// .flag-gp,
+// .flag-312,
+// .flag-ioc-gud,
+// .flag-fifa-glp {
+//   background-image: url(img/flags/png/glp.png);
+//   background-image: url(img/flags/glp.svg);
+// }
+// .flag-gmb,
+// .flag-gm,
+// .flag-270,
+// .flag-ioc-gam,
+// .flag-fifa-gam {
+//   background-image: url(img/flags/png/gmb.png);
+//   background-image: url(img/flags/gmb.svg);
+// }
+// .flag-gnb,
+// .flag-gw,
+// .flag-624,
+// .flag-ioc-gbs,
+// .flag-fifa-gnb {
+//   background-image: url(img/flags/png/gnb.png);
+//   background-image: url(img/flags/gnb.svg);
+// }
+// .flag-gnq,
+// .flag-gq,
+// .flag-226,
+// .flag-ioc-geq,
+// .flag-fifa-eqg {
+//   background-image: url(img/flags/png/gnq.png);
+//   background-image: url(img/flags/gnq.svg);
+// }
+// .flag-grc,
+// .flag-gr,
+// .flag-300,
+// .flag-ioc-gre,
+// .flag-fifa-gre {
+//   background-image: url(img/flags/png/grc.png);
+//   background-image: url(img/flags/grc.svg);
+// }
+// .flag-grd,
+// .flag-gd,
+// .flag-308,
+// .flag-ioc-grn,
+// .flag-fifa-grn {
+//   background-image: url(img/flags/png/grd.png);
+//   background-image: url(img/flags/grd.svg);
+// }
+// .flag-grl,
+// .flag-gl,
+// .flag-304,
+// .flag-ioc-grl,
+// .flag-fifa-grl {
+//   background-image: url(img/flags/png/grl.png);
+//   background-image: url(img/flags/grl.svg);
+// }
+// .flag-gtm,
+// .flag-gt,
+// .flag-320,
+// .flag-ioc-gua,
+// .flag-fifa-gua {
+//   background-image: url(img/flags/png/gtm.png);
+//   background-image: url(img/flags/gtm.svg);
+// }
+// .flag-guf,
+// .flag-gf,
+// .flag-254,
+// .flag-ioc-fgu,
+// .flag-fifa-guf {
+//   background-image: url(img/flags/png/guf.png);
+//   background-image: url(img/flags/guf.svg);
+// }
+// .flag-gum,
+// .flag-gu,
+// .flag-316,
+// .flag-ioc-gum,
+// .flag-fifa-gum {
+//   background-image: url(img/flags/png/gum.png);
+//   background-image: url(img/flags/gum.svg);
+// }
+// .flag-guy,
+// .flag-gy,
+// .flag-328,
+// .flag-ioc-guy,
+// .flag-fifa-guy {
+//   background-image: url(img/flags/png/guy.png);
+//   background-image: url(img/flags/guy.svg);
+// }
+// .flag-hkg,
+// .flag-hk,
+// .flag-344,
+// .flag-ioc-hkg,
+// .flag-fifa-hkg {
+//   background-image: url(img/flags/png/hkg.png);
+//   background-image: url(img/flags/hkg.svg);
+// }
+// .flag-hmd,
+// .flag-hm,
+// .flag-334 {
+//   background-image: url(img/flags/png/hmd.png);
+//   background-image: url(img/flags/hmd.svg);
+// }
+// .flag-hnd,
+// .flag-hn,
+// .flag-340,
+// .flag-ioc-hon,
+// .flag-fifa-hon {
+//   background-image: url(img/flags/png/hnd.png);
+//   background-image: url(img/flags/hnd.svg);
+// }
+// .flag-hrv,
+// .flag-hr,
+// .flag-191,
+// .flag-ioc-cro,
+// .flag-fifa-cro {
+//   background-image: url(img/flags/png/hrv.png);
+//   background-image: url(img/flags/hrv.svg);
+// }
+// .flag-hti,
+// .flag-ht,
+// .flag-332,
+// .flag-ioc-hai,
+// .flag-fifa-hai {
+//   background-image: url(img/flags/png/hti.png);
+//   background-image: url(img/flags/hti.svg);
+// }
+// .flag-hun,
+// .flag-hu,
+// .flag-348,
+// .flag-ioc-hun,
+// .flag-fifa-hun {
+//   background-image: url(img/flags/png/hun.png);
+//   background-image: url(img/flags/hun.svg);
+// }
+.flag-idn,
+.flag-id,
+.flag-360,
+.flag-ioc-ina,
+.flag-fifa-idn {
+  background-image: url(img/flags/png/idn.png);
+  background-image: url(img/flags/idn.svg);
+}
+// .flag-imn,
+// .flag-im,
+// .flag-833,
+// .flag-fifa-gbm {
+//   background-image: url(img/flags/png/imn.png);
+//   background-image: url(img/flags/imn.svg);
+// }
+.flag-ind,
+.flag-in,
+.flag-356,
+.flag-ioc-ind,
+.flag-fifa-ind {
+  background-image: url(img/flags/png/ind.png);
+  background-image: url(img/flags/ind.svg);
+}
+// .flag-iot,
+// .flag-io,
+// .flag-86 {
+//   background-image: url(img/flags/png/iot.png);
+//   background-image: url(img/flags/iot.svg);
+// }
+// .flag-irl,
+// .flag-ie,
+// .flag-372,
+// .flag-ioc-irl,
+// .flag-fifa-irl {
+//   background-image: url(img/flags/png/irl.png);
+//   background-image: url(img/flags/irl.svg);
+// }
+// .flag-irn,
+// .flag-ir,
+// .flag-364,
+// .flag-ioc-iri,
+// .flag-fifa-irn {
+//   background-image: url(img/flags/png/irn.png);
+//   background-image: url(img/flags/irn.svg);
+// }
+// .flag-irq,
+// .flag-iq,
+// .flag-368,
+// .flag-ioc-irq,
+// .flag-fifa-irq {
+//   background-image: url(img/flags/png/irq.png);
+//   background-image: url(img/flags/irq.svg);
+// }
+// .flag-isl,
+// .flag-is,
+// .flag-352,
+// .flag-ioc-isl,
+// .flag-fifa-isl {
+//   background-image: url(img/flags/png/isl.png);
+//   background-image: url(img/flags/isl.svg);
+// }
+.flag-isr,
+.flag-il,
+.flag-376,
+.flag-ioc-isr,
+.flag-fifa-isr {
+  background-image: url(img/flags/png/isr.png);
+  background-image: url(img/flags/isr.svg);
+}
+.flag-ita,
+.flag-it,
+.flag-380,
+.flag-ioc-ita,
+.flag-fifa-ita {
+  background-image: url(img/flags/png/ita.png);
+  background-image: url(img/flags/ita.svg);
+}
+// .flag-jam,
+// .flag-jm,
+// .flag-388,
+// .flag-ioc-jam,
+// .flag-fifa-jam {
+//   background-image: url(img/flags/png/jam.png);
+//   background-image: url(img/flags/jam.svg);
+// }
+// .flag-jey,
+// .flag-je,
+// .flag-832,
+// .flag-fifa-gbj {
+//   background-image: url(img/flags/png/jey.png);
+//   background-image: url(img/flags/jey.svg);
+// }
+// .flag-jor,
+// .flag-jo,
+// .flag-400,
+// .flag-ioc-jor,
+// .flag-fifa-jor {
+//   background-image: url(img/flags/png/jor.png);
+//   background-image: url(img/flags/jor.svg);
+// }
+.flag-jpn,
+.flag-jp,
+.flag-392,
+.flag-ioc-jpn,
+.flag-fifa-jpn {
+  background-image: url(img/flags/png/jpn.png);
+  background-image: url(img/flags/jpn.svg);
+}
+.flag-kaz,
+.flag-kz,
+.flag-398,
+.flag-ioc-kaz,
+.flag-fifa-kaz {
+  background-image: url(img/flags/png/kaz.png);
+  background-image: url(img/flags/kaz.svg);
+}
+// .flag-ken,
+// .flag-ke,
+// .flag-404,
+// .flag-ioc-ken,
+// .flag-fifa-ken {
+//   background-image: url(img/flags/png/ken.png);
+//   background-image: url(img/flags/ken.svg);
+// }
+// .flag-kgz,
+// .flag-kg,
+// .flag-417,
+// .flag-ioc-kgz,
+// .flag-fifa-kgz {
+//   background-image: url(img/flags/png/kgz.png);
+//   background-image: url(img/flags/kgz.svg);
+// }
+// .flag-khm,
+// .flag-kh,
+// .flag-116,
+// .flag-ioc-cam,
+// .flag-fifa-cam {
+//   background-image: url(img/flags/png/khm.png);
+//   background-image: url(img/flags/khm.svg);
+// }
+// .flag-kir,
+// .flag-ki,
+// .flag-296,
+// .flag-ioc-kir,
+// .flag-fifa-kir {
+//   background-image: url(img/flags/png/kir.png);
+//   background-image: url(img/flags/kir.svg);
+// }
+// .flag-kna,
+// .flag-kn,
+// .flag-659,
+// .flag-ioc-skn,
+// .flag-fifa-skn {
+//   background-image: url(img/flags/png/kna.png);
+//   background-image: url(img/flags/kna.svg);
+// }
+// .flag-kor,
+// .flag-kr,
+// .flag-410,
+// .flag-ioc-kor,
+// .flag-fifa-kor {
+//   background-image: url(img/flags/png/kor.png);
+//   background-image: url(img/flags/kor.svg);
+// }
+// .flag-kwt,
+// .flag-kw,
+// .flag-414,
+// .flag-ioc-kuw,
+// .flag-fifa-kuw {
+//   background-image: url(img/flags/png/kwt.png);
+//   background-image: url(img/flags/kwt.svg);
+// }
+// .flag-lao,
+// .flag-la,
+// .flag-418,
+// .flag-ioc-lao,
+// .flag-fifa-lao {
+//   background-image: url(img/flags/png/lao.png);
+//   background-image: url(img/flags/lao.svg);
+// }
+// .flag-lbn,
+// .flag-lb,
+// .flag-422,
+// .flag-ioc-lib,
+// .flag-fifa-lib {
+//   background-image: url(img/flags/png/lbn.png);
+//   background-image: url(img/flags/lbn.svg);
+// }
+// .flag-lbr,
+// .flag-lr,
+// .flag-430,
+// .flag-ioc-lbr,
+// .flag-fifa-lbr {
+//   background-image: url(img/flags/png/lbr.png);
+//   background-image: url(img/flags/lbr.svg);
+// }
+// .flag-lby,
+// .flag-ly,
+// .flag-434,
+// .flag-ioc-lba,
+// .flag-fifa-lby {
+//   background-image: url(img/flags/png/lby.png);
+//   background-image: url(img/flags/lby.svg);
+// }
+// .flag-lca,
+// .flag-lc,
+// .flag-662,
+// .flag-ioc-lca,
+// .flag-fifa-lca {
+//   background-image: url(img/flags/png/lca.png);
+//   background-image: url(img/flags/lca.svg);
+// }
+// .flag-lie,
+// .flag-li,
+// .flag-438,
+// .flag-ioc-lie,
+// .flag-fifa-lie {
+//   background-image: url(img/flags/png/lie.png);
+//   background-image: url(img/flags/lie.svg);
+// }
+// .flag-lka,
+// .flag-lk,
+// .flag-144,
+// .flag-ioc-sri,
+// .flag-fifa-sri {
+//   background-image: url(img/flags/png/lka.png);
+//   background-image: url(img/flags/lka.svg);
+// }
+// .flag-lso,
+// .flag-ls,
+// .flag-426,
+// .flag-ioc-les,
+// .flag-fifa-les {
+//   background-image: url(img/flags/png/lso.png);
+//   background-image: url(img/flags/lso.svg);
+// }
+// .flag-ltu,
+// .flag-lt,
+// .flag-440,
+// .flag-ioc-ltu,
+// .flag-fifa-ltu {
+//   background-image: url(img/flags/png/ltu.png);
+//   background-image: url(img/flags/ltu.svg);
+// }
+// .flag-lux,
+// .flag-lu,
+// .flag-442,
+// .flag-ioc-lux,
+// .flag-fifa-lux {
+//   background-image: url(img/flags/png/lux.png);
+//   background-image: url(img/flags/lux.svg);
+// }
+// .flag-lva,
+// .flag-lv,
+// .flag-428,
+// .flag-ioc-lat,
+// .flag-fifa-lva {
+//   background-image: url(img/flags/png/lva.png);
+//   background-image: url(img/flags/lva.svg);
+// }
+// .flag-mac,
+// .flag-mo,
+// .flag-446,
+// .flag-ioc-mac,
+// .flag-fifa-mac {
+//   background-image: url(img/flags/png/mac.png);
+//   background-image: url(img/flags/mac.svg);
+// }
+// .flag-maf,
+// .flag-mf,
+// .flag-663 {
+//   background-image: url(img/flags/png/maf.png);
+//   background-image: url(img/flags/maf.svg);
+// }
+// .flag-mar,
+// .flag-ma,
+// .flag-504,
+// .flag-ioc-mar,
+// .flag-fifa-mar {
+//   background-image: url(img/flags/png/mar.png);
+//   background-image: url(img/flags/mar.svg);
+// }
+// .flag-mco,
+// .flag-mc,
+// .flag-492,
+// .flag-ioc-mon,
+// .flag-fifa-mon {
+//   background-image: url(img/flags/png/mco.png);
+//   background-image: url(img/flags/mco.svg);
+// }
+// .flag-mda,
+// .flag-md,
+// .flag-498,
+// .flag-ioc-mda,
+// .flag-fifa-mda {
+//   background-image: url(img/flags/png/mda.png);
+//   background-image: url(img/flags/mda.svg);
+// }
+// .flag-mdg,
+// .flag-mg,
+// .flag-450,
+// .flag-ioc-mad,
+// .flag-fifa-mad {
+//   background-image: url(img/flags/png/mdg.png);
+//   background-image: url(img/flags/mdg.svg);
+// }
+// .flag-mdv,
+// .flag-mv,
+// .flag-462,
+// .flag-ioc-mdv,
+// .flag-fifa-mdv {
+//   background-image: url(img/flags/png/mdv.png);
+//   background-image: url(img/flags/mdv.svg);
+// }
+.flag-mex,
+.flag-mx,
+.flag-484,
+.flag-ioc-mex,
+.flag-fifa-mex {
+  background-image: url(img/flags/png/mex.png);
+  background-image: url(img/flags/mex.svg);
+}
+// .flag-mhl,
+// .flag-mh,
+// .flag-584,
+// .flag-ioc-msh,
+// .flag-fifa-mhl {
+//   background-image: url(img/flags/png/mhl.png);
+//   background-image: url(img/flags/mhl.svg);
+// }
+// .flag-mkd,
+// .flag-mk,
+// .flag-807,
+// .flag-ioc-mkd,
+// .flag-fifa-mkd {
+//   background-image: url(img/flags/png/mkd.png);
+//   background-image: url(img/flags/mkd.svg);
+// }
+// .flag-mli,
+// .flag-ml,
+// .flag-466,
+// .flag-ioc-mli,
+// .flag-fifa-mli {
+//   background-image: url(img/flags/png/mli.png);
+//   background-image: url(img/flags/mli.svg);
+// }
+// .flag-mlt,
+// .flag-mt,
+// .flag-470,
+// .flag-ioc-mlt,
+// .flag-fifa-mlt {
+//   background-image: url(img/flags/png/mlt.png);
+//   background-image: url(img/flags/mlt.svg);
+// }
+// .flag-mmr,
+// .flag-mm,
+// .flag-104,
+// .flag-ioc-mya,
+// .flag-fifa-mya {
+//   background-image: url(img/flags/png/mmr.png);
+//   background-image: url(img/flags/mmr.svg);
+// }
+// .flag-mne,
+// .flag-me,
+// .flag-499,
+// .flag-ioc-mgo,
+// .flag-fifa-mne {
+//   background-image: url(img/flags/png/mne.png);
+//   background-image: url(img/flags/mne.svg);
+// }
+// .flag-mng,
+// .flag-mn,
+// .flag-496,
+// .flag-ioc-mgl,
+// .flag-fifa-mng {
+//   background-image: url(img/flags/png/mng.png);
+//   background-image: url(img/flags/mng.svg);
+// }
+// .flag-mnp,
+// .flag-mp,
+// .flag-580,
+// .flag-ioc-nma,
+// .flag-fifa-nmi {
+//   background-image: url(img/flags/png/mnp.png);
+//   background-image: url(img/flags/mnp.svg);
+// }
+// .flag-moz,
+// .flag-mz,
+// .flag-508,
+// .flag-ioc-moz,
+// .flag-fifa-moz {
+//   background-image: url(img/flags/png/moz.png);
+//   background-image: url(img/flags/moz.svg);
+// }
+// .flag-mrt,
+// .flag-mr,
+// .flag-478,
+// .flag-ioc-mtn,
+// .flag-fifa-mtn {
+//   background-image: url(img/flags/png/mrt.png);
+//   background-image: url(img/flags/mrt.svg);
+// }
+// .flag-msr,
+// .flag-ms,
+// .flag-500,
+// .flag-ioc-mnt,
+// .flag-fifa-msr {
+//   background-image: url(img/flags/png/msr.png);
+//   background-image: url(img/flags/msr.svg);
+// }
+// .flag-mtq,
+// .flag-mq,
+// .flag-474,
+// .flag-ioc-mrt,
+// .flag-fifa-mtq {
+//   background-image: url(img/flags/png/mtq.png);
+//   background-image: url(img/flags/mtq.svg);
+// }
+// .flag-mus,
+// .flag-mu,
+// .flag-480,
+// .flag-ioc-mri,
+// .flag-fifa-mri {
+//   background-image: url(img/flags/png/mus.png);
+//   background-image: url(img/flags/mus.svg);
+// }
+// .flag-mwi,
+// .flag-mw,
+// .flag-454,
+// .flag-ioc-maw,
+// .flag-fifa-mwi {
+//   background-image: url(img/flags/png/mwi.png);
+//   background-image: url(img/flags/mwi.svg);
+// }
+// .flag-mys,
+// .flag-my,
+// .flag-458,
+// .flag-ioc-mas,
+// .flag-fifa-mas {
+//   background-image: url(img/flags/png/mys.png);
+//   background-image: url(img/flags/mys.svg);
+// }
+// .flag-myt,
+// .flag-yt,
+// .flag-175,
+// .flag-ioc-may,
+// .flag-fifa-myt {
+//   background-image: url(img/flags/png/myt.png);
+//   background-image: url(img/flags/myt.svg);
+// }
+// .flag-nam,
+// .flag-na,
+// .flag-516,
+// .flag-ioc-nam,
+// .flag-fifa-nam {
+//   background-image: url(img/flags/png/nam.png);
+//   background-image: url(img/flags/nam.svg);
+// }
+// .flag-ncl,
+// .flag-nc,
+// .flag-540,
+// .flag-ioc-ncd,
+// .flag-fifa-ncl {
+//   background-image: url(img/flags/png/ncl.png);
+//   background-image: url(img/flags/ncl.svg);
+// }
+// .flag-ner,
+// .flag-ne,
+// .flag-562,
+// .flag-ioc-nig,
+// .flag-fifa-nig {
+//   background-image: url(img/flags/png/ner.png);
+//   background-image: url(img/flags/ner.svg);
+// }
+// .flag-nfk,
+// .flag-nf,
+// .flag-574,
+// .flag-ioc-nfi,
+// .flag-fifa-nfk {
+//   background-image: url(img/flags/png/nfk.png);
+//   background-image: url(img/flags/nfk.svg);
+// }
+// .flag-nga,
+// .flag-ng,
+// .flag-566,
+// .flag-ioc-ngr,
+// .flag-fifa-nga {
+//   background-image: url(img/flags/png/nga.png);
+//   background-image: url(img/flags/nga.svg);
+// }
+// .flag-nic,
+// .flag-ni,
+// .flag-558,
+// .flag-ioc-nca,
+// .flag-fifa-nca {
+//   background-image: url(img/flags/png/nic.png);
+//   background-image: url(img/flags/nic.svg);
+// }
+// .flag-niu,
+// .flag-nu,
+// .flag-570,
+// .flag-ioc-niu,
+// .flag-fifa-niu {
+//   background-image: url(img/flags/png/niu.png);
+//   background-image: url(img/flags/niu.svg);
+// }
+.flag-nld,
+.flag-nl,
+.flag-528,
+.flag-ioc-ned,
+.flag-fifa-ned {
+  background-image: url(img/flags/png/nld.png);
+  background-image: url(img/flags/nld.svg);
+}
+// .flag-nor,
+// .flag-no,
+// .flag-578,
+// .flag-ioc-nor,
+// .flag-fifa-nor {
+//   background-image: url(img/flags/png/nor.png);
+//   background-image: url(img/flags/nor.svg);
+// }
+// .flag-npl,
+// .flag-np,
+// .flag-524,
+// .flag-ioc-nep,
+// .flag-fifa-nep {
+//   background-image: url(img/flags/png/npl.png);
+//   background-image: url(img/flags/npl.svg);
+// }
+// .flag-nru,
+// .flag-nr,
+// .flag-520,
+// .flag-ioc-nru,
+// .flag-fifa-nru {
+//   background-image: url(img/flags/png/nru.png);
+//   background-image: url(img/flags/nru.svg);
+// }
+// .flag-nzl,
+// .flag-nz,
+// .flag-554,
+// .flag-ioc-nzl,
+// .flag-fifa-nzl {
+//   background-image: url(img/flags/png/nzl.png);
+//   background-image: url(img/flags/nzl.svg);
+// }
+// .flag-omn,
+// .flag-om,
+// .flag-512,
+// .flag-ioc-oma,
+// .flag-fifa-oma {
+//   background-image: url(img/flags/png/omn.png);
+//   background-image: url(img/flags/omn.svg);
+// }
+// .flag-pak,
+// .flag-pk,
+// .flag-586,
+// .flag-ioc-pak,
+// .flag-fifa-pak {
+//   background-image: url(img/flags/png/pak.png);
+//   background-image: url(img/flags/pak.svg);
+// }
+// .flag-pan,
+// .flag-pa,
+// .flag-591,
+// .flag-ioc-pan,
+// .flag-fifa-pan {
+//   background-image: url(img/flags/png/pan.png);
+//   background-image: url(img/flags/pan.svg);
+// }
+// .flag-pcn,
+// .flag-pn,
+// .flag-612,
+// .flag-fifa-pcn {
+//   background-image: url(img/flags/png/pcn.png);
+//   background-image: url(img/flags/pcn.svg);
+// }
+// .flag-per,
+// .flag-pe,
+// .flag-604,
+// .flag-ioc-per,
+// .flag-fifa-per {
+//   background-image: url(img/flags/png/per.png);
+//   background-image: url(img/flags/per.svg);
+// }
+// .flag-phl,
+// .flag-ph,
+// .flag-608,
+// .flag-ioc-phi,
+// .flag-fifa-phi {
+//   background-image: url(img/flags/png/phl.png);
+//   background-image: url(img/flags/phl.svg);
+// }
+// .flag-plw,
+// .flag-pw,
+// .flag-585,
+// .flag-ioc-plw,
+// .flag-fifa-plw {
+//   background-image: url(img/flags/png/plw.png);
+//   background-image: url(img/flags/plw.svg);
+// }
+// .flag-png,
+// .flag-pg,
+// .flag-598,
+// .flag-ioc-png,
+// .flag-fifa-png {
+//   background-image: url(img/flags/png/png.png);
+//   background-image: url(img/flags/png.svg);
+// }
+.flag-pol,
+.flag-pl,
+.flag-616,
+.flag-ioc-pol,
+.flag-fifa-pol {
+  background-image: url(img/flags/png/pol.png);
+  background-image: url(img/flags/pol.svg);
+}
+// .flag-pri,
+// .flag-pr,
+// .flag-630,
+// .flag-ioc-pur,
+// .flag-fifa-pur {
+//   background-image: url(img/flags/png/pri.png);
+//   background-image: url(img/flags/pri.svg);
+// }
+// .flag-prk,
+// .flag-kp,
+// .flag-408,
+// .flag-ioc-prk,
+// .flag-fifa-prk {
+//   background-image: url(img/flags/png/prk.png);
+//   background-image: url(img/flags/prk.svg);
+// }
+// .flag-prt,
+// .flag-pt,
+// .flag-620,
+// .flag-ioc-por,
+// .flag-fifa-por {
+//   background-image: url(img/flags/png/prt.png);
+//   background-image: url(img/flags/prt.svg);
+// }
+// .flag-pry,
+.flag-py,
+.flag-600,
+.flag-ioc-par,
+.flag-fifa-par {
+  background-image: url(img/flags/png/pry.png);
+  background-image: url(img/flags/pry.svg);
+}
+// .flag-pse,
+// .flag-ps,
+// .flag-275,
+// .flag-ioc-ple,
+// .flag-fifa-ple {
+//   background-image: url(img/flags/png/pse.png);
+//   background-image: url(img/flags/pse.svg);
+// }
+// .flag-pyf,
+// .flag-pf,
+// .flag-258,
+// .flag-ioc-fpo,
+// .flag-fifa-tah2 {
+//   background-image: url(img/flags/png/pyf.png);
+//   background-image: url(img/flags/pyf.svg);
+// }
+// .flag-qat,
+// .flag-qa,
+// .flag-634,
+// .flag-ioc-qat,
+// .flag-fifa-qat {
+//   background-image: url(img/flags/png/qat.png);
+//   background-image: url(img/flags/qat.svg);
+// }
+// .flag-reu,
+// .flag-re,
+// .flag-638,
+// .flag-ioc-reu,
+// .flag-fifa-reu {
+//   background-image: url(img/flags/png/reu.png);
+//   background-image: url(img/flags/reu.svg);
+// }
+// .flag-rou,
+// .flag-ro,
+// .flag-642,
+// .flag-ioc-rou,
+// .flag-fifa-rou {
+//   background-image: url(img/flags/png/rou.png);
+//   background-image: url(img/flags/rou.svg);
+// }
+.flag-rus,
+.flag-ru,
+.flag-643,
+.flag-ioc-rus,
+.flag-fifa-rus {
+  background-image: url(img/flags/png/rus.png);
+  background-image: url(img/flags/rus.svg);
+}
+// .flag-rwa,
+// .flag-rw,
+// .flag-646,
+// .flag-ioc-rwa,
+// .flag-fifa-rwa {
+//   background-image: url(img/flags/png/rwa.png);
+//   background-image: url(img/flags/rwa.svg);
+// }
+.flag-sau,
+.flag-sa,
+.flag-682,
+.flag-ioc-ksa,
+.flag-fifa-ksa {
+  background-image: url(img/flags/png/sau.png);
+  background-image: url(img/flags/sau.svg);
+}
+// .flag-sdn,
+// .flag-sd,
+// .flag-729,
+// .flag-ioc-sud,
+// .flag-fifa-sud {
+//   background-image: url(img/flags/png/sdn.png);
+//   background-image: url(img/flags/sdn.svg);
+// }
+// .flag-sen,
+// .flag-sn,
+// .flag-686,
+// .flag-ioc-sen,
+// .flag-fifa-sen {
+//   background-image: url(img/flags/png/sen.png);
+//   background-image: url(img/flags/sen.svg);
+// }
+.flag-sgp,
+.flag-sg,
+.flag-702,
+.flag-ioc-sin,
+.flag-fifa-sin {
+  background-image: url(img/flags/png/sgp.png);
+  background-image: url(img/flags/sgp.svg);
+}
+// .flag-sgs,
+// .flag-gs,
+// .flag-239 {
+//   background-image: url(img/flags/png/sgs.png);
+//   background-image: url(img/flags/sgs.svg);
+// }
+// .flag-shn,
+// .flag-sh,
+// .flag-654,
+// .flag-ioc-hel,
+// .flag-fifa-shn {
+//   background-image: url(img/flags/png/shn.png);
+//   background-image: url(img/flags/shn.svg);
+// }
+// .flag-sjm,
+// .flag-sj,
+// .flag-744 {
+//   background-image: url(img/flags/png/sjm.png);
+//   background-image: url(img/flags/sjm.svg);
+// }
+// .flag-slb,
+// .flag-sb,
+// .flag-90,
+// .flag-ioc-sol,
+// .flag-fifa-sol {
+//   background-image: url(img/flags/png/slb.png);
+//   background-image: url(img/flags/slb.svg);
+// }
+// .flag-sle,
+// .flag-sl,
+// .flag-694,
+// .flag-ioc-sle,
+// .flag-fifa-sle {
+//   background-image: url(img/flags/png/sle.png);
+//   background-image: url(img/flags/sle.svg);
+// }
+// .flag-slv,
+// .flag-sv,
+// .flag-222,
+// .flag-ioc-esa,
+// .flag-fifa-slv {
+//   background-image: url(img/flags/png/slv.png);
+//   background-image: url(img/flags/slv.svg);
+// }
+// .flag-smr,
+// .flag-sm,
+// .flag-674,
+// .flag-ioc-smr,
+// .flag-fifa-smr {
+//   background-image: url(img/flags/png/smr.png);
+//   background-image: url(img/flags/smr.svg);
+// }
+// .flag-som,
+// .flag-so,
+// .flag-706,
+// .flag-ioc-som,
+// .flag-fifa-som {
+//   background-image: url(img/flags/png/som.png);
+//   background-image: url(img/flags/som.svg);
+// }
+// .flag-spm,
+// .flag-pm,
+// .flag-666,
+// .flag-ioc-spm,
+// .flag-fifa-spm {
+//   background-image: url(img/flags/png/spm.png);
+//   background-image: url(img/flags/spm.svg);
+// }
+// .flag-srb,
+// .flag-rs,
+// .flag-688,
+// .flag-ioc-srb,
+// .flag-fifa-srb {
+//   background-image: url(img/flags/png/srb.png);
+//   background-image: url(img/flags/srb.svg);
+// }
+// .flag-ssd,
+// .flag-ss,
+// .flag-728 {
+//   background-image: url(img/flags/png/ssd.png);
+//   background-image: url(img/flags/ssd.svg);
+// }
+// .flag-stp,
+// .flag-st,
+// .flag-678,
+// .flag-ioc-stp,
+// .flag-fifa-stp {
+//   background-image: url(img/flags/png/stp.png);
+//   background-image: url(img/flags/stp.svg);
+// }
+// .flag-sur,
+// .flag-sr,
+// .flag-740,
+// .flag-ioc-sur,
+// .flag-fifa-sur {
+//   background-image: url(img/flags/png/sur.png);
+//   background-image: url(img/flags/sur.svg);
+// }
+// .flag-svk,
+// .flag-sk,
+// .flag-703,
+// .flag-ioc-svk,
+// .flag-fifa-svk {
+//   background-image: url(img/flags/png/svk.png);
+//   background-image: url(img/flags/svk.svg);
+// }
+// .flag-svn,
+// .flag-si,
+// .flag-705,
+// .flag-ioc-slo,
+// .flag-fifa-svn {
+//   background-image: url(img/flags/png/svn.png);
+//   background-image: url(img/flags/svn.svg);
+// }
+.flag-swe,
+.flag-se,
+.flag-752,
+.flag-ioc-swe,
+.flag-fifa-swe {
+  background-image: url(img/flags/png/swe.png);
+  background-image: url(img/flags/swe.svg);
+}
+// .flag-swz,
+// .flag-sz,
+// .flag-748,
+// .flag-ioc-swz,
+// .flag-fifa-swz {
+//   background-image: url(img/flags/png/swz.png);
+//   background-image: url(img/flags/swz.svg);
+// }
+// .flag-sxm,
+// .flag-sx,
+// .flag-534 {
+//   background-image: url(img/flags/png/sxm.png);
+//   background-image: url(img/flags/sxm.svg);
+// }
+// .flag-syc,
+// .flag-sc,
+// .flag-690,
+// .flag-ioc-sey,
+// .flag-fifa-sey {
+//   background-image: url(img/flags/png/syc.png);
+//   background-image: url(img/flags/syc.svg);
+// }
+// .flag-syr,
+// .flag-sy,
+// .flag-760,
+// .flag-ioc-syr,
+// .flag-fifa-syr {
+//   background-image: url(img/flags/png/syr.png);
+//   background-image: url(img/flags/syr.svg);
+// }
+// .flag-tca,
+// .flag-tc,
+// .flag-796,
+// .flag-ioc-tks,
+// .flag-fifa-tca {
+//   background-image: url(img/flags/png/tca.png);
+//   background-image: url(img/flags/tca.svg);
+// }
+// .flag-tcd,
+// .flag-td,
+// .flag-148,
+// .flag-ioc-cha,
+// .flag-fifa-cha {
+//   background-image: url(img/flags/png/tcd.png);
+//   background-image: url(img/flags/tcd.svg);
+// }
+// .flag-tgo,
+// .flag-tg,
+// .flag-768,
+// .flag-ioc-tog,
+// .flag-fifa-tog {
+//   background-image: url(img/flags/png/tgo.png);
+//   background-image: url(img/flags/tgo.svg);
+// }
+// .flag-tha,
+// .flag-th,
+// .flag-764,
+// .flag-ioc-tha,
+// .flag-fifa-tha {
+//   background-image: url(img/flags/png/tha.png);
+//   background-image: url(img/flags/tha.svg);
+// }
+// .flag-tjk,
+// .flag-tj,
+// .flag-762,
+// .flag-ioc-tjk,
+// .flag-fifa-tjk {
+//   background-image: url(img/flags/png/tjk.png);
+//   background-image: url(img/flags/tjk.svg);
+// }
+// .flag-tkl,
+// .flag-tk,
+// .flag-772,
+// .flag-fifa-tkl {
+//   background-image: url(img/flags/png/tkl.png);
+//   background-image: url(img/flags/tkl.svg);
+// }
+// .flag-tkm,
+// .flag-tm,
+// .flag-795,
+// .flag-ioc-tkm,
+// .flag-fifa-tkm {
+//   background-image: url(img/flags/png/tkm.png);
+//   background-image: url(img/flags/tkm.svg);
+// }
+// .flag-tls,
+// .flag-tl,
+// .flag-626,
+// .flag-ioc-tls,
+// .flag-fifa-tls {
+//   background-image: url(img/flags/png/tls.png);
+//   background-image: url(img/flags/tls.svg);
+// }
+// .flag-ton,
+// .flag-to,
+// .flag-776,
+// .flag-ioc-tga,
+// .flag-fifa-tga {
+//   background-image: url(img/flags/png/ton.png);
+//   background-image: url(img/flags/ton.svg);
+// }
+// .flag-tto,
+// .flag-tt,
+// .flag-780,
+// .flag-ioc-tto,
+// .flag-fifa-tri {
+//   background-image: url(img/flags/png/tto.png);
+//   background-image: url(img/flags/tto.svg);
+// }
+// .flag-tun,
+// .flag-tn,
+// .flag-788,
+// .flag-ioc-tun,
+// .flag-fifa-tun {
+//   background-image: url(img/flags/png/tun.png);
+//   background-image: url(img/flags/tun.svg);
+// }
+// .flag-tur,
+// .flag-tr,
+// .flag-792,
+// .flag-ioc-tur,
+// .flag-fifa-tur {
+//   background-image: url(img/flags/png/tur.png);
+//   background-image: url(img/flags/tur.svg);
+// }
+// .flag-tuv,
+// .flag-tv,
+// .flag-798,
+// .flag-ioc-tuv,
+// .flag-fifa-tuv {
+//   background-image: url(img/flags/png/tuv.png);
+//   background-image: url(img/flags/tuv.svg);
+// }
+// .flag-twn,
+// .flag-tw,
+// .flag-158 {
+//   background-image: url(img/flags/png/twn.png);
+//   background-image: url(img/flags/twn.svg);
+// }
+// .flag-tza,
+// .flag-tz,
+// .flag-834,
+// .flag-ioc-tan,
+// .flag-fifa-tan {
+//   background-image: url(img/flags/png/tza.png);
+//   background-image: url(img/flags/tza.svg);
+// }
+// .flag-uga,
+// .flag-ug,
+// .flag-800,
+// .flag-ioc-uga,
+// .flag-fifa-uga {
+//   background-image: url(img/flags/png/uga.png);
+//   background-image: url(img/flags/uga.svg);
+// }
+// .flag-ukr,
+// .flag-ua,
+// .flag-804,
+// .flag-ioc-ukr,
+// .flag-fifa-ukr {
+//   background-image: url(img/flags/png/ukr.png);
+//   background-image: url(img/flags/ukr.svg);
+// }
+// .flag-umi,
+// .flag-um,
+// .flag-581 {
+//   background-image: url(img/flags/png/umi.png);
+//   background-image: url(img/flags/umi.svg);
+// }
+// .flag-ury,
+// .flag-uy,
+// .flag-858,
+// .flag-ioc-uru,
+// .flag-fifa-uru {
+//   background-image: url(img/flags/png/ury.png);
+//   background-image: url(img/flags/ury.svg);
+// }
+.flag-usa,
+.flag-us,
+.flag-840,
+.flag-ioc-usa,
+.flag-fifa-usa {
+  background-image: url(img/flags/png/usa.png);
+  background-image: url(img/flags/usa.svg);
+}
+// .flag-uzb,
+// .flag-uz,
+// .flag-860,
+// .flag-ioc-uzb,
+// .flag-fifa-uzb {
+//   background-image: url(img/flags/png/uzb.png);
+//   background-image: url(img/flags/uzb.svg);
+// }
+// .flag-vat,
+// .flag-va,
+// .flag-336,
+// .flag-fifa-vat {
+//   background-image: url(img/flags/png/vat.png);
+//   background-image: url(img/flags/vat.svg);
+// }
+// .flag-vct,
+// .flag-vc,
+// .flag-670,
+// .flag-ioc-vin,
+// .flag-fifa-vin {
+//   background-image: url(img/flags/png/vct.png);
+//   background-image: url(img/flags/vct.svg);
+// }
+// .flag-ven,
+// .flag-ve,
+// .flag-862,
+// .flag-ioc-ven,
+// .flag-fifa-ven {
+//   background-image: url(img/flags/png/ven.png);
+//   background-image: url(img/flags/ven.svg);
+// }
+// .flag-vgb,
+// .flag-vg,
+// .flag-92,
+// .flag-ioc-ivb,
+// .flag-fifa-vgb {
+//   background-image: url(img/flags/png/vgb.png);
+//   background-image: url(img/flags/vgb.svg);
+// }
+// .flag-vir,
+// .flag-vi,
+// .flag-850,
+// .flag-ioc-isv,
+// .flag-fifa-vir {
+//   background-image: url(img/flags/png/vir.png);
+//   background-image: url(img/flags/vir.svg);
+// }
+// .flag-vnm,
+// .flag-vn,
+// .flag-704,
+// .flag-ioc-vie,
+// .flag-fifa-vie {
+//   background-image: url(img/flags/png/vnm.png);
+//   background-image: url(img/flags/vnm.svg);
+// }
+// .flag-vut,
+// .flag-vu,
+// .flag-548,
+// .flag-ioc-van,
+// .flag-fifa-van {
+//   background-image: url(img/flags/png/vut.png);
+//   background-image: url(img/flags/vut.svg);
+// }
+// .flag-wlf,
+// .flag-wf,
+// .flag-876,
+// .flag-ioc-waf,
+// .flag-fifa-wlf {
+//   background-image: url(img/flags/png/wlf.png);
+//   background-image: url(img/flags/wlf.svg);
+// }
+// .flag-wsm,
+// .flag-ws,
+// .flag-882,
+// .flag-ioc-sam,
+// .flag-fifa-sam {
+//   background-image: url(img/flags/png/wsm.png);
+//   background-image: url(img/flags/wsm.svg);
+// }
+// .flag-yem,
+// .flag-ye,
+// .flag-887,
+// .flag-ioc-yem,
+// .flag-fifa-yem {
+//   background-image: url(img/flags/png/yem.png);
+//   background-image: url(img/flags/yem.svg);
+// }
+// .flag-zaf,
+// .flag-za,
+// .flag-710,
+// .flag-ioc-rsa,
+// .flag-fifa-rsa {
+//   background-image: url(img/flags/png/zaf.png);
+//   background-image: url(img/flags/zaf.svg);
+// }
+// .flag-zmb,
+// .flag-zm,
+// .flag-894,
+// .flag-ioc-zam,
+// .flag-fifa-zam {
+//   background-image: url(img/flags/png/zmb.png);
+//   background-image: url(img/flags/zmb.svg);
+// }
+// .flag-zwe,
+// .flag-zw,
+// .flag-716,
+// .flag-ioc-zim,
+// .flag-fifa-zim {
+//   background-image: url(img/flags/png/zwe.png);
+//   background-image: url(img/flags/zwe.svg);
+// }
+// .flag-fifa-eng {
+//   background-image: url(img/flags/png/eng.png);
+//   background-image: url(img/flags/eng.svg);
+// }
+// .flag-eur,
+// .flag-eu {
+//   background-image: url(img/flags/png/eur.png);
+//   background-image: url(img/flags/eur.svg);
+// }
+// .flag-ioc-kos {
+//   background-image: url(img/flags/png/kos.png);
+//   background-image: url(img/flags/kos.svg);
+// }
+// .flag-fifa-nir {
+//   background-image: url(img/flags/png/nir.png);
+//   background-image: url(img/flags/nir.svg);
+// }
+// .flag-ico-tpe,
+// .flag-fifa-tpe {
+//   background-image: url(img/flags/png/tpe.png);
+//   background-image: url(img/flags/tpe.svg);
+// }
+// .flag-fifa-sco {
+//   background-image: url(img/flags/png/sco.png);
+//   background-image: url(img/flags/sco.svg);
+// }
+// .flag-fifa-wal {
+//   background-image: url(img/flags/png/wal.png);
+//   background-image: url(img/flags/wal.svg);
+// }

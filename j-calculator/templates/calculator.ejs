@@ -1,0 +1,128 @@
+<div class="<%= calculatorBlockClass %>">
+
+    <div class="languages">
+        <% for (var i = 0, language; language = oLanguages[i]; i++) { %>
+            <div class="language">
+                <label class="calc-block">
+                    <input type="radio" name="language" <%= i == 0 ? 'checked' : '' %>>
+                    <img src="/j-calculator/img/languages/<%= language %>.svg" alt="<%= language %>">
+                </label>
+            </div>
+        <% } %>
+    </div>
+
+    <div class="calc-block calculator">
+        <div class="calculator-left">
+            <div class="calculator-left-top">
+                <div class="calculator-left-top-chooser">
+                    <div class="calculator-left-top-chooser-left">
+                        <input checked type="radio" name="mode" id="balancer">
+                        <label for="balancer">
+                            Balancer
+                        </label>
+                        <input type="radio" name="mode" id="appsever">
+                        <label for="appsever">
+                            App Server
+                        </label>
+                        <input type="radio" name="mode" id="database">
+                        <label for="database">
+                            Database
+                        </label>
+                    </div>
+                </div>
+                <div class="calculator-left-top-scale">
+                    <div class="range-block min-block">
+                        <div class="inner">
+                            <span class="decrease min-block-decrease"></span>
+                            <div class="digits">
+
+                            </div>
+                            <span class="increase min-block-increase"></span>
+                        </div>
+                        <span class="dot-line reserved">
+                            <span>
+                                Reserved
+                            </span>
+                            <span class="dot"></span>
+                        </span>
+                    </div>
+                    <div class="range-block max-block">
+                        <div class="inner">
+                            <span class="decrease max-block-decrease"></span>
+                            <div class="digits">
+
+                            </div>
+                            <span class="increase max-block-increase"></span>
+                        </div>
+                        <span class="dot-line sl">
+                            <span>
+                                Scaling limit
+                            </span>
+                            <span class="dot"></span>
+                        </span>
+                    </div>
+                    <div class="range-wrapper">
+                        <div class="range"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="calculator-left-bottom">
+                <div class="calculator-left-bottom-block">
+                    <p>Disk space</p>
+                    <div class="inner">
+                        <span class="minus"></span>
+                        <div class="count">
+                            <span class="digit">10</span><span>GiB</span>
+                        </div>
+                        <span class="plus"></span>
+                    </div>
+                </div>
+                <div class="calculator-left-bottom-block">
+                    <p>Public IP</p>
+                    <div class="inner">
+                        <span class="minus"></span>
+                        <div class="count">
+                            <span class="digit">4</span>
+                        </div>
+                        <span class="plus"></span>
+                    </div>
+                </div>
+                <div class="calculator-left-bottom-block">
+                    <p>External Traffic</p>
+                    <div class="inner">
+                        <span class="minus"></span>
+                        <div class="count">
+                            <span class="digit">11</span><span>GiB</span>
+                        </div>
+                        <span class="plus"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="calculator-right">
+            <p class="cost">COST</p>
+            <div class="radio-block">
+                <input type="radio" id="hour" name="price" value="hourly" checked>
+                <label for="hour">Per Hour</label>
+                <input type="radio" id="month" name="price" value="monthly">
+                <label for="month">Per Month</label>
+            </div>
+            <div class="period" data-period="hourly">
+                <div class="start-price">
+                    <p>Starting Price</p>
+                    <span class="price">$0</span>
+                </div>
+                <div class="max-price">
+                    <p>
+                        Maximum Price
+                        <span>
+                        if all resources are fully used up to Scaling Limit
+                    </span>
+                    </p>
+                    <span class="price">$0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
