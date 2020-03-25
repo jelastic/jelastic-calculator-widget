@@ -46,6 +46,30 @@ body {
     font-size: 14px;
   }
 
+  .price {
+    font-size: 34px;
+    @media (max-width: $laptop) {
+      font-size: 28px;
+    }
+    @media (max-width: $tablet) {
+      font-size: 22px;
+    }
+  }
+
+  &[data-period=hourly] {
+    .start-price, .max-price {
+      .price {
+        font-size: 24px;
+        @media (max-width: $laptop) {
+          font-size: 20px;
+        }
+        @media (max-width: $tablet) {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+
   .hoster-selector {
 
     p {
@@ -380,10 +404,9 @@ body {
         height: 80px;
         cursor: pointer;
         img {
-          height: 30px;
-          max-width: 100%;
+          max-height: 95%;
+          max-width: 95%;
           filter: grayscale(1);
-          max-height: 100%;
           transition: .3s;
         }
         &:hover {
@@ -693,7 +716,7 @@ body {
                     top: -3px;
                     bottom: 0;
                     margin: auto;
-                    left: 22px;
+                    left: 18px;
                     z-index: 3;
                   }
                   &:after {
@@ -954,7 +977,6 @@ body {
             }
           }
           .price {
-            font-size: 40px;
             width: 150px;
             margin-left: 30px;
             text-align: center;
@@ -965,12 +987,10 @@ body {
             border-radius: 15px;
             font-weight: 400;
             @media (max-width: $laptop) {
-              font-size: 30px;
               width: 120px;
               margin-left: 15px;
             }
             @media (max-width: $tablet) {
-              font-size: 24px;
               width: 80px;
             }
           }
@@ -998,22 +1018,6 @@ body {
             }
           }
         }
-
-        &[data-period=hourly] {
-          .start-price, .max-price {
-            .price {
-              font-size: 24px;
-              @media (max-width: $laptop) {
-                font-size: 20px;
-              }
-              @media (max-width: $tablet) {
-                font-size: 13px;
-              }
-            }
-          }
-        }
-
-
       }
     }
   }
