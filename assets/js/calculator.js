@@ -279,6 +279,14 @@ jQuery(document).ready(function ($) {
 
         importPricing();
 
+
+        $(window).resize(function () {
+           $('.j-calculator[data-reserved]').each(function () {
+               setMinValues(this);
+               setMaxValues(this);
+           });
+        });
+
         function uniqid(a = "", b = false) {
             var c = Date.now() / 1000;
             var d = c.toString(16).split(".").join("");

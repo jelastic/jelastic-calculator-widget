@@ -13,16 +13,13 @@ $mainColor: #0087ff;
   outline: none;
   box-sizing: border-box;
 }
+
 body {
   font-family: 'Open Sans', sans-serif;
   font-weight: lighter;
   margin: 0;
   padding: 0;
 }
-
-
-
-
 
 .j-calculator {
   max-width: 1250px;
@@ -90,8 +87,15 @@ body {
       @media (max-width: $tablet) {
         padding: 0;
       }
-      @media (max-width: $extraSmall) {
+      @media (max-width: $mobile) {
         flex-wrap: wrap;
+        p {
+          margin-bottom: 10px;
+          margin-right: 0;
+        }
+      }
+      @media (max-width: $extraSmall) {
+        opacity: 1;
       }
     }
 
@@ -243,6 +247,9 @@ body {
     @media (max-width: $tablet) {
       width: 210px;
     }
+    @media (max-width: $mobile) {
+      width: 300px;
+    }
     @media (max-width: $extraSmall) {
       width: 100%;
     }
@@ -327,6 +334,9 @@ body {
       max-height: 300px;
       overflow: auto;
       background-color: #fff;
+      @media (max-width: $extraSmall) {
+        max-height: 200px;
+      }
       li {
         margin: 0;
         padding: 8px 0;
@@ -508,9 +518,134 @@ body {
           }
           .range-block {
             width: 47%;
+            position: relative;
+
+            .tooltip-button {
+              font-style: normal;
+              color: #fff;
+              border: 1px solid;
+              width: 15px;
+              height: 15px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              position: absolute;
+              right: 5px;
+              top: 5px;
+              z-index: 2;
+              border-radius: 50%;
+              font-size: 11px;
+              cursor: pointer;
+              @media (max-width: $extraSmall) {
+                right: auto;
+                left: 5px;
+              }
+
+              &.max {
+                color: #0087ff;
+                @media (max-width: $extraSmall) {
+                  right: 5px;
+                  left: auto;
+                }
+              }
+              &:hover {
+                + .tooltip-wrapper {
+                  display: block;
+                }
+              }
+
+            }
+
+            .tooltip-wrapper {
+              width: 300px;
+              position: absolute;
+              left: calc(100% + 10px);
+              top: -7px;
+              display: none;
+              border-radius: 10px;
+              box-shadow: 0 0 10px 0 rgba(0, 132, 245, .15);
+
+              @media (max-width: $laptop) {
+                width: 250px;
+              }
+              @media (max-width: $tablet) {
+                width: 200px;
+              }
+              @media (max-width: $extraSmall) {
+                left: 30px;
+              }
+
+              &.max {
+                @media (max-width: $tablet) {
+                  left: auto;
+                  right: 35px;
+                }
+                @media (max-width: $extraSmall) {
+                  right: 30px;
+                }
+                &:before {
+                  @media (max-width: $tablet) {
+                    left: auto;
+                    right: -18px;
+                    border: 10px solid transparent;
+                    border-left-color: $mainColor;
+                  }
+                }
+                &:after {
+                  @media (max-width: $tablet) {
+                    left: auto;
+                    right: -15px;
+                    border-right-color: transparent;
+                    border-left-color: #fff;
+                  }
+                }
+              }
+              &:before {
+                display: block;
+                content: '';
+                position: absolute;
+                left: -18px;
+                top: 8px;
+                border: 10px solid transparent;
+                border-right-color: $mainColor;
+              }
+              &:after {
+                display: block;
+                content: '';
+                position: absolute;
+                top: 10px;
+                left: -15px;
+                border: 8px solid transparent;
+                border-right-color: #ffffff;
+                z-index: 9;
+              }
+              .tooltip-inner {
+                position: relative;
+                background: #fff;
+                color: #000;
+                z-index: 9;
+                border-radius: 10px;
+                padding: 10px;
+                border: 1px solid $mainColor;
+                .title {
+                  font-size: 14px;
+                  margin-bottom: 10px;
+                }
+                .description {
+                  font-size: 12px;
+                  margin-bottom: 10px;
+                }
+                img {
+                  display: block;
+                  max-width: 90%;
+                  margin: 0 auto;
+                }
+              }
+            }
+
             .inner {
               background: $mainColor;
-              border-radius: 15px;
+              border-radius: 10px;
               padding: 25px 10px;
               transition: .3s;
               position: relative;
@@ -808,7 +943,7 @@ body {
                 width: 7px;
                 height: 7px;
                 border-width: 0 1px 1px 0;
-                left: 5px;
+                left: 10px;
               }
             }
             .minus {
@@ -830,7 +965,7 @@ body {
               }
               @media (max-width: $extraSmall) {
                 left: auto;
-                right: 5px;
+                right: 10px;
               }
             }
           }
@@ -865,7 +1000,7 @@ body {
       }
       .radio-block {
         padding: 28px 35px;
-        box-shadow: 0 0 30px 0 rgba(0,132,245,.1);
+        box-shadow: 0 0 30px 0 rgba(0, 132, 245, .1);
         border-radius: 15px;
         width: 100%;
         display: flex;
@@ -909,7 +1044,7 @@ body {
             background: #dfefff;
             border: 1px solid #bac5dc;
             border-radius: 50%;
-            left:0;
+            left: 0;
             top: 0;
             bottom: 0;
             margin: auto;
@@ -926,7 +1061,7 @@ body {
             height: 15px;
             background: #bac5dc;
             border-radius: 50%;
-            left:5px;
+            left: 5px;
             top: 0;
             bottom: 0;
             margin: auto;

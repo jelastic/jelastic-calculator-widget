@@ -1,58 +1,81 @@
-.ico-pecul {
-  display: block;
-  float: left;
-  width: 49px;
-  height: 49px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  margin-right: 30px;
+.icons {
+  margin-bottom: -10px;
   @media (max-width: $laptop) {
-    margin-right: 15px;
+    opacity: 1;
   }
-  &:last-child {
-    margin-right: 0;
+  @media (max-width: $tablet) {
+    opacity: 1;
   }
-  &.ico-pecul--wordpress{
-    background-image: url("img/ico-pecul--wordpress.svg");
+  @media (max-width: $mobile) {
+    opacity: 1;
   }
-  &.ico-pecul--magento{
-    background-image: url("img/ico-pecul--magento.svg");
+  @media (max-width: $extraSmall) {
+    width: 100%;
   }
-  &.ico-pecul--kubernetes{
-    background-image: url("img/ico-pecul--kubernetes.svg");
-  }
-  &.ico-pecul--docker{
-    background-image: url("img/ico-pecul--docker.svg");
-  }
-  &.ico-pecul--vip{
-    background-image: url("img/ico-pecul--vip.svg");
-  }
-  &.ico-pecul--multiregion{
-    background-image: url("img/ico-pecul--multiregion.svg");
-  }
-  &.ico-pecul--storage{
-    background-image: url("img/ico-pecul--storage.svg");
-  }
-  &.ico-pecul--perfomance{
-    background-image: url("img/ico-pecul--perfomance.svg");
-  }
-  &.ico-pecul--silver{
-    background-image: url("img/ico-pecul--silver.svg");
-  }
-  &.ico-pecul--gold{
-    background-image: url("img/ico-pecul--gold.svg");
-  }
-  &.ico-pecul--platinum{
-    background-image: url("img/ico-pecul--platinum.svg");
-  }
-  &.ico-pecul--cdn{
-    background-image: url("img/ico-pecul--cdn.svg");
-  }
-  &.ico-pecul--ls {
-    background-image: url("img/ico-pecul--litespeed.svg");
-  }
-  &.ico-pecul--cs {
-    background-image: url("img/ico-pecul--cs.svg");
+
+  .ico-pecul {
+    display: block;
+    float: left;
+    width: 49px;
+    height: 49px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-right: 30px;
+    margin-bottom: 10px;
+
+    @media (max-width: $laptop) {
+      margin-right: 15px;
+    }
+    @media (max-width: $tablet) {
+      width: 39px;
+      height: 39px;
+      margin-right: 10px;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+    &.ico-pecul--wordpress {
+      background-image: url("img/ico-pecul--wordpress.svg");
+    }
+    &.ico-pecul--magento {
+      background-image: url("img/ico-pecul--magento.svg");
+    }
+    &.ico-pecul--kubernetes {
+      background-image: url("img/ico-pecul--kubernetes.svg");
+    }
+    &.ico-pecul--docker {
+      background-image: url("img/ico-pecul--docker.svg");
+    }
+    &.ico-pecul--vip {
+      background-image: url("img/ico-pecul--vip.svg");
+    }
+    &.ico-pecul--multiregion {
+      background-image: url("img/ico-pecul--multiregion.svg");
+    }
+    &.ico-pecul--storage {
+      background-image: url("img/ico-pecul--storage.svg");
+    }
+    &.ico-pecul--perfomance {
+      background-image: url("img/ico-pecul--perfomance.svg");
+    }
+    &.ico-pecul--silver {
+      background-image: url("img/ico-pecul--silver.svg");
+    }
+    &.ico-pecul--gold {
+      background-image: url("img/ico-pecul--gold.svg");
+    }
+    &.ico-pecul--platinum {
+      background-image: url("img/ico-pecul--platinum.svg");
+    }
+    &.ico-pecul--cdn {
+      background-image: url("img/ico-pecul--cdn.svg");
+    }
+    &.ico-pecul--ls {
+      background-image: url("img/ico-pecul--litespeed.svg");
+    }
+    &.ico-pecul--cs {
+      background-image: url("img/ico-pecul--cs.svg");
+    }
   }
 }
