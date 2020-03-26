@@ -243,14 +243,14 @@ jQuery(document).ready(function ($) {
         function importPricing() {
             $.ajax({
                 type: "GET",
-                url: 'http://platforms-info.jelastic.com/api/GetPricings',
+                url: '//platforms-info.jelastic.com/api/GetPricings',
                 dataType: "json",
                 success: function (pricingJSON) {
                     if (pricingJSON.result === 0) {
                         window.pricing = pricingJSON.response.pricings;
                         $.ajax({
                             type: "GET",
-                            url: 'http://platforms-info.jelastic.com/api/GetCurrency',
+                            url: '//platforms-info.jelastic.com/api/GetCurrency',
                             dataType: "json",
                             success: function (currencyJSON) {
                                 if (currencyJSON.result === 0) {

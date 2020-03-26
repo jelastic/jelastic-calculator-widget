@@ -25,6 +25,7 @@ body {
   max-width: 1250px;
   margin: 70px auto;
   font-size: 30px;
+  position: relative;
 
   @media (max-width: $laptop) {
     max-width: 992px;
@@ -50,6 +51,9 @@ body {
     }
     @media (max-width: $tablet) {
       font-size: 22px;
+    }
+    @media (max-width: $mobile) {
+      font-size: 13px;
     }
   }
 
@@ -1037,6 +1041,7 @@ body {
             margin: 0;
           }
           &:before {
+            box-sizing: border-box;
             width: 23px;
             height: 23px;
             display: block;
@@ -1061,7 +1066,7 @@ body {
             height: 15px;
             background: #bac5dc;
             border-radius: 50%;
-            left: 5px;
+            left: 4px;
             top: 0;
             bottom: 0;
             margin: auto;
@@ -1069,7 +1074,7 @@ body {
             opacity: 0;
             transition: .3s;
             @media (max-width: $laptop) {
-              left: 4px;
+              left: 3px;
               width: 13px;
               height: 13px;
             }
