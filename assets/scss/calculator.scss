@@ -5,6 +5,8 @@ $tablet: 1024px;
 $mobile: 768px;
 $extraSmall: 475px;
 $mainColor: #0087ff;
+$dbColor: #ffb000;
+$balancerColor: #09b475;
 
 @import "jquery-ui";
 @import "flags";
@@ -24,7 +26,7 @@ body {
 .j-calculator {
   max-width: 1250px;
   margin: 70px auto;
-  font-size: 30px;
+  font-size: 26px;
   position: relative;
 
   @media (max-width: $laptop) {
@@ -44,6 +46,132 @@ body {
     font-size: 14px;
   }
 
+  &[data-mode=balancer] {
+    .calculator-left-top-chooser-left {
+      input {
+        &:checked {
+          + label {
+            border-color: $balancerColor !important;
+          }
+        }
+      }
+    }
+    .range-block {
+      .tooltip-button {
+        &.max {
+          color: $balancerColor !important;
+        }
+      }
+      .tooltip-wrapper {
+
+        &:before {
+          border-right-color: $balancerColor !important;
+        }
+        &.max {
+          &:before {
+            @media (max-width: $tablet) {
+              border: 10px solid transparent !important;
+              border-left-color: $balancerColor !important;
+            }
+          }
+        }
+        .tooltip-inner {
+          border-color: $balancerColor !important;
+        }
+      }
+
+      .inner {
+        background: $balancerColor !important;
+        border-color: $balancerColor !important;
+      }
+      &.max-block {
+        .inner {
+          background: none !important;
+        }
+      }
+      .dot-line {
+        .dot {
+          background: $balancerColor !important;
+          .line {
+            background: $balancerColor !important;
+            &:before {
+              background: $balancerColor !important;
+            }
+          }
+        }
+      }
+    }
+    .range-wrapper {
+      background: $balancerColor !important;
+      &:before {
+        background: $balancerColor !important;
+      }
+    }
+  }
+
+  &[data-mode=database] {
+    .calculator-left-top-chooser-left {
+      input {
+        &:checked {
+          + label {
+            border-color: $dbColor !important;
+          }
+        }
+      }
+    }
+    .range-block {
+      .tooltip-button {
+        &.max {
+          color: $dbColor !important;
+        }
+      }
+      .tooltip-wrapper {
+
+        &:before {
+          border-right-color: $dbColor !important;
+        }
+        &.max {
+          &:before {
+            @media (max-width: $tablet) {
+              border: 10px solid transparent !important;
+              border-left-color: $dbColor !important;
+            }
+          }
+        }
+        .tooltip-inner {
+          border-color: $dbColor !important;
+        }
+      }
+
+      .inner {
+        background: $dbColor !important;
+        border-color: $dbColor !important;
+      }
+      &.max-block {
+        .inner {
+          background: none !important;
+        }
+      }
+      .dot-line {
+        .dot {
+          background: $dbColor !important;
+          .line {
+            background: $dbColor !important;
+            &:before {
+              background: $dbColor !important;
+            }
+          }
+        }
+      }
+    }
+    .range-wrapper {
+      background: $dbColor !important;
+      &:before {
+        background: $dbColor !important;
+      }
+    }
+  }
+
   .price {
     font-size: 34px;
     @media (max-width: $laptop) {
@@ -60,7 +188,7 @@ body {
   &[data-period=hourly] {
     .start-price, .max-price {
       .price {
-        font-size: 24px;
+        font-size: 26px;
         @media (max-width: $laptop) {
           font-size: 20px;
         }
@@ -84,6 +212,18 @@ body {
       }
     }
 
+    .selector-wrapper {
+      font-size: 30px;
+      @media (max-width: $laptop) {
+        font-size: 22px;
+      }
+      @media (max-width: $tablet) {
+        font-size: 18px;
+      }
+      @media (max-width: $extraSmall) {
+        font-size: 14px;
+      }
+    }
     .selector-wrapper, .services {
       width: 100%;
       display: flex;
@@ -107,7 +247,7 @@ body {
       width: 100%;
       .hosting-information--top {
         display: flex;
-        margin: 50px 0;
+        margin: 40px 0;
         @media (max-width: $laptop) {
           margin: 40px 0;
         }
@@ -378,13 +518,12 @@ body {
   }
   .calc-block {
     display: block;
-    padding: 50px;
+    padding: 40px;
     box-shadow: 0 0 30px 0 rgba(0, 132, 245, 0.1);
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     border-radius: 15px;
     @media (max-width: $tablet) {
-      padding: 40px;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
     @media (max-width: $extraSmall) {
       padding: 15px;
@@ -420,19 +559,33 @@ body {
         img {
           max-height: 95%;
           max-width: 95%;
-          filter: grayscale(1);
           transition: .3s;
+          &[src*=active] {
+            display: none;
+          }
         }
         &:hover {
           img {
-            filter: none;
+            &[src*=active] {
+              display: block;
+            }
+            &[src*=mute] {
+              display: none;
+            }
           }
         }
       }
       input {
         display: none;
-        &:checked + img {
-          filter: none;
+        &:checked {
+          ~ img {
+            &[src*=active] {
+              display: block;
+            }
+            &[src*=mute] {
+              display: none;
+            }
+          }
         }
       }
     }
@@ -546,7 +699,7 @@ body {
               }
 
               &.max {
-                color: #0087ff;
+                color: $mainColor;
                 @media (max-width: $extraSmall) {
                   right: 5px;
                   left: auto;
@@ -662,34 +815,48 @@ body {
                 font-size: 12px;
               }
               .decrease, .increase {
-                border: solid #fff;
-                border-width: 0 3px 3px 0;
-                display: inline-block;
-                padding: 3px;
-                width: 14px;
-                height: 14px;
                 position: absolute;
+                left: 0;
                 top: 0;
-                bottom: 0;
-                margin: auto;
-                left: 10px;
-                cursor: pointer;
-                @media (max-width: $tablet) {
-                  border-width: 0 2px 2px 0;
-                }
-                @media (max-width: $extraSmall) {
-                  border-width: 0 1px 1px 0;
+                width: 20%;
+                height: 100%;
+                &:before {
+                  content: '';
+                  border: solid #fff;
+                  border-width: 0 3px 3px 0;
+                  display: inline-block;
+                  padding: 3px;
+                  width: 7px;
+                  height: 7px;
+                  position: absolute;
+                  top: 0;
+                  bottom: 0;
+                  margin: auto;
+                  left: 10px;
+                  cursor: pointer;
+                  @media (max-width: $tablet) {
+                    border-width: 0 2px 2px 0;
+                  }
+                  @media (max-width: $extraSmall) {
+                    border-width: 0 1px 1px 0;
+                  }
                 }
               }
               .decrease {
-                transform: rotate(135deg);
-                -webkit-transform: rotate(135deg);
+                &:before {
+                  transform: rotate(135deg);
+                  -webkit-transform: rotate(135deg);
+                }
               }
               .increase {
-                transform: rotate(-45deg);
-                -webkit-transform: rotate(-45deg);
-                right: 10px;
                 left: auto;
+                right: 0;
+                &:before {
+                  transform: rotate(-45deg);
+                  -webkit-transform: rotate(-45deg);
+                  right: 10px;
+                  left: auto;
+                }
               }
             }
             &.zero {
@@ -707,7 +874,9 @@ body {
                 background: none;
                 border: 2px dashed $mainColor;
                 .decrease, .increase {
-                  border-color: #5b6c90;
+                  &:before {
+                    border-color: #5b6c90;
+                  }
                 }
               }
             }
@@ -915,61 +1084,82 @@ body {
             background: #7a8eb8;
             color: #fff;
             position: relative;
-            padding: 28px 10px;
+            padding: 0 10px 4px;
             font-size: 24px;
             text-align: center;
             border-radius: 15px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            @media (max-width: $laptop) {
+              height: 60px;
+            }
             @media (max-width: $tablet) {
-              padding: 15px 5px;
+              padding: 0 5px;
               font-size: 16px;
             }
             @media (max-width: $extraSmall) {
               font-size: 12px;
             }
             .minus, .plus {
-              border: solid #fff;
-              border-width: 0 3px 3px 0;
-              display: inline-block;
-              padding: 3px;
-              width: 14px;
-              height: 14px;
               position: absolute;
               top: 0;
-              bottom: 0;
-              margin: auto;
-              left: 30px;
-              cursor: pointer;
-              @media (max-width: $tablet) {
-                border-width: 0 2px 2px 0;
-                left: 10px;
-              }
-              @media (max-width: $extraSmall) {
-                width: 7px;
-                height: 7px;
-                border-width: 0 1px 1px 0;
-                left: 10px;
+              left: 0;
+              width: 25%;
+              height: 100%;
+              &:before {
+                content: '';
+                border: solid #fff;
+                border-width: 0 3px 3px 0;
+                display: inline-block;
+                padding: 3px;
+                width: 4px;
+                height: 4px;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                left: 30px;
+                cursor: pointer;
+                @media (max-width: $tablet) {
+                  border-width: 0 2px 2px 0;
+                  left: 10px;
+                }
+                @media (max-width: $extraSmall) {
+                  width: 1px;
+                  height: 1px;
+                  border-width: 0 1px 1px 0;
+                  left: 10px;
+                }
               }
             }
             .minus {
-              -webkit-transform: rotate(135deg);
-              -ms-transform: rotate(135deg);
-              -o-transform: rotate(135deg);
-              transform: rotate(135deg);
+              &:before {
+                -webkit-transform: rotate(135deg);
+                -ms-transform: rotate(135deg);
+                -o-transform: rotate(135deg);
+                transform: rotate(135deg);
+              }
             }
             .plus {
-              -webkit-transform: rotate(-45deg);
-              -ms-transform: rotate(-45deg);
-              -o-transform: rotate(-45deg);
-              transform: rotate(-45deg);
-              right: 30px;
               left: auto;
-              @media (max-width: $tablet) {
+              right: 0;
+              &:before {
+                -webkit-transform: rotate(-45deg);
+                -ms-transform: rotate(-45deg);
+                -o-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+                right: 30px;
                 left: auto;
-                right: 10px;
-              }
-              @media (max-width: $extraSmall) {
-                left: auto;
-                right: 10px;
+                @media (max-width: $tablet) {
+                  left: auto;
+                  right: 10px;
+                }
+                @media (max-width: $extraSmall) {
+                  left: auto;
+                  right: 10px;
+                }
               }
             }
           }
@@ -978,8 +1168,14 @@ body {
     }
     .calculator-right {
       width: 35%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       @media (max-width: $laptop) {
         width: 35%;
+      }
+      @media (max-width: $tablet) {
+        justify-content: flex-start;
       }
       @media (max-width: $mobile) {
         width: 100%;
@@ -1064,7 +1260,7 @@ body {
             content: '';
             width: 15px;
             height: 15px;
-            background: #bac5dc;
+            background: #758bba;
             border-radius: 50%;
             left: 4px;
             top: 0;
@@ -1117,21 +1313,30 @@ body {
             }
           }
           .price {
-            width: 150px;
+            width: 180px;
             margin-left: 30px;
-            text-align: center;
-            padding: 15px 5px;
+            padding: 0 5px;
             background: #01b6a6;
             border: 2px dashed #01b6a6;
             color: #fff;
             border-radius: 15px;
             font-weight: 400;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             @media (max-width: $laptop) {
+              height: 60px;
               width: 120px;
               margin-left: 15px;
             }
             @media (max-width: $tablet) {
-              width: 80px;
+              width: 90px;
+              margin-left: 0;
+            }
+            @media (max-width: $tablet) {
+              width: 120px;
+              margin-left: 15px;
             }
           }
         }

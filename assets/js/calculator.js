@@ -173,6 +173,10 @@ jQuery(document).ready(function ($) {
             setMinPrice(fixed.tiers, el, usdRate);
             setMaxPrice(dynamic.tiers, fixed.tiers, el, usdRate);
 
+            $(el).find('input[name*="mode"]').click(function (e) {
+                changeMode($(this).val(), el);
+            });
+            $(el).find('input[name*="mode"][value=appsever]').click();
             $(el).find('.min-block-decrease').click(function (e) {
                 e.preventDefault();
                 decreaseReserved(el);
@@ -300,6 +304,10 @@ jQuery(document).ready(function ($) {
                 e += f;
             }
             return a + d + e;
+        }
+        
+        function changeMode(value, el) {
+            $(el).attr('data-mode', value);
         }
 
         function setReservedCloudlets(cloudlets, el) {

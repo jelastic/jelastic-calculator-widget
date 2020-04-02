@@ -5,7 +5,8 @@
             <div class="language">
                 <label class="calc-block">
                     <input type="radio" name="language<%= id %>" <%= i == 0 ? 'checked' : '' %>>
-                    <img src="/j-calculator/img/languages/<%= language %>.svg" alt="<%= language %>">
+                    <img src="/j-calculator/img/languages/<%= language %>-active.svg" alt="<%= language %>">
+                    <img src="/j-calculator/img/languages/<%= language %>-mute.svg" alt="<%= language %>">
                 </label>
             </div>
         <% } %>
@@ -16,15 +17,15 @@
             <div class="calculator-left-top">
                 <div class="calculator-left-top-chooser">
                     <div class="calculator-left-top-chooser-left">
-                        <input checked type="radio" name="mode<%= id %>" id="balancer<%= id %>">
+                        <input checked type="radio" name="mode<%= id %>" value="balancer" id="balancer<%= id %>">
                         <label for="balancer<%= id %>">
                             Balancer
                         </label>
-                        <input type="radio" name="mode<%= id %>" id="appsever<%= id %>">
+                        <input type="radio" name="mode<%= id %>" value="appsever" id="appsever<%= id %>">
                         <label for="appsever<%= id %>">
                             App Server
                         </label>
-                        <input type="radio" name="mode<%= id %>" id="database<%= id %>">
+                        <input type="radio" name="mode<%= id %>" value="database" id="database<%= id %>">
                         <label for="database<%= id %>">
                             Database
                         </label>
@@ -88,7 +89,7 @@
             </div>
             <div class="calculator-left-bottom">
                 <div class="calculator-left-bottom-block">
-                    <p>Disk space</p>
+                    <p>Disk Space</p>
                     <div class="inner">
                         <span class="minus"></span>
                         <div class="count">
@@ -120,12 +121,14 @@
             </div>
         </div>
         <div class="calculator-right">
-            <p class="cost">COST</p>
-            <div class="radio-block">
-                <input type="radio" id="hour<%= id %>" name="price<%= id %>" value="hourly" checked>
-                <label for="hour<%= id %>">Per Hour</label>
-                <input type="radio" id="month<%= id %>" name="price<%= id %>" value="monthly">
-                <label for="month<%= id %>">Per Month</label>
+            <div class="calculator-right-top">
+                <p class="cost">COST</p>
+                <div class="radio-block">
+                    <input type="radio" id="hour<%= id %>" name="price<%= id %>" value="hourly" checked>
+                    <label for="hour<%= id %>">Per Hour</label>
+                    <input type="radio" id="month<%= id %>" name="price<%= id %>" value="monthly">
+                    <label for="month<%= id %>">Per Month</label>
+                </div>
             </div>
             <div class="period">
                 <div class="start-price">
