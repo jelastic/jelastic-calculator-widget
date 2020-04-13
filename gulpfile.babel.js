@@ -132,13 +132,12 @@ gulp.task('images', function() {
 
 gulp.task('scripts', function() {
   return gulp.src([
-      'assets/js/3dparty/jquery-ui.min.js',
-      'assets/js/3dparty/jquery.ui.touch-punch.min.js',
+      // 'assets/js/3dparty/ejs.js',
+      'assets/js/3dparty/Obj.min.js',
       'assets/js/data/countries.js',
       'assets/js/data/regions.js',
       'assets/js/data/features.js',
       'assets/js/JApp.js',
-      // 'assets/js/3dparty/ejs.js',
       'assets/js/calculator.js',
   ])
     .pipe(plugins.concat('j-calculator.min.js'))

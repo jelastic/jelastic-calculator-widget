@@ -21,7 +21,7 @@
                         <label for="balancer<%= id %>">
                             Balancer
                         </label>
-                        <input type="radio" name="mode<%= id %>" value="appsever" id="appsever<%= id %>">
+                        <input type="radio" name="mode<%= id %>" value="appserver" id="appsever<%= id %>">
                         <label for="appsever<%= id %>">
                             App Server
                         </label>
@@ -32,9 +32,10 @@
                     </div>
                 </div>
                 <div class="calculator-left-top-scale">
-                    <div class="range-block min-block">
-                        <span class="tooltip-button min">i</span>
-                        <span class="tooltip-wrapper">
+                    <div class="balancer-range">
+                        <div class="range-block min-block">
+                            <span class="tooltip-button min">i</span>
+                            <span class="tooltip-wrapper">
                             <span class="tooltip-inner">
                                 <span class="title">Reserved Cloudlets</span>
                                 <span class="description">
@@ -43,23 +44,23 @@
                                 <img src="/j-calculator/img/cld-fixed-hybrid.svg" alt="Reserved Cloudlets">
                             </span>
                         </span>
-                        <div class="inner">
-                            <span class="decrease min-block-decrease"></span>
-                            <div class="digits">
+                            <div class="inner">
+                                <span class="decrease min-block-decrease"></span>
+                                <div class="digits">
 
+                                </div>
+                                <span class="increase min-block-increase"></span>
                             </div>
-                            <span class="increase min-block-increase"></span>
-                        </div>
-                        <span class="dot-line reserved">
+                            <span class="dot-line reserved">
                             <span>
                                 Reserved
                             </span>
                             <span class="dot"></span>
                         </span>
-                    </div>
-                    <div class="range-block max-block">
-                        <span class="tooltip-button max">i</span>
-                        <span class="tooltip-wrapper max">
+                        </div>
+                        <div class="range-block max-block">
+                            <span class="tooltip-button max">i</span>
+                            <span class="tooltip-wrapper max">
                             <span class="tooltip-inner">
                                 <span class="title">Scaling Limit</span>
                             <span class="description">
@@ -68,22 +69,155 @@
                             <img src="/j-calculator/img/cld-flex-hybrid.svg" alt="Scaling Limit">
                             </span>
                         </span>
-                        <div class="inner">
-                            <span class="decrease max-block-decrease"></span>
-                            <div class="digits">
+                            <div class="inner">
+                                <span class="decrease max-block-decrease"></span>
+                                <div class="digits">
 
+                                </div>
+                                <span class="increase max-block-increase"></span>
                             </div>
-                            <span class="increase max-block-increase"></span>
-                        </div>
-                        <span class="dot-line sl">
+                            <span class="dot-line sl">
                             <span>
                                 Scaling limit
                             </span>
                             <span class="dot"></span>
                         </span>
+                        </div>
+                        <div class="range-wrapper">
+                            <input
+                                    data-addui='slider'
+                                    data-min='0'
+                                    data-max='128'
+                                    data-range='true'
+                                    data-step='1'
+                                    value='1,64'
+                            />
+
+                        </div>
                     </div>
-                    <div class="range-wrapper">
-                        <div class="range"></div>
+                    <div class="appserver-range">
+                        <div class="range-block min-block">
+                            <span class="tooltip-button min">i</span>
+                            <span class="tooltip-wrapper">
+                            <span class="tooltip-inner">
+                                <span class="title">Reserved Cloudlets</span>
+                                <span class="description">
+                                    Reserve the cloudlets to pay a fixed price. The more you reserve, the bigger the discount is!
+                                </span>
+                                <img src="/j-calculator/img/cld-fixed-hybrid.svg" alt="Reserved Cloudlets">
+                            </span>
+                        </span>
+                            <div class="inner">
+                                <span class="decrease min-block-decrease"></span>
+                                <div class="digits">
+
+                                </div>
+                                <span class="increase min-block-increase"></span>
+                            </div>
+                            <span class="dot-line reserved">
+                            <span>
+                                Reserved
+                            </span>
+                            <span class="dot"></span>
+                        </span>
+                        </div>
+                        <div class="range-block max-block">
+                            <span class="tooltip-button max">i</span>
+                            <span class="tooltip-wrapper max">
+                            <span class="tooltip-inner">
+                                <span class="title">Scaling Limit</span>
+                            <span class="description">
+                                Define the maximum amount of resources for automatic vertical scaling based on load changes
+                            </span>
+                            <img src="/j-calculator/img/cld-flex-hybrid.svg" alt="Scaling Limit">
+                            </span>
+                        </span>
+                            <div class="inner">
+                                <span class="decrease max-block-decrease"></span>
+                                <div class="digits">
+
+                                </div>
+                                <span class="increase max-block-increase"></span>
+                            </div>
+                            <span class="dot-line sl">
+                            <span>
+                                Scaling limit
+                            </span>
+                            <span class="dot"></span>
+                        </span>
+                        </div>
+                        <div class="range-wrapper">
+                            <input
+                                    data-addui='slider'
+                                    data-min='0'
+                                    data-max='128'
+                                    data-range='true'
+                                    data-step='1'
+                                    value='1,64'
+                            />
+                        </div>
+                    </div>
+                    <div class="database-range">
+                        <div class="range-block min-block">
+                            <span class="tooltip-button min">i</span>
+                            <span class="tooltip-wrapper">
+                            <span class="tooltip-inner">
+                                <span class="title">Reserved Cloudlets</span>
+                                <span class="description">
+                                    Reserve the cloudlets to pay a fixed price. The more you reserve, the bigger the discount is!
+                                </span>
+                                <img src="/j-calculator/img/cld-fixed-hybrid.svg" alt="Reserved Cloudlets">
+                            </span>
+                        </span>
+                            <div class="inner">
+                                <span class="decrease min-block-decrease"></span>
+                                <div class="digits">
+
+                                </div>
+                                <span class="increase min-block-increase"></span>
+                            </div>
+                            <span class="dot-line reserved">
+                            <span>
+                                Reserved
+                            </span>
+                            <span class="dot"></span>
+                        </span>
+                        </div>
+                        <div class="range-block max-block">
+                            <span class="tooltip-button max">i</span>
+                            <span class="tooltip-wrapper max">
+                            <span class="tooltip-inner">
+                                <span class="title">Scaling Limit</span>
+                            <span class="description">
+                                Define the maximum amount of resources for automatic vertical scaling based on load changes
+                            </span>
+                            <img src="/j-calculator/img/cld-flex-hybrid.svg" alt="Scaling Limit">
+                            </span>
+                        </span>
+                            <div class="inner">
+                                <span class="decrease max-block-decrease"></span>
+                                <div class="digits">
+
+                                </div>
+                                <span class="increase max-block-increase"></span>
+                            </div>
+                            <span class="dot-line sl">
+                            <span>
+                                Scaling limit
+                            </span>
+                            <span class="dot"></span>
+                        </span>
+                        </div>
+                        <div class="range-wrapper">
+                            <input
+                                    data-addui='slider'
+                                    data-min='0'
+                                    data-max='128'
+                                    data-range='true'
+                                    data-step='1'
+                                    value='1,64'
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,5 @@
 (function(){
 
-
 var rsplit = function(string, regex) {
 	var result = regex.exec(string),retArr = new Array(), first_idx, last_idx, first_bit;
 	while (result != null)
@@ -29,10 +28,8 @@ extend = function(d, s){
     for(var n in s){
         if(s.hasOwnProperty(n))  d[n] = s[n]
     }
-};
-
-
-var EJS = function( options ){
+},
+	EJS = function( options ){
 	options = typeof options == "string" ? {view: options} : options
     this.set_options(options);
 	if(options.precompiled){
