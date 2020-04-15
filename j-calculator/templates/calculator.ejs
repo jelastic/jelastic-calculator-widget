@@ -21,8 +21,8 @@
                         <label for="balancer<%= id %>">
                             Balancer
                         </label>
-                        <input type="radio" name="mode<%= id %>" value="appserver" id="appsever<%= id %>">
-                        <label for="appsever<%= id %>">
+                        <input type="radio" name="mode<%= id %>" value="appserver" id="appserver<%= id %>">
+                        <label for="appserver<%= id %>">
                             App Server
                         </label>
                         <input type="radio" name="mode<%= id %>" value="database" id="database<%= id %>">
@@ -90,7 +90,7 @@
                                     data-max='128'
                                     data-range='true'
                                     data-step='1'
-                                    value='1,64'
+                                    value='0,64'
                             />
 
                         </div>
@@ -215,7 +215,7 @@
                                     data-max='128'
                                     data-range='true'
                                     data-step='1'
-                                    value='1,64'
+                                    value='0,64'
                             />
                         </div>
                     </div>
@@ -226,9 +226,9 @@
                     <p>Disk Space</p>
                     <div class="inner">
                         <span class="minus"></span>
-                        <div class="count">
-                            <span class="digit">10</span><span>GiB</span>
-                        </div>
+                        <label class="count">
+                            <input type="number" class="digit" name="storage" max="99"><span>GiB</span>
+                        </label>
                         <span class="plus"></span>
                     </div>
                 </div>
@@ -236,9 +236,9 @@
                     <p>Public IP</p>
                     <div class="inner">
                         <span class="minus"></span>
-                        <div class="count">
-                            <span class="digit">4</span>
-                        </div>
+                        <label class="count">
+                            <input type="number" class="digit" name="ip" max="3" step="1">
+                        </label>
                         <span class="plus"></span>
                     </div>
                 </div>
@@ -246,9 +246,9 @@
                     <p>External Traffic</p>
                     <div class="inner">
                         <span class="minus"></span>
-                        <div class="count">
-                            <span class="digit">11</span><span>GiB</span>
-                        </div>
+                        <label class="count">
+                            <input type="number" class="digit" name="traffic" max="99"><span>GiB</span>
+                        </label>
                         <span class="plus"></span>
                     </div>
                 </div>

@@ -108,8 +108,8 @@ jQuery(document).ready(function ($) {
             var oLanguages = ['java', 'php', 'node', 'ruby', 'python', 'go'],
                 fixed = '',
                 dynamic = '',
-                minPrice = '',
-                maxPrice = '',
+                ip = '',
+                storage = '',
                 usdRate = 1;
 
             sHtml = new EJS({url: '/j-calculator/templates/calculator'}).render({
@@ -117,7 +117,6 @@ jQuery(document).ready(function ($) {
                 oLanguages: oLanguages,
                 id: Math.round(Math.random() * 100000000)
             });
-
 
             if ($(el).find(calculatorBlockClass).length > 0) {
                 $(el).find(calculatorBlockClass).replaceWith(sHtml);
@@ -132,11 +131,20 @@ jQuery(document).ready(function ($) {
                     $(el).attr('data-currency', oHoster.currencyCode);
                 }
             }
+            
+            var defaultOptions = {
+                "storage": 10,
+                "ip": 1,
+                "traffic": 10
+            };
+            $.each(defaultOptions, function (key, value) {
+                $(el).attr('data-' + key, value).find('[name='+key+']').val(value).change();
+            });
 
             var sKey = window.pricing[$(el).attr('data-key')],
                 hosterCurrency = $(el).attr('data-currency'),
                 tariffPlans = sKey.tariffPlans;
-
+            
             if (tariffPlans.length > 0) {
                 $.each(tariffPlans, function () {
                     if (this.type.toLowerCase() === 'fixed') {
@@ -145,8 +153,15 @@ jQuery(document).ready(function ($) {
                     if (this.type.toLowerCase() === 'flexible') {
                         dynamic = this;
                     }
+                    if (this.type.toLowerCase() === 'storage') {
+                        storage = this;
+                    }
+                    if (this.keyword.toLowerCase() === 'ip') {
+                        ip = this;
+                    }
                 });
             }
+
             $.each(window.currency, function () {
                 if (this.code === hosterCurrency) {
                     usdRate = this.usdRate;
@@ -171,6 +186,9 @@ jQuery(document).ready(function ($) {
                     s.max = $el.attr("max");
                 if ($el.attr("step"))
                     s.step = $el.attr("step");
+
+                s.storage = storage;
+                s.ip = ip;
 
                 s.fixed = fixed;
                 s.dynamic = dynamic;
@@ -201,7 +219,6 @@ jQuery(document).ready(function ($) {
                 setMaxValues(el, $(el).attr('data-mode'));
             });
             $(el).find('input[name*="mode"][value=appserver]').click();
-
             $(el).find('.min-block-decrease').click(function (e) {
                 e.preventDefault();
                 var slider = sliders[$(el).attr('data-mode')];
@@ -222,6 +239,21 @@ jQuery(document).ready(function ($) {
                 var slider = sliders[$(el).attr('data-mode')];
                 increaseScaling(slider);
             });
+            $(el).find('.digit').change(function (e) {
+                var type = $(this).attr('name');
+                $(el).attr('data-' + type, $(this).val());
+
+                var digit = $(this);
+                if (parseInt(digit.val()) > parseInt(digit.attr('max'))) {
+                    digit.val(digit.attr('max')).change();
+                }
+
+                if (parseInt(digit.val()) < 0) {
+                    digit.val(0).change();
+                }
+
+                setMinPrice(fixed.tiers, el, usdRate, storage.tiers, ip.tiers);
+            });
             $(el).find('.plus').click(function (e) {
                 e.preventDefault();
                 increaseBlockDigit(this);
@@ -232,7 +264,7 @@ jQuery(document).ready(function ($) {
             });
             $(el).find('.calculator-right input').click(function (e) {
                 $(el).attr('data-period', $(this).val());
-                setMinPrice(fixed.tiers, el, usdRate);
+                setMinPrice(fixed.tiers, el, usdRate, storage.tiers, ip.tiers);
                 setMaxPrice(dynamic.tiers, fixed.tiers, el, usdRate);
             });
 
@@ -240,6 +272,7 @@ jQuery(document).ready(function ($) {
             $(calculatorTag).removeClass(sCssLoading);
 
         }
+
 
         function decreaseReserved(oSlider) {
             var l = oSlider.value.split(',')[0];
@@ -286,13 +319,13 @@ jQuery(document).ready(function ($) {
 
         function increaseBlockDigit(clickedElement) {
             var digit = $(clickedElement).closest('.inner').find('.digit');
-            digit.text(parseInt(digit.text()) + 1);
+                digit.val(parseInt(digit.val()) + 1).change();
         }
 
         function decreaseBlockDigit(clickedElement) {
             var digit = $(clickedElement).closest('.inner').find('.digit');
-            if (parseInt(digit.text()) > 0) {
-                digit.text(parseInt(digit.text()) - 1);
+            if (parseInt(digit.val()) > 0) {
+                digit.val(parseInt(digit.val()) - 1).change();
             }
         }
 
@@ -362,6 +395,23 @@ jQuery(document).ready(function ($) {
         }
 
         function setReservedCloudlets(cloudlets, el, type) {
+
+            if(cloudlets === 0) {
+                $(el).find('label[for*=' + type + ']').removeClass('active');
+
+            } else {
+                $(el).find('label[for*=' + type + ']').addClass('active');
+            }
+
+            var ip_input = $(el).find('[name=ip]'),
+                labelWrapper = $(el).find('.calculator-left-top-chooser-left label.active');
+
+            ip_input.attr('max', parseInt(labelWrapper.length));
+            if (parseInt(ip_input.val()) > parseInt(ip_input.attr('max'))){
+                ip_input.val(parseInt(ip_input.attr('max')));
+                $(el).attr('data-ip', parseInt(ip_input.attr('max')));
+            }
+
             $(el).attr('data-' + type + '-reserved', cloudlets);
             setMinValues(el, type);
         }
@@ -402,11 +452,63 @@ jQuery(document).ready(function ($) {
             return sValue;
         }
 
-        function setMinPrice(reservedTiers, el, usdRate) {
+        function checkStoragePrice(sValue, tiers) {
+            sValue = parseInt(sValue);
+            var price = tiers[0].price;
+            for (var i = 0; i < tiers.length; i++) {
+                if (!tiers[i + 1]) {
+                    price = tiers[tiers.length - 1].price;
+                } else {
+                    if (sValue < tiers[0].value) {
+                        return 0;
+                    }
+                    if ((sValue >= tiers[i].value) && (sValue < tiers[i + 1].value)) {
+                        if ((tiers[i].free > 0) && (sValue <= tiers[i].free)) {
+                            return 0;
+                        } else {
+                            price = tiers[i].price;
+                            return sValue * price;
+                        }
+                    }
+                }
+            }
+            return sValue * price;
+        }
+
+        function checkIpPrice(sValue, tiers) {
+            sValue = parseInt(sValue);
+            var price = tiers[0].price;
+            for (var i = 0; i < tiers.length; i++) {
+                if (!tiers[i + 1]) {
+                    if ((tiers[tiers.length - 1].free > 0) && (sValue <= tiers[tiers.length - 1].free)) {
+                        return 0;
+                    } else {
+                        price = tiers[tiers.length - 1].price;
+                    }
+                } else {
+                    if (sValue < tiers[0].value) {
+                        return 0;
+                    }
+                    if ((sValue >= tiers[i].value) && (sValue < tiers[i + 1].value)) {
+                        if ((tiers[i].free > 0) && (sValue <= tiers[i].free)) {
+                            return 0;
+                        } else {
+                            price = tiers[i].price;
+                            return sValue * price;
+                        }
+                    }
+                }
+            }
+            return sValue * price;
+        }
+
+        function setMinPrice(reservedTiers, el, usdRate, storageTiers, ipTiers) {
             var minBalancerPrice = checkPrice(getReservedCloudlets(el, 'balancer'), reservedTiers),
                 minAppserverPrice = checkPrice(getReservedCloudlets(el, 'appserver'), reservedTiers),
                 minDatabasePrice = checkPrice(getReservedCloudlets(el, 'database'), reservedTiers),
-                minPrice = minBalancerPrice + minAppserverPrice + minDatabasePrice;
+                storagePrice = checkStoragePrice($(el).attr('data-storage'), storageTiers),
+                ipPrice = checkIpPrice($(el).attr('data-ip'), ipTiers),
+                minPrice = minBalancerPrice + minAppserverPrice + minDatabasePrice + storagePrice + ipPrice;
             minPrice = toUSD(minPrice, usdRate);
             minPrice = changePricePeriod(minPrice, $(el).attr('data-period'));
             $(el).find('.start-price .price').html('$' + minPrice);
@@ -475,13 +577,12 @@ jQuery(document).ready(function ($) {
 
             var value = getReservedCloudlets(el, type);
 
-
             // render line from dot to range
             var leftRange = $(el).find('.' + type + '-range .addui-slider-handle').eq(0),
                 leftDot = $(el).find('.' + type + '-range .reserved .dot');
             var distance = leftRange.offset().left - $(leftDot).offset().left + $(leftDot).outerWidth() + 10;
             if (distance > 0) {
-                $(leftDot).html('<span class="line more" style="width:' + distance + 'px"></span>');
+                $(leftDot).html('<span class="line more" style="width:' + (distance + 2 )+ 'px"></span>');
             } else {
                 $(leftDot).html('<span class="line less" style="width:' + Math.abs(distance) + 'px"></span>');
             }
@@ -502,7 +603,7 @@ jQuery(document).ready(function ($) {
                 rightDot = $(el).find('.' + type + '-range .sl .dot');
             var distance = rightRange.offset().left - $(rightDot).offset().left + $(rightDot).outerWidth() + 10;
             if (distance > 0) {
-                $(rightDot).html('<span class="line more" style="width:' + distance + 'px"></span>');
+                $(rightDot).html('<span class="line more" style="width:' + (distance + 2) + 'px"></span>');
             } else {
                 $(rightDot).html('<span class="line less" style="width:' + Math.abs(distance) + 'px"></span>');
             }
@@ -559,7 +660,6 @@ jQuery(document).ready(function ($) {
                 max: 100,
                 step: 0.1,
                 value: 50,
-                fontsize: 18,
                 formatter: function (x) {
                     if ((this._settings.step + "").indexOf(".") > -1)
                         var digits = (this._settings.step + "").split(".").pop().length;
@@ -647,9 +747,11 @@ jQuery(document).ready(function ($) {
                                 $el.find(".addui-slider-handle").eq(1).css("bottom", hPer + "%");
                                 $el.find(".addui-slider-range").css("bottom", lPer + "%").css("height", (hPer - lPer) + "%");
                             } else {
+                                $el.find(".addui-slider-start-distance").css("width", "calc(" + lPer + "% + 30px)");
                                 $el.find(".addui-slider-handle").eq(0).css("left", lPer + "%");
                                 $el.find(".addui-slider-handle").eq(1).css("left", hPer + "%");
                                 $el.find(".addui-slider-range").css("left", lPer + "%").css("width", (hPer - lPer) + "%");
+                                $el.find(".addui-slider-distance").css("width", "calc(" + (100 - hPer ) + "% + 31px)");
                             }
 
                             $el.find(".addui-slider-handle").eq(0).find(".addui-slider-value span").html(toFunc(self._settings.formatter).call(self, l));
@@ -657,7 +759,7 @@ jQuery(document).ready(function ($) {
 
                             setReservedCloudlets(l, calc, type);
                             setScalingCloudlets(h, calc, type);
-                            setMinPrice(self._settings.fixed.tiers, calc, self._settings.usdRate);
+                            setMinPrice(self._settings.fixed.tiers, calc, self._settings.usdRate, self._settings.storage.tiers, self._settings.ip.tiers);
                             setMaxPrice(self._settings.dynamic.tiers, self._settings.fixed.tiers, calc, self._settings.usdRate);
                         });
                     }
@@ -672,7 +774,7 @@ jQuery(document).ready(function ($) {
                 var $range = $("<div class='addui-slider-range'></div>").appendTo($track);
 
                 if (!this._settings.range) {
-                    var $handle = $("<div class='addui-slider-handle'><div class='addui-slider-value'><span style='font-size: " + this._settings.fontsize + "px'></span></div></div>").appendTo($track);
+                    var $handle = $("<div class='addui-slider-handle'><div class='addui-slider-value'><span></span></div></div>").appendTo($track);
                     var activeTimer = null;
 
                     function dragHandler(e) {
@@ -698,6 +800,7 @@ jQuery(document).ready(function ($) {
                         var val = toNearest((offsetPer / 100) * (self._settings.max - self._settings.min), self._settings.step) + self._settings.min;
                         val = Math.min(self._settings.max, Math.max(self._settings.min, val));
                         self.value = toNearest(val, self._settings.step);
+
                     };
 
                     function dragStopHandler(e) {
@@ -743,7 +846,8 @@ jQuery(document).ready(function ($) {
                         self.value = val;
                     });
                 } else {
-                    var $handle1 = $("<div class='addui-slider-handle addui-slider-handle-l'><div class='addui-slider-value'><span style='font-size: " + this._settings.fontsize + "px'></span></div></div>").appendTo($track);
+                    var $startDistance = $("<div class='addui-slider-start-distance'></div>").appendTo($track);
+                    var $handle1 = $("<div class='addui-slider-handle addui-slider-handle-l'><div class='addui-slider-value'><span></span></div></div>").appendTo($track);
                     var activeTimer1 = null;
 
 
@@ -793,8 +897,10 @@ jQuery(document).ready(function ($) {
                         $(window).one("mouseup touchend", dragStopHandler1);
                     });
 
-                    var $handle2 = $("<div class='addui-slider-handle addui-slider-handle-h'><div class='addui-slider-value'><span style='font-size: " + this._settings.fontsize + "px'></span></div></div>").appendTo($track);
+                    var $handle2 = $("<div class='addui-slider-handle addui-slider-handle-h'><div class='addui-slider-value'><span></span></div></div>").appendTo($track);
                     var activeTimer2 = null;
+
+                    var $distance = $("<div class='addui-slider-distance'></div>").appendTo($track);
 
 
                     function dragHandler2(e) {
@@ -886,7 +992,6 @@ jQuery(document).ready(function ($) {
             };
             this.init.apply(this, arguments);
         };
-
 
     }
 );
