@@ -455,13 +455,19 @@ jQuery(document).ready(function ($) {
         function checkStoragePrice(sValue, tiers) {
             sValue = parseInt(sValue);
             var price = tiers[0].price;
+
+            if (sValue < tiers[0].value) {
+                return 0;
+            }
+
             for (var i = 0; i < tiers.length; i++) {
                 if (!tiers[i + 1]) {
-                    price = tiers[tiers.length - 1].price;
-                } else {
-                    if (sValue < tiers[0].value) {
+                    if ((tiers[tiers.length - 1].free > 0) && (sValue <= tiers[tiers.length - 1].free)) {
                         return 0;
+                    } else {
+                        price = tiers[tiers.length - 1].price;
                     }
+                } else {
                     if ((sValue >= tiers[i].value) && (sValue < tiers[i + 1].value)) {
                         if ((tiers[i].free > 0) && (sValue <= tiers[i].free)) {
                             return 0;
@@ -478,6 +484,11 @@ jQuery(document).ready(function ($) {
         function checkIpPrice(sValue, tiers) {
             sValue = parseInt(sValue);
             var price = tiers[0].price;
+
+            if (sValue < tiers[0].value) {
+                return 0;
+            }
+
             for (var i = 0; i < tiers.length; i++) {
                 if (!tiers[i + 1]) {
                     if ((tiers[tiers.length - 1].free > 0) && (sValue <= tiers[tiers.length - 1].free)) {
@@ -486,9 +497,6 @@ jQuery(document).ready(function ($) {
                         price = tiers[tiers.length - 1].price;
                     }
                 } else {
-                    if (sValue < tiers[0].value) {
-                        return 0;
-                    }
                     if ((sValue >= tiers[i].value) && (sValue < tiers[i + 1].value)) {
                         if ((tiers[i].free > 0) && (sValue <= tiers[i].free)) {
                             return 0;
