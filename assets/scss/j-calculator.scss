@@ -26,7 +26,7 @@ body {
 
 .j-calculator {
   max-width: 1250px;
-  margin: 70px auto;
+  margin: 0 auto;
   font-size: 26px;
   position: relative;
 
@@ -40,8 +40,7 @@ body {
   }
   @media (max-width: $mobile) {
     max-width: 100%;
-    padding: 0 15px;
-    margin: 40px auto;
+    padding: 0;
   }
   @media (max-width: $extraSmall) {
     font-size: 14px;
@@ -992,7 +991,6 @@ body {
             color: #fff;
             position: relative;
             padding: 0 10px 4px;
-            font-size: 24px;
             text-align: center;
             border-radius: 15px;
             height: 80px;
@@ -1010,6 +1008,22 @@ body {
             }
             @media (max-width: $extraSmall) {
               font-size: 12px;
+            }
+
+            .count {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 24px;
+              @media (max-width: $laptop) {
+                font-size: 17px;
+              }
+              @media (max-width: $tablet) {
+                font-size: 16px;
+              }
+              @media (max-width: $extraSmall) {
+                font-size: 12px;
+              }
             }
 
 
@@ -1034,6 +1048,15 @@ body {
               width: 35px;
               text-align: center;
               padding: 0;
+              @media (max-width: $laptop) {
+                width: 26px;
+              }
+              @media (max-width: $tablet) {
+                width: 23px;
+              }
+              @media (max-width: $extraSmall) {
+                width: 15px;
+              }
             }
             .minus, .plus {
               position: absolute;

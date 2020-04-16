@@ -134,7 +134,7 @@ jQuery(document).ready(function ($) {
             
             var defaultOptions = {
                 "storage": 10,
-                "ip": 1,
+                "ip": 0,
                 "traffic": 10
             };
             $.each(defaultOptions, function (key, value) {
@@ -395,10 +395,13 @@ jQuery(document).ready(function ($) {
         }
 
         function setReservedCloudlets(cloudlets, el, type) {
+            $(el).attr('data-' + type + '-reserved', cloudlets);
+            setMinValues(el, type);
+        }
 
+        function setScalingCloudlets(cloudlets, el, type) {
             if(cloudlets === 0) {
                 $(el).find('label[for*=' + type + ']').removeClass('active');
-
             } else {
                 $(el).find('label[for*=' + type + ']').addClass('active');
             }
@@ -412,11 +415,6 @@ jQuery(document).ready(function ($) {
                 $(el).attr('data-ip', parseInt(ip_input.attr('max')));
             }
 
-            $(el).attr('data-' + type + '-reserved', cloudlets);
-            setMinValues(el, type);
-        }
-
-        function setScalingCloudlets(cloudlets, el, type) {
             $(el).attr('data-' + type + '-scaling', cloudlets);
             setMaxValues(el, type);
         }
@@ -527,6 +525,7 @@ jQuery(document).ready(function ($) {
                 maxAppserverPrice = checkMaxPrice(getScalingCloudlets(el, 'appserver'), scalingTiers, getReservedCloudlets(el, 'appserver'), reservedTiers),
                 maxDatabasePrice = checkMaxPrice(getScalingCloudlets(el, 'database'), scalingTiers, getReservedCloudlets(el, 'database'), reservedTiers),
                 maxPrice = maxBalancerPrice + maxAppserverPrice + maxDatabasePrice;
+
             maxPrice = toUSD(maxPrice, usdRate);
             maxPrice = changePricePeriod(maxPrice, $(el).attr('data-period'));
             $(el).find('.max-price .price').html('$' + maxPrice);
@@ -549,8 +548,14 @@ jQuery(document).ready(function ($) {
 
         function checkMaxPrice(cloudlets, tiers, minCloudlets, minTiers) {
 
+            if (cloudlets === 0) {
+                return 0;
+            }
+
+            var reservedPrice = checkPrice(minCloudlets, minTiers),
+                scalingCloudlets = cloudlets - minCloudlets;
             if (cloudlets === minCloudlets) {
-                return checkPrice(minCloudlets, minTiers);
+                return reservedPrice;
             }
 
             var price = tiers[0].price;
@@ -558,23 +563,23 @@ jQuery(document).ready(function ($) {
                 if (!tiers[i + 1]) {
                     price = tiers[tiers.length - 1].price;
                 } else {
-                    if ((cloudlets >= tiers[i].value) && (cloudlets < tiers[i + 1].value)) {
+                    if ((scalingCloudlets >= tiers[i].value) && (scalingCloudlets < tiers[i + 1].value)) {
                         if (tiers[i].free > 0) {
-                            var disatance = cloudlets - minCloudlets;
-                            if (disatance <= tiers[i].free) {
-                                return checkPrice(minCloudlets, minTiers);
+                            if (scalingCloudlets <= tiers[i].free) {
+                                return reservedPrice;
                             } else {
                                 price = tiers[i].price;
-                                return cloudlets * price;
+                                break;
                             }
                         } else {
                             price = tiers[i].price;
-                            return cloudlets * price;
+                            break;
                         }
                     }
                 }
             }
-            return cloudlets * price;
+
+            return (scalingCloudlets * price) + reservedPrice;
         }
 
         function toUSD(sValue, sUsdRate) {
