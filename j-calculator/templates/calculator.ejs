@@ -85,14 +85,13 @@
                         </div>
                         <div class="range-wrapper">
                             <input
-                                    data-addui='slider'
-                                    data-min='0'
-                                    data-max='128'
-                                    data-range='true'
-                                    data-step='1'
-                                    value='0,0'
+                                data-addui='slider'
+                                data-min='<%= balancerMin %>'
+                                data-max='<%= balancerMax %>'
+                                data-range='true'
+                                data-step='1'
+                                value='<%= balancerReserved %>,<%= balancerScaling %>'
                             />
-
                         </div>
                     </div>
                     <div class="appserver-range">
@@ -148,12 +147,12 @@
                         </div>
                         <div class="range-wrapper">
                             <input
-                                    data-addui='slider'
-                                    data-min='0'
-                                    data-max='128'
-                                    data-range='true'
-                                    data-step='1'
-                                    value='1,64'
+                                data-addui='slider'
+                                data-min='<%= appServerMin %>'
+                                data-max='<%= appServerMax %>'
+                                data-range='true'
+                                data-step='1'
+                                value='<%= appServerReserved %>,<%= appServerScaling %>'
                             />
                         </div>
                     </div>
@@ -210,12 +209,12 @@
                         </div>
                         <div class="range-wrapper">
                             <input
-                                    data-addui='slider'
-                                    data-min='0'
-                                    data-max='128'
-                                    data-range='true'
-                                    data-step='1'
-                                    value='0,0'
+                                data-addui='slider'
+                                data-min='<%= databaseMin %>'
+                                data-max='<%= databaseMax %>'
+                                data-range='true'
+                                data-step='1'
+                                value='<%= databaseReserved %>,<%= databaseScaling %>'
                             />
                         </div>
                     </div>
@@ -258,7 +257,7 @@
             <div class="calculator-right-top">
                 <p class="cost">COST</p>
                 <div class="radio-block">
-                    <input type="radio" id="hour<%= id %>" name="price<%= id %>" value="hourly" checked>
+                    <input type="radio" id="hour<%= id %>" name="price<%= id %>" value="hourly">
                     <label for="hour<%= id %>">Per Hour</label>
                     <input type="radio" id="month<%= id %>" name="price<%= id %>" value="monthly">
                     <label for="month<%= id %>">Per Month</label>

@@ -100,22 +100,46 @@ jQuery(document).ready(function ($) {
             });
 
 
-            $(calculatorTag).removeClass(sCssLoading);
         }
 
         function renderCalculator(el) {
 
-            var oLanguages = ['java', 'php', 'node', 'ruby', 'python', 'go'],
+            var oLanguages = $(el).data('languages') || ['java', 'php', 'node', 'ruby', 'python', 'go'],
                 fixed = '',
                 dynamic = '',
                 ip = '',
                 storage = '',
-                usdRate = 1;
+                usdRate = 1,
+                period = $(el).attr('data-period') || 'hourly';
+
+            if (!Array.isArray(oLanguages)) {
+                oLanguages = oLanguages.split(",").map(function(item) {
+                    return item.trim();
+                });
+            }
 
             sHtml = new EJS({url: '/j-calculator/templates/calculator'}).render({
                 calculatorBlockClass: calculatorBlockClass.replace('.', ''),
                 oLanguages: oLanguages,
-                id: Math.round(Math.random() * 100000000)
+                id: Math.round(Math.random() * 100000000),
+
+                balancerMin: parseInt($(el).attr('data-balancer-min')) || 0,
+                balancerMax: parseInt($(el).attr('data-balancer-max')) || 128,
+
+                balancerReserved: parseInt($(el).attr('data-balancer-reserved')) || 0,
+                balancerScaling: parseInt($(el).attr('data-balancer-scaling')) || 0,
+
+                appServerMin: parseInt($(el).attr('data-appserver-min')) || 0,
+                appServerMax: parseInt($(el).attr('data-appserver-max')) || 128,
+
+                appServerReserved: parseInt($(el).attr('data-appserver-reserved')) || 1,
+                appServerScaling: parseInt($(el).attr('data-appserver-scaling')) || 64,
+
+                databaseMin: parseInt($(el).attr('data-database-min')) || 0,
+                databaseMax: parseInt($(el).attr('data-database-max')) || 128,
+
+                databaseReserved: parseInt($(el).attr('data-database-reserved')) || 0,
+                databaseScaling: parseInt($(el).attr('data-database-scaling')) || 0,
             });
 
             if ($(el).find(calculatorBlockClass).length > 0) {
@@ -124,7 +148,6 @@ jQuery(document).ready(function ($) {
                 $(el).append(sHtml);
             }
 
-            $(el).attr('data-period', 'hourly');
             $(el).attr('data-mode', 'appserver');
             for (var i = 0, oHoster; oHoster = oHosters[i]; i++) {
                 if ($(el).attr('data-key') === oHoster.key) {
@@ -133,13 +156,21 @@ jQuery(document).ready(function ($) {
             }
             
             var defaultOptions = {
-                "storage": 10,
-                "ip": 0,
-                "traffic": 10
+                "storage": $(el).attr('data-storage') || 10,
+                "ip": $(el).attr('data-ip') || 10,
+                "traffic": $(el).attr('data-traffic') || 10,
             };
             $.each(defaultOptions, function (key, value) {
                 $(el).attr('data-' + key, value).find('[name='+key+']').val(value).change();
+
+                if (value > parseInt($(el).attr('data-' + key, value).find('[name='+key+']').attr('max'))) {
+                    $(el).attr('data-' + key, value).find('[name='+key+']').val($(el).attr('data-' + key, value).find('[name='+key+']').attr('max')).change();
+                }
+
             });
+
+            $(el).attr('data-period', period);
+            $(el).find('input[value=' + period + ']').attr('checked', 'checked').change();
 
             var sKey = window.pricing[$(el).attr('data-key')],
                 hosterCurrency = $(el).attr('data-currency'),
@@ -244,6 +275,7 @@ jQuery(document).ready(function ($) {
                 $(el).attr('data-' + type, $(this).val());
 
                 var digit = $(this);
+
                 if (parseInt(digit.val()) > parseInt(digit.attr('max'))) {
                     digit.val(digit.attr('max')).change();
                 }
