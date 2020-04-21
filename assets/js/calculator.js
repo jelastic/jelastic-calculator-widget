@@ -284,7 +284,7 @@ jQuery(document).ready(function ($) {
                     digit.val(0).change();
                 }
 
-                setMinPrice(fixed.tiers, el, usdRate, storage.tiers, ip.tiers);
+                setPrice(fixed.tiers, dynamic.tiers, el, usdRate, storage.tiers, ip.tiers);
             });
             $(el).find('.plus').click(function (e) {
                 e.preventDefault();
@@ -296,8 +296,7 @@ jQuery(document).ready(function ($) {
             });
             $(el).find('.calculator-right input').click(function (e) {
                 $(el).attr('data-period', $(this).val());
-                setMinPrice(fixed.tiers, el, usdRate, storage.tiers, ip.tiers);
-                setMaxPrice(dynamic.tiers, fixed.tiers, el, usdRate);
+                setPrice(fixed.tiers, dynamic.tiers, el, usdRate, storage.tiers, ip.tiers);
             });
 
 
@@ -540,7 +539,7 @@ jQuery(document).ready(function ($) {
             return sValue * price;
         }
 
-        function setMinPrice(reservedTiers, el, usdRate, storageTiers, ipTiers) {
+        function setPrice(reservedTiers, scalingTiers, el, usdRate, storageTiers, ipTiers, ) {
             var minBalancerPrice = checkPrice(getReservedCloudlets(el, 'balancer'), reservedTiers),
                 minAppserverPrice = checkPrice(getReservedCloudlets(el, 'appserver'), reservedTiers),
                 minDatabasePrice = checkPrice(getReservedCloudlets(el, 'database'), reservedTiers),
@@ -550,9 +549,8 @@ jQuery(document).ready(function ($) {
             minPrice = toUSD(minPrice, usdRate);
             minPrice = changePricePeriod(minPrice, $(el).attr('data-period'));
             $(el).find('.start-price .price').html('$' + minPrice);
-        }
 
-        function setMaxPrice(scalingTiers, reservedTiers, el, usdRate) {
+
             var maxBalancerPrice = checkMaxPrice(getScalingCloudlets(el, 'balancer'), scalingTiers, getReservedCloudlets(el, 'balancer'), reservedTiers),
                 maxAppserverPrice = checkMaxPrice(getScalingCloudlets(el, 'appserver'), scalingTiers, getReservedCloudlets(el, 'appserver'), reservedTiers),
                 maxDatabasePrice = checkMaxPrice(getScalingCloudlets(el, 'database'), scalingTiers, getReservedCloudlets(el, 'database'), reservedTiers),
@@ -560,18 +558,38 @@ jQuery(document).ready(function ($) {
 
             maxPrice = toUSD(maxPrice, usdRate);
             maxPrice = changePricePeriod(maxPrice, $(el).attr('data-period'));
+
+            if (maxPrice < minPrice) {
+                maxPrice = minPrice;
+            }
             $(el).find('.max-price .price').html('$' + maxPrice);
+            
+            console.log(minPrice, maxPrice);
+
         }
 
+
         function checkPrice(cloudlets, tiers) {
+            console.log(tiers);
             var price = tiers[0].price;
             for (var i = 0; i < tiers.length; i++) {
                 if (!tiers[i + 1]) {
                     price = tiers[tiers.length - 1].price;
                 } else {
                     if ((cloudlets >= tiers[i].value) && (cloudlets < tiers[i + 1].value)) {
-                        price = tiers[i].price;
-                        return cloudlets * price;
+                        if (tiers[i].free > 0) {
+                            if (cloudlets <= tiers[i].free) {
+                                console.log(cloudlets);
+                                console.log(tiers[i].free);
+                                return 0;
+                            } else {
+                                price = tiers[i].price;
+                                break;
+                            }
+                        } else {
+                            price = tiers[i].price;
+                            break;
+                        }
                     }
                 }
             }
@@ -804,8 +822,7 @@ jQuery(document).ready(function ($) {
 
                             setReservedCloudlets(l, calc, type);
                             setScalingCloudlets(h, calc, type);
-                            setMinPrice(self._settings.fixed.tiers, calc, self._settings.usdRate, self._settings.storage.tiers, self._settings.ip.tiers);
-                            setMaxPrice(self._settings.dynamic.tiers, self._settings.fixed.tiers, calc, self._settings.usdRate);
+                            setPrice(self._settings.fixed.tiers, self._settings.dynamic.tiers, calc, self._settings.usdRate, self._settings.storage.tiers, self._settings.ip.tiers);
                         });
                     }
                 }
