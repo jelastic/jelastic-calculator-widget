@@ -3,16 +3,36 @@
 
         <p><%= txChoose %></p>
         <div class="custom-select">
-            <select class="<%= hSelectClass %>">
-                <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) { %>
-                    <% if (defHoster == oHoster.keyword) { %>
-                        <option selected value="<%= oHoster.keyword %>"
-                                data-key="<%= oHoster.key %>"><%= oHoster.name %></option>
-                    <% } else { %>
-                        <option value="<%= oHoster.keyword %>"
-                                data-key="<%= oHoster.key %>"><%= oHoster.name %></option>
-                    <% } %>
-                <% } %>
+            <select class="hoster-selector--select">
+                <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) {
+                    var locations = [];
+
+                    delete oHoster.performanceRegions.general;
+                    if (Object.keys(oHoster.performanceRegions).length) {
+                        var out = [],
+                            j = 0;
+                        $.each(oHoster.performanceRegions, function (code, stars) {
+                            var codes = code.split('-'),
+                                code = codes[0],
+                                flag = out.indexOf(code);
+                            if (flag < 0) {
+                                locations[j] = code.toLowerCase();
+                                j++;
+                            }
+                        });
+                    } else {
+                        locations[0] = oHoster.countryCode.toLowerCase();
+                    }
+
+
+                if (defHoster == oHoster.keyword) { %>
+                    <option selected value="<%= oHoster.keyword %>"
+                            data-key="<%= oHoster.key %>" data-location="<%= locations.join(',') %>"><%= oHoster.name %></option>
+                <% } else { %>
+                    <option value="<%= oHoster.keyword %>"
+                            data-key="<%= oHoster.key %>" data-location="<%= locations.join(',') %>"><%= oHoster.name %></option>
+                <% }
+                } %>
             </select>
         </div>
     </div>

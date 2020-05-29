@@ -11,7 +11,6 @@ jQuery(document).ready(function ($) {
             currency = '',
             calculatorsWithSelector = [],
             hSelectBlockClass = '.hoster-selector',
-            hSelectClass = '.hoster-selector--select',
             calculatorBlockClass = '.calculator-wrapper',
             sCssLoading = 'loading';
 
@@ -32,7 +31,6 @@ jQuery(document).ready(function ($) {
 
             sHtml = new EJS({url: '/j-calculator/templates/hoster-selector'}).render({
                 hSelectBlockClass: hSelectBlockClass.replace('.', ''),
-                hSelectClass: hSelectClass.replace('.', ''),
                 txChoose: 'Choose Service Provider of Jelastic Public Cloud',
                 txPerfomance: 'Perfomance',
                 txSupport: 'Support',
@@ -54,7 +52,7 @@ jQuery(document).ready(function ($) {
                 $(el).append(sHtml);
             }
 
-            $(el).find('select').each(function () {
+            $(el).find('.hoster-selector--select').each(function () {
                 var $this = $(this), numberOfOptions = $(this).children('option').length;
 
                 $this.addClass('select-hidden');
@@ -68,11 +66,25 @@ jQuery(document).ready(function ($) {
                     'class': 'select-options'
                 }).insertAfter($styledSelect);
 
+
                 for (var i = 0; i < numberOfOptions; i++) {
-                    $('<li />', {
+                    var li = $('<li />', {
                         text: $this.children('option').eq(i).text(),
                         rel: $this.children('option').eq(i).val()
                     }).appendTo($list);
+
+                    var li_flags = $('<span />', {
+                        class: 'flags',
+                    }).appendTo(li);
+
+                    var loc = $this.children('option').eq(i).attr('data-location').split(',').filter(onlyUnique);
+                    $.each(loc, function (index, code) {
+                        $('<i />', {
+                            class: 'flag flag-' + code,
+                            text: code
+                        }).appendTo(li_flags);
+                    })
+
                 }
 
                 var $listItems = $list.children('li');
@@ -99,7 +111,10 @@ jQuery(document).ready(function ($) {
 
             });
 
+        }
 
+        function onlyUnique(value, index, self) {
+            return self.indexOf(value) === index;
         }
 
         function renderCalculator(el) {
@@ -110,9 +125,7 @@ jQuery(document).ready(function ($) {
                 ip = '',
                 network = '',
                 storage = '',
-                usdRate = 1,
-                period = $(el).attr('data-period') || 'hourly',
-                currencySymbol = '$';
+                period = $(el).attr('data-period') || 'hourly';
 
             if (!Array.isArray(oLanguages)) {
                 oLanguages = oLanguages.split(",").map(function (item) {
@@ -120,23 +133,28 @@ jQuery(document).ready(function ($) {
                 });
             }
 
+
             sHtml = new EJS({url: '/j-calculator/templates/calculator'}).render({
                 calculatorBlockClass: calculatorBlockClass.replace('.', ''),
                 oLanguages: oLanguages,
                 id: Math.round(Math.random() * 100000000),
+                currencies: window.currency,
 
+                balancerNodes: parseInt($(el).attr('data-balancer-nodes')) || 1,
                 balancerMin: parseInt($(el).attr('data-balancer-min')) || 0,
                 balancerMax: parseInt($(el).attr('data-balancer-max')) || 128,
 
                 balancerReserved: parseInt($(el).attr('data-balancer-reserved')) || 0,
                 balancerScaling: parseInt($(el).attr('data-balancer-scaling')) || 0,
 
+                appServerNodes: parseInt($(el).attr('data-appserver-nodes')) || 1,
                 appServerMin: parseInt($(el).attr('data-appserver-min')) || 0,
                 appServerMax: parseInt($(el).attr('data-appserver-max')) || 128,
 
                 appServerReserved: parseInt($(el).attr('data-appserver-reserved')) || 1,
                 appServerScaling: parseInt($(el).attr('data-appserver-scaling')) || 64,
 
+                databaseNodes: parseInt($(el).attr('data-database-nodes')) || 1,
                 databaseMin: parseInt($(el).attr('data-database-min')) || 0,
                 databaseMax: parseInt($(el).attr('data-database-max')) || 128,
 
@@ -151,19 +169,19 @@ jQuery(document).ready(function ($) {
             }
 
             $(el).attr('data-mode', 'appserver');
+
+            $(el).attr('data-period', period);
+            $(el).find('input[value=' + period + ']').attr('checked', 'checked').change();
+
+
+            var sKey = window.pricing[$(el).attr('data-key')],
+                tariffPlans = sKey.tariffPlans;
+
             for (var i = 0, oHoster; oHoster = oHosters[i]; i++) {
                 if ($(el).attr('data-key') === oHoster.key) {
                     $(el).attr('data-currency', oHoster.currencyCode);
                 }
             }
-
-
-            $(el).attr('data-period', period);
-            $(el).find('input[value=' + period + ']').attr('checked', 'checked').change();
-
-            var sKey = window.pricing[$(el).attr('data-key')],
-                hosterCurrency = $(el).attr('data-currency'),
-                tariffPlans = sKey.tariffPlans;
 
             if (tariffPlans.length > 0) {
                 $.each(tariffPlans, function () {
@@ -187,15 +205,62 @@ jQuery(document).ready(function ($) {
             }
 
 
-            $.each(window.currency, function () {
-                if (this.code === hosterCurrency) {
-                    usdRate = this.usdRate;
-                    if ($(el).attr('data-original-price')) {
-                        currencySymbol = this.sign;
-                    }
-                }
-            });
+            $(el).find('.current-switcher').each(function () {
 
+                var $this = $(this), numberOfOptions = $(this).children('option').length;
+
+                $this.addClass('select-hidden');
+                $this.wrap('<div class="select"></div>');
+                $this.after('<div class="select-styled"></div>');
+
+                var $styledSelect = $this.next('div.select-styled');
+                $styledSelect.html($this.children('option:selected').attr('data-sign') + ' - ' + $this.children('option:selected').html());
+
+                var $list = $('<ul />', {
+                    'class': 'select-options'
+                }).insertAfter($styledSelect);
+
+                for (var i = 0; i < numberOfOptions; i++) {
+                    var li = $('<li />', {
+                        text: $this.children('option').eq(i).html(),
+                        rel: $this.children('option').eq(i).val()
+                    }).appendTo($list);
+
+                    $('<span />', {
+                        class: 'currency-sign',
+                        text: $this.children('option').eq(i).attr('data-sign') + ' - '
+                    }).prependTo(li);
+
+                    $('<span />', {
+                        class: 'currency-name',
+                        text: $this.children('option').eq(i).attr('data-name')
+                    }).appendTo(li);
+
+                }
+
+                var $listItems = $list.children('li');
+
+                $styledSelect.click(function (e) {
+                    e.stopPropagation();
+                    $('div.select-styled.active').not(this).each(function () {
+                        $(this).removeClass('active').next('ul.select-options').hide();
+                    });
+                    $(this).toggleClass('active').next('ul.select-options').toggle();
+                });
+
+                $listItems.click(function (e) {
+                    e.stopPropagation();
+                    $styledSelect.html($(this).html()).removeClass('active');
+                    $this.val($(this).attr('rel')).change();
+                    $list.hide();
+                });
+
+                $(document).click(function () {
+                    $styledSelect.removeClass('active');
+                    $list.hide();
+                });
+
+            });
 
             $add.Slider = function (el, settings) {
                 var $el = $(el);
@@ -221,8 +286,6 @@ jQuery(document).ready(function ($) {
                 s.fixed = fixed;
                 s.dynamic = dynamic;
                 s.network = network;
-                s.usdRate = usdRate;
-                s.currencySymbol = currencySymbol;
 
                 settings = $.extend(s, $el.data(), settings);
 
@@ -243,23 +306,26 @@ jQuery(document).ready(function ($) {
             };
 
 
-            // var defaultOptions = {
-            //     "storage": $(el).attr('data-storage') || 10,
-            //     "ip": $(el).attr('data-ip') || 10,
-            //     "traffic": $(el).attr('data-traffic') || 10,
-            // };
             var defaultOptions = {
                 "storage": 10,
                 "ip": 1,
                 "traffic": 10,
+                "balancer-nodes": 1,
+                "appserver-nodes": 1,
+                "database-nodes": 1
             };
             $.each(defaultOptions, function (key, value) {
-                $(el).attr('data-' + key, value).find('[name=' + key + ']').val(value).change();
-
-                if (value > parseInt($(el).attr('data-' + key, value).find('[name=' + key + ']').attr('max'))) {
-                    $(el).attr('data-' + key, value).find('[name=' + key + ']').val($(el).attr('data-' + key, value).find('[name=' + key + ']').attr('max')).change();
+                var digit = el[0].querySelectorAll('[name=' + key + ']')[0];
+                if (el[0].getAttribute('data-' + key)) {
+                    digit.value = el[0].getAttribute('data-' + key);
+                    if (+el[0].getAttribute('data-' + key) > +digit.getAttribute('max')) {
+                        el[0].setAttribute('data-' + key, digit.getAttribute('max'));
+                        digit.value = el[0].getAttribute('data-' + key);
+                    }
+                } else {
+                    el[0].setAttribute('data-' + key, value);
+                    digit.value = el[0].getAttribute('data-' + key);
                 }
-
             });
 
 
@@ -289,21 +355,21 @@ jQuery(document).ready(function ($) {
                 var slider = sliders[$(el).attr('data-mode')];
                 increaseScaling(slider);
             });
-            $(el).find('.digit').change(function (e) {
-                var type = $(this).attr('name');
-                $(el).attr('data-' + type, $(this).val());
+            $(el).find('.digit, .node-count input').change(function (e) {
+                var digit = $(this),
+                    type = digit.attr('name');
 
-                var digit = $(this);
+                el[0].setAttribute('data-' + type, this.value);
 
                 if (parseInt(digit.val()) > parseInt(digit.attr('max'))) {
-                    digit.val(digit.attr('max')).change();
+                    digit.val(digit.attr('max'));
                 }
 
                 if (parseInt(digit.val()) < 0) {
                     digit.val(0).change();
                 }
 
-                setPrice(fixed.tiers, dynamic.tiers, el, usdRate, storage.tiers, ip.tiers, network.tiers, currencySymbol);
+                setPrice(fixed.tiers, dynamic.tiers, el, storage.tiers, ip.tiers, network.tiers);
             });
             $(el).find('.plus').click(function (e) {
                 e.preventDefault();
@@ -313,14 +379,36 @@ jQuery(document).ready(function ($) {
                 e.preventDefault();
                 decreaseBlockDigit(this);
             });
+            $(el).find('.plus-node').click(function (e) {
+                e.preventDefault();
+                increseNode(this);
+            });
+            $(el).find('.minus-node').click(function (e) {
+                e.preventDefault();
+                decreaseNode(this);
+            });
             $(el).find('.calculator-right input').click(function (e) {
                 $(el).attr('data-period', $(this).val());
-                setPrice(fixed.tiers, dynamic.tiers, el, usdRate, storage.tiers, ip.tiers, network.tiers, currencySymbol);
+                setPrice(fixed.tiers, dynamic.tiers, el, storage.tiers, ip.tiers, network.tiers);
             });
-
+            $(el).find('.current-switcher').change(function (e) {
+                setPrice(fixed.tiers, dynamic.tiers, el, storage.tiers, ip.tiers, network.tiers);
+            });
 
             $(calculatorTag).removeClass(sCssLoading);
 
+        }
+
+        function increseNode(clickedElement) {
+            var digit = $(clickedElement).closest('.node-count').find('input');
+            digit.val(parseInt(digit.val()) + 1).change();
+        }
+
+        function decreaseNode(clickedElement) {
+            var digit = $(clickedElement).closest('.node-count').find('input');
+            if (parseInt(digit.val()) > 0) {
+                digit.val(parseInt(digit.val()) - 1).change();
+            }
         }
 
 
@@ -424,7 +512,6 @@ jQuery(document).ready(function ($) {
 
         importPricing();
 
-
         $(window).resize(function () {
             $('.j-calculator[data-mode]').each(function () {
                 setMinValues(this, $(this).attr('data-mode'));
@@ -461,15 +548,6 @@ jQuery(document).ready(function ($) {
                 $(el).find('label[for*=' + type + ']').removeClass('active');
             } else {
                 $(el).find('label[for*=' + type + ']').addClass('active');
-            }
-
-            var ip_input = $(el).find('[name=ip]'),
-                labelWrapper = $(el).find('.calculator-left-top-chooser-left label.active');
-
-            ip_input.attr('max', parseInt(labelWrapper.length));
-            if (parseInt(ip_input.val()) > parseInt(ip_input.attr('max'))) {
-                ip_input.val(parseInt(ip_input.attr('max')));
-                $(el).attr('data-ip', parseInt(ip_input.attr('max')));
             }
 
             $(el).attr('data-' + type + '-scaling', cloudlets);
@@ -594,9 +672,11 @@ jQuery(document).ready(function ($) {
                         if (tiers[i].free > 0) {
 
                             var val = sValue - tiers[i].free;
+
                             if (val < 0) {
                                 val = 0;
                             }
+
                             return val * tiers[i].price;
 
                         } else {
@@ -607,48 +687,144 @@ jQuery(document).ready(function ($) {
             }
         }
 
-        function setPrice(reservedTiers, scalingTiers, el, usdRate, storageTiers, ipTiers, trafficTiers, currencySymbol) {
+        function setPrice(reservedTiers, scalingTiers, el, storageTiers, ipTiers, trafficTiers) {
 
             var storagePrice = checkStoragePrice($(el).attr('data-storage'), storageTiers),
                 ipPrice = checkIpPrice($(el).attr('data-ip'), ipTiers),
                 trafficPrice = checkTrafficPrice($(el).attr('data-traffic'), trafficTiers);
 
+            var balancerNodes = $(el).attr('data-balancer-nodes'),
+                appServerNodes = $(el).attr('data-appserver-nodes'),
+                databaseNodes = $(el).attr('data-database-nodes');
+
             var minBalancerPrice = checkPrice(getReservedCloudlets(el, 'balancer'), reservedTiers),
                 minAppserverPrice = checkPrice(getReservedCloudlets(el, 'appserver'), reservedTiers),
                 minDatabasePrice = checkPrice(getReservedCloudlets(el, 'database'), reservedTiers),
-                minPrice = minBalancerPrice + minAppserverPrice + minDatabasePrice;
+                minPrice = (minBalancerPrice * balancerNodes) + (minAppserverPrice * appServerNodes) + (minDatabasePrice * databaseNodes);
+
+            var currencySettings = '',
+                usdRate = '';
+
+            currency = $(el).find('.current-switcher').val();
+            $.each(window.currency, function (index) {
+                if (currency === this.code) {
+                    currencySettings = this;
+                }
+                if ($(el).attr('data-currency') === this.code) {
+                    usdRate = this.usdRate;
+                }
+            });
+            
 
 
-            minPrice = minPrice + storagePrice + ipPrice + trafficPrice;
-
-            if (currencySymbol === '$') {
-                minPrice = toUSD(minPrice, usdRate);
+            if ($(el).attr('data-period') === 'hourly') {
+                trafficPrice = +trafficPrice / 730;
             }
+
+            
+            // TO USD
+            trafficPrice = trafficPrice * usdRate;
+            // TO CURRENCY
+            trafficPrice = toCurrency(trafficPrice, currencySettings.usdRate);
+
+
+            minPrice = minPrice + storagePrice + ipPrice;
+            // TO USD
+            minPrice = minPrice * usdRate;
+            // TO CURRENCY
+            minPrice = toCurrency(minPrice, currencySettings.usdRate);
             minPrice = changePricePeriod(minPrice, $(el).attr('data-period'));
-            $(el).find('.start-price .price').html(currencySymbol + ' ' + minPrice);
+            minPrice = +minPrice + +trafficPrice;
+
+            switch ($(el).attr('data-period')) {
+                case 'hourly':
+                    minPrice = Math.round(minPrice * 1000) / 1000;
+                    break;
+                case 'monthly':
+                    minPrice = (minPrice).toFixed(2);
+                    break
+            }
+
+            $(el).find('.start-price .price').html(minPrice);
 
 
             var maxBalancerPrice = checkMaxPrice(getScalingCloudlets(el, 'balancer'), scalingTiers, getReservedCloudlets(el, 'balancer'), reservedTiers),
                 maxAppserverPrice = checkMaxPrice(getScalingCloudlets(el, 'appserver'), scalingTiers, getReservedCloudlets(el, 'appserver'), reservedTiers),
                 maxDatabasePrice = checkMaxPrice(getScalingCloudlets(el, 'database'), scalingTiers, getReservedCloudlets(el, 'database'), reservedTiers);
 
-            var maxPrice = maxBalancerPrice + maxAppserverPrice + maxDatabasePrice;
-            
-            maxPrice = maxPrice + storagePrice + ipPrice + trafficPrice;
-            
-            if (currencySymbol === '$') {
-                maxPrice = toUSD(maxPrice, usdRate);
-            }
-            maxPrice = changePricePeriod(maxPrice, $(el).attr('data-period'));
+            var maxPrice = (maxBalancerPrice * balancerNodes) + (maxAppserverPrice * appServerNodes) + (maxDatabasePrice * databaseNodes);
 
-            if (parseFloat(maxPrice) < parseFloat(minPrice)) {
+            maxPrice = maxPrice + storagePrice + ipPrice;
+
+            // TO USD
+            maxPrice = maxPrice * usdRate;
+            // TO CURRENCY
+            maxPrice = toCurrency(maxPrice, currencySettings.usdRate);
+            maxPrice = changePricePeriod(maxPrice, $(el).attr('data-period'));
+            maxPrice = +maxPrice + +trafficPrice;
+
+            if (+maxPrice < +minPrice) {
                 maxPrice = minPrice;
             }
-            $(el).find('.max-price .price').html(currencySymbol + ' ' + maxPrice);
+
+            switch ($(el).attr('data-period')) {
+                case 'hourly':
+                    maxPrice = Math.round(maxPrice * 1000) / 1000;
+                    break;
+                case 'monthly':
+                    maxPrice = parseFloat(maxPrice).toFixed(2);
+                    break
+            }
+
+            $(el).find('.max-price .price').html(maxPrice);
+
+
+            var reservedBalancerCloudlets = +getReservedCloudlets(el, 'balancer') * balancerNodes;
+            var reservedAppServerCloudlets = +getReservedCloudlets(el, 'appserver') * appServerNodes;
+            var reservedDbCloudlets = +getReservedCloudlets(el, 'database') * databaseNodes;
+
+            var reservedCloudletsMib = convertMib(+reservedBalancerCloudlets + +reservedAppServerCloudlets + +reservedDbCloudlets);
+            var reservedCloudletsGHz = convertMhz(+reservedBalancerCloudlets + +reservedAppServerCloudlets + +reservedDbCloudlets);
+
+            $(el).find('.reserved-totals .gibs').html(reservedCloudletsMib);
+            $(el).find('.reserved-totals .ghz').html(reservedCloudletsGHz);
+            $(el).find('.reserved-totals .balancer').html(reservedBalancerCloudlets);
+            $(el).find('.reserved-totals .appserver').html(reservedAppServerCloudlets);
+            $(el).find('.reserved-totals .database').html(reservedDbCloudlets);
+            $(el).find('.reserved-totals .cloudlets-total').html(+reservedBalancerCloudlets + +reservedAppServerCloudlets + +reservedDbCloudlets);
+
+            var charsLength = reservedBalancerCloudlets + '' + reservedAppServerCloudlets + '' + reservedDbCloudlets;
+            if (charsLength.length >= 8) {
+                $(el).find('.calculator-right').addClass('new-row');
+            } else {
+                $(el).find('.calculator-right').removeClass('new-row');
+            }
+
+            var scalingBalancerCloudlets = +getScalingCloudlets(el, 'balancer') * balancerNodes;
+            var scalingAppServerCloudlets = +getScalingCloudlets(el, 'appserver') * appServerNodes;
+            var scalingDbCloudlets = +getScalingCloudlets(el, 'database') * databaseNodes;
+
+            var scalingCloudletsMib = convertMib(+scalingBalancerCloudlets + +scalingAppServerCloudlets + +scalingDbCloudlets);
+            var scalingCloudletsGHz = convertMhz(+scalingBalancerCloudlets + +scalingAppServerCloudlets + +scalingDbCloudlets);
+
+            $(el).find('.scaling-totals .gibs').html(scalingCloudletsMib);
+            $(el).find('.scaling-totals .ghz').html(scalingCloudletsGHz);
+            $(el).find('.scaling-totals .balancer').html(scalingBalancerCloudlets);
+            $(el).find('.scaling-totals .appserver').html(scalingAppServerCloudlets);
+            $(el).find('.scaling-totals .database').html(scalingDbCloudlets);
+            $(el).find('.scaling-totals .cloudlets-total').html(+scalingBalancerCloudlets + +scalingAppServerCloudlets + +scalingDbCloudlets);
+
+            charsLength = scalingBalancerCloudlets + '' + scalingAppServerCloudlets + '' + scalingDbCloudlets;
+            if (!$(el).find('.calculator-right').hasClass('new-row')) {
+                if (charsLength.length >= 8) {
+                    $(el).find('.calculator-right').addClass('new-row');
+                } else {
+                    $(el).find('.calculator-right').removeClass('new-row');
+                }
+            }
 
 
         }
-
 
         function checkPrice(cloudlets, tiers) {
 
@@ -706,11 +882,12 @@ jQuery(document).ready(function ($) {
             }
         }
 
-        function toUSD(sValue, sUsdRate) {
-            return sValue * sUsdRate;
+        function toCurrency(sValue, sUsdRate) {
+            return sValue / sUsdRate;
         }
 
         function setMinValues(el, type) {
+
 
             var value = getReservedCloudlets(el, type);
 
@@ -770,7 +947,7 @@ jQuery(document).ready(function ($) {
             }
         };
 
-        $(document).on('change', hSelectClass, function (e) {
+        $(document).on('change', '.hoster-selector--select', function (e) {
             var calculatorElement = $(this).closest(calculatorTag);
             sCurrentHoster = $(this).val();
             renderHosterSelector(calculatorElement);
@@ -828,7 +1005,6 @@ jQuery(document).ready(function ($) {
                 class: "",
                 fixed: "",
                 dynamic: "",
-                usdRate: ""
             };
             Object.defineProperty(this, "settings", {
                 get: function () {
@@ -891,13 +1067,15 @@ jQuery(document).ready(function ($) {
                                 $el.find(".addui-slider-distance").css("width", "calc(" + (100 - hPer) + "% + 31px)");
                             }
 
-                            $el.find(".addui-slider-handle").eq(0).find(".addui-slider-value span").html(toFunc(self._settings.formatter).call(self, l));
-                            $el.find(".addui-slider-handle").eq(1).find(".addui-slider-value span").html(toFunc(self._settings.formatter).call(self, h));
+                            $('.' + type + '-range .reserved-cloudlets').html(toFunc(self._settings.formatter).call(self, l) + ' cloudlets');
+                            $('.' + type + '-range .scaling-cloudlets').html(toFunc(self._settings.formatter).call(self, h) + ' cloudlets');
+                            // $el.find(".addui-slider-handle").eq(0).find(".addui-slider-value span").html(toFunc(self._settings.formatter).call(self, l));
+                            // $el.find(".addui-slider-handle").eq(1).find(".addui-slider-value span").html(toFunc(self._settings.formatter).call(self, h));
 
                             setReservedCloudlets(l, calc, type);
                             setScalingCloudlets(h, calc, type);
                             setTimeout(function () {
-                                setPrice(self._settings.fixed.tiers, self._settings.dynamic.tiers, calc, self._settings.usdRate, self._settings.storage.tiers, self._settings.ip.tiers, self._settings.network.tiers, self._settings.currencySymbol);
+                                setPrice(self._settings.fixed.tiers, self._settings.dynamic.tiers, calc, self._settings.storage.tiers, self._settings.ip.tiers, self._settings.network.tiers);
                             }, 100)
                         });
                     }

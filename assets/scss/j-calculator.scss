@@ -39,7 +39,8 @@ body {
     font-size: 18px;
   }
   @media (max-width: $mobile) {
-    max-width: 100%;
+    max-width: calc(100% - 30px);
+    margin: 0 auto;
     padding: 0;
   }
   @media (max-width: $extraSmall) {
@@ -54,7 +55,6 @@ body {
     justify-content: space-between;
     width: 100%;
   }
-
 
   &[data-mode=appserver] {
     .appserver-range {
@@ -109,6 +109,9 @@ body {
       }
       .dot-line {
         .dot {
+          &:before {
+            background: $balancerColor !important;
+          }
           background: $balancerColor !important;
           .line {
             background: $balancerColor !important;
@@ -170,6 +173,9 @@ body {
       }
       .dot-line {
         .dot {
+          &:before {
+            background: $dbColor !important;
+          }
           background: $dbColor !important;
           .line {
             background: $dbColor !important;
@@ -189,19 +195,20 @@ body {
   }
 
   .price {
-    font-size: 34px;
+    font-size: 32px;
     @media (max-width: $laptop) {
-      font-size: 26px;
+      font-size: 22px;
     }
     @media (max-width: $tablet) {
-      font-size: 20px;
+      font-size: 17px;
     }
     @media (max-width: $mobile) {
-      font-size: 18px;
+      font-size: 17px;
     }
   }
 
   .hoster-selector {
+    background: rgba($mainColor, 0.13);
 
     p {
       margin-right: 20px;
@@ -237,7 +244,7 @@ body {
         flex-wrap: wrap;
         p {
           margin-bottom: 10px;
-          margin-right: 0;
+          margin-right: 10px;
         }
       }
       @media (max-width: $extraSmall) {
@@ -391,7 +398,7 @@ body {
       width: 340px;
     }
     @media (max-width: $tablet) {
-      width: 210px;
+      width: 290px;
     }
     @media (max-width: $mobile) {
       width: 300px;
@@ -482,7 +489,7 @@ body {
       overflow: auto;
       background-color: #fff;
       padding-top: 0px;
-      box-shadow: 0 15px 30px 0 rgba(0,132,245,.1);
+      box-shadow: 0 15px 30px 0 rgba(0, 132, 245, .1);
       @media (max-width: $extraSmall) {
         max-height: 200px;
       }
@@ -490,12 +497,18 @@ body {
         margin: 0;
         padding: 8px 0;
         text-indent: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         &:hover {
           color: #fff;
           background: #00acff;
         }
         &[rel="hide"] {
           display: none;
+        }
+        .flags {
+          display: flex;
         }
       }
     }
@@ -530,6 +543,7 @@ body {
     border-radius: 15px;
     @media (max-width: $tablet) {
       margin-bottom: 30px;
+      padding: 25px;
     }
     @media (max-width: $extraSmall) {
       padding: 15px;
@@ -603,24 +617,39 @@ body {
       flex-wrap: wrap;
     }
     .calculator-left {
-      margin-right: 40px;
-      border-right: 1px solid #bec8de;
+      width: 60%;
+      position: relative;
       padding-right: 40px;
-      width: 65%;
-      @media (max-width: $tablet) {
-        margin-right: 20px;
-        padding-right: 20px;
+      @media (max-width: $laptop) {
+        padding-right: 15px;
         width: 60%;
+      }
+      @media (max-width: $tablet) {
+        padding-right: 20px;
       }
       @media (max-width: $mobile) {
         width: 100%;
         border-right: 0;
         margin-right: 0;
-        padding-right: 0;
+        padding-right: 25px;
         margin-bottom: 30px;
       }
       @media (max-width: $extraSmall) {
         margin-bottom: 20px;
+        padding-right: 15px;
+      }
+      &:before {
+        display: block;
+        content: '';
+        width: 40px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        right: -20px;
+        background: #fff;
+        @media (max-width: $mobile) {
+          display: none;
+        }
       }
       .calculator-left-top {
         display: flex;
@@ -634,10 +663,108 @@ body {
           }
           .calculator-left-top-chooser-left {
             margin-right: 30px;
+            @media (max-width: $laptop) {
+              margin-right: 15px;
+            }
             @media (max-width: $tablet) {
               margin-right: 0;
             }
-            input {
+            .node-count {
+              max-width: 55px;
+              position: relative;
+              text-align: center;
+              width: 100%;
+              @media (max-width: $laptop) {
+                max-width: 45px;
+              }
+
+              .minus-node, .plus-node {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 25%;
+                height: 100%;
+                &:before {
+                  content: '';
+                  border: solid #5b6c90;
+                  border-width: 0 1px 1px 0;
+                  display: inline-block;
+                  padding: 3px;
+                  width: 3px;
+                  height: 3px;
+                  position: absolute;
+                  top: 6px;
+                  bottom: 0;
+                  margin: auto;
+                  left: 0;
+                  cursor: pointer;
+                  @media (max-width: $laptop) {
+                    top: 0;
+                    border-width: 0 2px 2px 0;
+                  }
+                  @media (max-width: $tablet) {
+                    border-width: 0 2px 2px 0;
+                  }
+                  @media (max-width: $extraSmall) {
+                    width: 1px;
+                    height: 1px;
+                    border-width: 0 1px 1px 0;
+                  }
+                }
+              }
+              .minus-node {
+                &:before {
+                  -webkit-transform: rotate(135deg);
+                  -ms-transform: rotate(135deg);
+                  -o-transform: rotate(135deg);
+                  transform: rotate(135deg);
+                }
+              }
+              .plus-node {
+                left: auto;
+                right: 0;
+                &:before {
+                  -webkit-transform: rotate(-45deg);
+                  -ms-transform: rotate(-45deg);
+                  -o-transform: rotate(-45deg);
+                  transform: rotate(-45deg);
+                  right: 0;
+                  left: auto;
+                  @media (max-width: $tablet) {
+                    left: auto;
+                  }
+                  @media (max-width: $extraSmall) {
+                    left: auto;
+                  }
+                }
+              }
+              input {
+                width: 32px;
+                font-size: 20px;
+                background: none;
+                text-align: center;
+                border: none;
+                padding: 0;
+                display: inline-block;
+                @media (max-width: $extraSmall) {
+                  font-size: 14px;
+                }
+              }
+              /* Chrome, Safari, Edge, Opera */
+              input::-webkit-outer-spin-button,
+              input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+              }
+
+              /* Firefox */
+              input[type=number] {
+                -moz-appearance: textfield;
+              }
+
+            }
+
+            input[type="radio"] {
               display: none;
               &:checked {
                 + label {
@@ -648,25 +775,34 @@ body {
             label {
               cursor: pointer;
               box-shadow: 0 0 30px 0 rgba(0, 132, 245, 0.1);
-              display: block;
               border-radius: 10px;
               padding: 10px 18px 12px;
               border: 2px solid #fff;
-              margin-bottom: 8px;
+              margin-bottom: 22px;
               font-size: 26px;
               transition: .3s;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+
+              &:last-of-type {
+                margin-bottom: 0;
+              }
+
               @media (max-width: $laptop) {
-                font-size: 22px;
+                font-size: 20px;
+
               }
               @media (max-width: $tablet) {
                 padding: 8px 15px 10px;
                 font-size: 18px;
+                margin-bottom: 10px;
               }
               @media (max-width: $extraSmall) {
+                margin-bottom: 10px;
                 font-size: 14px;
                 border-width: 1px;
               }
-
 
               &[for*=balancer] {
                 background: rgba($balancerColor, 0.12);
@@ -695,9 +831,39 @@ body {
             margin-top: 20px;
             width: 100%;
           }
+
+          .cloudlets-title {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 10px;
+            @media (max-width: $laptop) {
+              font-size: 18px;
+            }
+            @media (max-width: $mobile) {
+              font-size: 16px;
+            }
+            span {
+              text-transform: uppercase;
+              margin-bottom: 2px;
+            }
+            div {
+              font-size: 18px;
+              @media (max-width: $laptop) {
+                font-size: 16px;
+              }
+              @media (max-width: $mobile) {
+                font-size: 14px;
+              }
+            }
+          }
+
           .range-block {
             width: 47%;
             position: relative;
+
+            .j-relative {
+              position: relative;
+            }
 
             .digits {
               span {
@@ -838,7 +1004,8 @@ body {
               font-size: 24px;
               font-weight: 400;
               @media (max-width: $laptop) {
-                font-size: 17px;
+                font-size: 16px;
+                padding: 20px 10px;
               }
               @media (max-width: $extraSmall) {
                 font-size: 12px;
@@ -914,7 +1081,6 @@ body {
               text-align: center;
               &.dot-line {
                 font-size: 16px;
-                margin-top: 10px;
                 padding-bottom: 6px;
                 position: relative;
                 text-align: center;
@@ -926,12 +1092,25 @@ body {
                   background: $mainColor;
                   border-radius: 50%;
                   position: relative;
+                  top: -11px;
+                  &:before {
+                    display: block;
+                    content: "";
+                    width: 1px;
+                    height: 16px;
+                    position: absolute;
+                    background: $mainColor;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    margin: auto;
+                  }
                   span.line {
                     height: 1px;
                     background: $mainColor;
                     display: block;
                     position: absolute;
-                    bottom: 3px;
+                    bottom: -9px;
                     right: 3px;
                     &:before {
                       display: block;
@@ -971,25 +1150,26 @@ body {
         .calculator-left-bottom-block {
           margin-top: 50px;
           width: 100%;
-          font-size: 26px;
-          max-width: 200px;
+          font-size: 22px;
+          max-width: 220px;
           padding: 0 10px;
+          text-align: center;
           @media (max-width: $laptop) {
-            font-size: 22px;
+            font-size: 18px;
           }
           @media (max-width: $tablet) {
             margin-top: 30px;
-            font-size: 14px;
+            font-size: 13px;
           }
           @media (max-width: $extraSmall) {
             font-size: 10px;
+            padding: 0 1px;
           }
           p {
             margin-bottom: 10px;
           }
           .inner {
-            background: #7a8eb8;
-            color: #fff;
+            box-shadow: 0 0 30px 0 rgba(0, 132, 245, 0.1);
             position: relative;
             padding: 0 10px 4px;
             text-align: center;
@@ -1027,7 +1207,6 @@ body {
               }
             }
 
-
             /* Chrome, Safari, Edge, Opera */
             input::-webkit-outer-spin-button,
             input::-webkit-inner-spin-button {
@@ -1046,17 +1225,17 @@ body {
               color: inherit;
               font-size: inherit;
               line-height: inherit;
-              width: 35px;
+              width: 74px;
               text-align: center;
               padding: 0;
               @media (max-width: $laptop) {
-                width: 26px;
+                width: 55px;
               }
               @media (max-width: $tablet) {
-                width: 23px;
+                width: 45px;
               }
               @media (max-width: $extraSmall) {
-                width: 15px;
+                width: 35px;
               }
             }
             .minus, .plus {
@@ -1067,7 +1246,7 @@ body {
               height: 100%;
               &:before {
                 content: '';
-                border: solid #fff;
+                border: solid #5b6c90;
                 border-width: 0 3px 3px 0;
                 display: inline-block;
                 padding: 3px;
@@ -1124,138 +1303,350 @@ body {
       }
     }
     .calculator-right {
-      width: 35%;
+      position: relative;
+      width: 40%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      padding-left: 35px;
       @media (max-width: $laptop) {
-        width: 35%;
+        width: 40%;
       }
       @media (max-width: $tablet) {
         justify-content: flex-start;
         width: 40%;
+        padding-left: 20px;
       }
       @media (max-width: $mobile) {
         width: 100%;
       }
-      .cost {
-        font-size: 45px;
-        margin-bottom: 25px;
-        text-align: center;
+      @media (max-width: $extraSmall) {
+        padding-left: 15px;
+      }
+      .total {
+        margin-bottom: 30px;
         @media (max-width: $laptop) {
-          font-size: 42px;
+          font-size: 20px;
+          margin-bottom: 25px;
         }
         @media (max-width: $tablet) {
-          font-size: 38px;
+          font-size: 20px;
         }
         @media (max-width: $mobile) {
-          font-size: 36px;
+          font-size: 20px;
         }
         @media (max-width: $extraSmall) {
-          font-size: 24px;
+          font-size: 20px;
           margin-bottom: 20px;
         }
       }
-      .radio-block {
-        padding: 28px 25px;
-        box-shadow: 0 0 30px 0 rgba(0, 132, 245, .1);
-        border-radius: 15px;
-        width: 100%;
+
+      .totals {
         display: flex;
-        align-items: flex-start;
         justify-content: space-between;
-        margin-bottom: 30px;
+        align-items: flex-start;
+        margin-bottom: 20px;
+        font-weight: 400;
+        @media (max-width: $laptop) {
+          margin-bottom: 20px;
+        }
         @media (max-width: $tablet) {
-          padding: 20px 15px;
+          font-size: 20px;
+          flex-wrap: wrap;
         }
         @media (max-width: $mobile) {
-          padding: 28px 35px;
-          justify-content: center;
+          font-size: 20px;
         }
         @media (max-width: $extraSmall) {
-          padding: 20px 15px;
-          justify-content: space-between;
-        }
-        label {
           font-size: 20px;
-          padding-left: 40px;
-          position: relative;
-          cursor: pointer;
+          margin-bottom: 20px;
+        }
+      }
+
+      .totals-right {
+        width: 50%;
+        text-align: right;
+        font-size: 20px;
+        @media (max-width: $laptop) {
+          font-size: 14px;
+          width: 50%;
+        }
+        @media (max-width: $tablet) {
+          width: 100%;
+          font-size: 18px;
+          text-align: left;
+          margin-top: 3px;
+        }
+        @media (max-width: $mobile) {
+          font-size: 16px;
+        }
+        @media (max-width: $extraSmall) {
+          font-size: 16px;
+          margin-bottom: 15px;
+        }
+        .balancer {
+          color: $balancerColor;
+        }
+        .appserver {
+          color: $mainColor;
+        }
+        .database {
+          color: $dbColor;
+        }
+      }
+
+      .totals-left {
+        width: 50%;
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 18px;
+        font-weight: 600;
+        @media (max-width: $laptop) {
+          font-size: 14px;
+          width: 50%;
+        }
+        @media (max-width: $tablet) {
+          font-size: 16px;
+          width: 100%;
+        }
+        @media (max-width: $mobile) {
+          font-size: 16px;
+        }
+        @media (max-width: $extraSmall) {
+          font-size: 16px;
+          margin-bottom: 0;
+          font-weight: 400;
+        }
+      }
+
+      &.new-row {
+        .totals {
+          flex-wrap: wrap;
+          margin-bottom: 10px;
+        }
+
+        .totals-title {
+          margin-bottom: 2px;
+        }
+
+        .total {
+          margin-bottom: 10px;
+        }
+
+        .totals-left {
+          width: 100%;
+        }
+
+        .totals-right {
+          margin-top: 2px;
+          text-align: left;
+          width: 100%;
+        }
+      }
+
+      .totals-title {
+        flex: 100%;
+        width: 100%;
+        font-weight: 400;
+        margin-bottom: 5px;
+        @media (max-width: $laptop) {
+          margin-bottom: 0;
+        }
+      }
+
+      .currency-period {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        @media (max-width: $laptop) {
+          margin-top: 20px;
+        }
+        @media (max-width: $tablet) {
+          flex-wrap: wrap;
+        }
+        .radio-block {
+          width: 55%;
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
           @media (max-width: $laptop) {
-            font-size: 16px;
-            padding-left: 30px;
+            width: 60%;
           }
           @media (max-width: $tablet) {
-            font-size: 14px;
+            width: 100%;
           }
           @media (max-width: $mobile) {
-            margin: 0 15px;
+            width: 100%;
+            justify-content: flex-start;
           }
           @media (max-width: $extraSmall) {
-            margin: 0;
+            width: 73%;
           }
-          &:before {
-            box-sizing: border-box;
-            width: 23px;
-            height: 23px;
-            display: block;
-            content: '';
-            background: #dfefff;
-            border: 1px solid #bac5dc;
-            border-radius: 50%;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            margin: auto;
-            position: absolute;
+          label {
+            font-size: 16px;
+            padding-left: 35px;
+            position: relative;
+            cursor: pointer;
             @media (max-width: $laptop) {
-              width: 19px;
-              height: 19px;
+              font-size: 14px;
+              padding-left: 30px;
+            }
+            @media (max-width: $tablet) {
+              font-size: 14px;
+            }
+            @media (max-width: $mobile) {
+              margin: 0 15px 0 0;
+            }
+            @media (max-width: $extraSmall) {
+              margin: 0 10px 0 0;
+            }
+            &:before {
+              box-sizing: border-box;
+              width: 23px;
+              height: 23px;
+              display: block;
+              content: '';
+              background: #dfefff;
+              border: 1px solid #bac5dc;
+              border-radius: 50%;
+              left: 0;
+              top: 0;
+              bottom: 0;
+              margin: auto;
+              position: absolute;
+              @media (max-width: $laptop) {
+                width: 19px;
+                height: 19px;
+              }
+            }
+            &:after {
+              display: block;
+              content: '';
+              width: 15px;
+              height: 15px;
+              background: #758bba;
+              border-radius: 50%;
+              left: 4px;
+              top: 0;
+              bottom: 0;
+              margin: auto;
+              position: absolute;
+              opacity: 0;
+              transition: .3s;
+              @media (max-width: $laptop) {
+                left: 3px;
+                width: 13px;
+                height: 13px;
+              }
             }
           }
-          &:after {
-            display: block;
-            content: '';
-            width: 15px;
-            height: 15px;
-            background: #758bba;
-            border-radius: 50%;
-            left: 4px;
-            top: 0;
-            bottom: 0;
-            margin: auto;
-            position: absolute;
-            opacity: 0;
-            transition: .3s;
-            @media (max-width: $laptop) {
-              left: 3px;
-              width: 13px;
-              height: 13px;
-            }
-          }
-        }
-        input {
-          display: none;
-          &:checked {
-            + label {
-              &:after {
-                opacity: 1;
+          input {
+            display: none;
+            &:checked {
+              + label {
+                &:after {
+                  opacity: 1;
+                }
               }
             }
           }
         }
+
+        .current-switcher-wrapper {
+
+          @media (max-width: $tablet) {
+            margin-top: 20px;
+          }
+          @media (max-width: $extraSmall) {
+            margin-top: 0;
+          }
+          .select {
+            width: auto;
+            padding: 3px 12px;
+            border: 1px solid #bac5dc;
+            font-size: 18px;
+            border-radius: 5px;
+            text-align: center;
+            color: #03b6a6;
+            position: relative;
+            font-weight: 400;
+            @media (max-width: $extraSmall) {
+              padding: 2px 8px;
+              font-size: 14px;
+            }
+            select {
+              display: none;
+            }
+            .select-styled .currency-name {
+              display: none;
+            }
+
+            .select-options {
+              position: absolute;
+              right: -1px;
+              top: -1px;
+              margin: 0;
+              padding: 0;
+              border: 1px solid #bac5dc;
+              border-radius: 5px;
+              background: #fff;
+              text-align: right;
+              z-index: 2;
+              max-height: 225px;
+              overflow: auto;
+              @media (max-width: $mobile) {
+                right: auto;
+                left: -1px;
+              }
+              @media (max-width: $extraSmall) {
+                right: -1px;
+                left: auto;
+              }
+              li {
+                display: flex;
+                flex-direction: row-reverse;
+                padding: 2px 10px;
+                @media (max-width: $mobile) {
+                  flex-direction: row;
+                }
+                .currency-sign {
+                  display: none;
+                }
+                span {
+                  margin-right: 5px;
+                  white-space: nowrap;
+                  color: #bac5dc;
+                  @media (max-width: $mobile) {
+                    margin-right: 0;
+                    margin-left: 5px;
+                  }
+                }
+              }
+            }
+
+          }
+        }
       }
+
       .period {
         padding-bottom: 5px;
+        @media (max-width: $tablet) {
+          margin-top: 30px;
+        }
+        @media (max-width: $extraSmall) {
+          margin-top: 10px;
+        }
         .start-price, .max-price {
           display: flex;
           justify-content: space-between;
           align-items: center;
           p {
-            font-size: 26px;
+            font-size: 24px;
             width: calc(100% - 180px);
             @media (max-width: $laptop) {
-              font-size: 22px;
+              font-size: 18px;
               width: calc(100% - 135px);
             }
             @media (max-width: $tablet) {
@@ -1264,8 +1655,11 @@ body {
             }
             span {
               display: block;
-              font-size: 15px;
+              font-size: 14px;
               margin-top: 5px;
+              @media (max-width: $laptop) {
+                font-size: 12px;
+              }
               @media (max-width: $tablet) {
                 font-size: 12px;
               }
@@ -1280,7 +1674,7 @@ body {
             color: #fff;
             border-radius: 15px;
             font-weight: 400;
-            height: 80px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1300,7 +1694,7 @@ body {
           }
         }
         .max-price {
-          margin-top: 30px;
+          margin-top: 15px;
           @media (max-width: $laptop) {
             margin-top: 20px;
           }

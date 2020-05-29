@@ -69,7 +69,7 @@ window.JApp = (function (that) {
             success: function (response) {
                 var oResp = jQuery.parseJSON(response) || {};
 
-                if (oResp.result == 0 && oResp.response) {
+                if (oResp.result === 0 && oResp.response) {
                     oResp = oResp.response;
                 }
 
@@ -88,7 +88,7 @@ window.JApp = (function (that) {
             async: true,
             success: function (response) {
                 var oResp = '';
-                if (response.result == 0 && response.hosters) {
+                if (response.result === 0 && response.hosters) {
                     oResp = response.hosters;
                 }
 
@@ -112,7 +112,7 @@ window.JApp = (function (that) {
             success: function (response) {
                 var oResp = jQuery.parseJSON(response) || {};
 
-                if (oResp.result == 0 && oResp.response) {
+                if (oResp.result === 0 && oResp.response) {
                     oResp = oResp.response;
                 }
 
@@ -190,7 +190,7 @@ window.JApp = (function (that) {
             success: function (sResponse) {
                 var oResp = jQuery.parseJSON(sResponse);
 
-                if (oResp.result == 0 && oResp.response.result == 0) {
+                if (oResp.result === 0 && oResp.response.result === 0) {
                     fnCallback(oResp.response.country);
                     $.cookie('user_country', oResp.response.country);
 
@@ -297,7 +297,7 @@ JApp.utils = (function (that) {
             url: url,
             success: function (response) {
 
-                if (response.result != 0) {
+                if (response.result !== 0) {
                     var maxmindBan = '';
                     var riskScore = '';
                     var risk = '';
