@@ -1,4 +1,4 @@
-<div class="<%= calculatorBlockClass %>">
+<div class="calculator-wrapper">
 
     <div class="languages">
         <% for (var i = 0, language; language = oLanguages[i]; i++) { %>
@@ -271,13 +271,20 @@
                     <div class="inner">
                         <span class="minus"></span>
                         <label class="count">
-                            <input type="number" class="digit" value="1" name="ip" max="10" step="1">
+                            <input type="number" class="digit" value="1" name="ip" max="99" step="1">
                         </label>
                         <span class="plus"></span>
                     </div>
                 </div>
                 <div class="calculator-left-bottom-block">
-                    <p>External Traffic, GB</p>
+                    <p class="j-relative">External Traffic, GB
+                        <span class="tooltip-button max">i</span>
+                        <span class="tooltip-wrapper max">
+                            <span class="tooltip-inner">
+                                <span class="title">Amount of external traffic <br> spent per month.</span>
+                            </span>
+                        </span>
+                    </p>
                     <div class="inner">
                         <span class="minus"></span>
                         <label class="count">

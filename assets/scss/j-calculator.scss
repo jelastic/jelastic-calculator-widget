@@ -47,6 +47,10 @@ body {
     font-size: 14px;
   }
 
+  .j-relative {
+    position: relative;
+  }
+
   .balancer-range,
   .appserver-range,
   .database-range {
@@ -252,6 +256,26 @@ body {
       }
     }
 
+    .hosting-information--bottom {
+      display: flex;
+      align-items: center;
+      .hoster-logo {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 5px 0;
+        height: 90px;
+        width: 35%;
+        img {
+          max-width: 100%;
+          max-height: 100%;
+          width: auto;
+          height: auto;
+        }
+      }
+    }
+
+
     .hosting-information {
       width: 100%;
       .hosting-information--top {
@@ -265,7 +289,7 @@ body {
           margin: 30px 0 10px;
         }
         @media (max-width: $extraSmall) {
-          margin: 20px 0 20px;
+          margin: 20px 0 0;
         }
         &:last-child {
           margin-bottom: 0;
@@ -500,7 +524,7 @@ body {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        &:hover {
+        &:hover, &.current-hoster {
           color: #fff;
           background: #00acff;
         }
@@ -621,7 +645,7 @@ body {
       position: relative;
       padding-right: 40px;
       @media (max-width: $laptop) {
-        padding-right: 15px;
+        padding-right: 35px;
         width: 60%;
       }
       @media (max-width: $tablet) {
@@ -827,6 +851,7 @@ body {
           flex-wrap: wrap;
           justify-content: space-between;
           width: 60%;
+          user-select: none;
           @media (max-width: $tablet) {
             margin-top: 20px;
             width: 100%;
@@ -860,10 +885,6 @@ body {
           .range-block {
             width: 47%;
             position: relative;
-
-            .j-relative {
-              position: relative;
-            }
 
             .digits {
               span {
@@ -1166,8 +1187,132 @@ body {
             padding: 0 1px;
           }
           p {
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+            @media (max-width: $laptop) {
+              margin-bottom: 20px;
+            }
+            @media (max-width: $tablet) {
+              margin-bottom: 15px;
+            }
+            @media (max-width: $extraSmall) {
+              margin-bottom: 10px;
+            }
           }
+
+          .tooltip-button {
+            font-style: normal;
+            border: 1px solid;
+            width: 15px;
+            height: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            right: -10px;
+            top: -10px;
+            z-index: 2;
+            border-radius: 50%;
+            font-size: 11px;
+            cursor: pointer;
+            color: $mainColor;
+            @media (max-width: $tablet) {
+              right: -10px;
+              top: -8px;
+            }
+            @media (max-width: $extraSmall) {
+              right: -3px;
+              top: -13px;
+            }
+            &:hover {
+              + .tooltip-wrapper {
+                display: block;
+              }
+            }
+
+          }
+
+          .tooltip-wrapper {
+            width: 200px;
+            position: absolute;
+            left: calc(100% + 20px);
+            top: -18px;
+            display: none;
+            border-radius: 10px;
+            box-shadow: 0 0 10px 0 rgba(0, 132, 245, .15);
+
+            @media (max-width: $laptop) {
+              width: 200px;
+            }
+            @media (max-width: $tablet) {
+              width: 200px;
+            }
+            @media (max-width: $extraSmall) {
+              left: 25px;
+              top: -20px;
+            }
+
+            &.max {
+              @media (max-width: $tablet) {
+                left: auto;
+                right: 15px;
+                top: -15px;
+              }
+              @media (max-width: $extraSmall) {
+                right: 20px;
+                top: -20px;
+              }
+              &:before {
+                @media (max-width: $tablet) {
+                  left: auto;
+                  right: -16px;
+                  border: 10px solid transparent;
+                  border-left-color: $mainColor;
+                }
+              }
+              &:after {
+                @media (max-width: $tablet) {
+                  left: auto;
+                  right: -13px;
+                  border-right-color: transparent;
+                  border-left-color: #fff;
+                }
+              }
+            }
+            &:before {
+              display: block;
+              content: '';
+              position: absolute;
+              left: -17px;
+              top: 5px;
+              border: 10px solid transparent;
+              border-right-color: $mainColor;
+            }
+            &:after {
+              display: block;
+              content: '';
+              position: absolute;
+              top: 7px;
+              left: -14px;
+              border: 8px solid transparent;
+              border-right-color: #ffffff;
+              z-index: 9;
+            }
+            .tooltip-inner {
+              display: block;
+              position: relative;
+              background: #fff;
+              color: #000;
+              z-index: 9;
+              border-radius: 10px;
+              padding: 5px;
+              border: 1px solid $mainColor;
+              .title {
+                display: block;
+                font-size: 12px;
+              }
+            }
+          }
+
           .inner {
             box-shadow: 0 0 30px 0 rgba(0, 132, 245, 0.1);
             position: relative;
@@ -1572,6 +1717,7 @@ body {
             color: #03b6a6;
             position: relative;
             font-weight: 400;
+            cursor: pointer;
             @media (max-width: $extraSmall) {
               padding: 2px 8px;
               font-size: 14px;
@@ -1611,13 +1757,20 @@ body {
                 @media (max-width: $mobile) {
                   flex-direction: row;
                 }
+
+                &:hover, &.current-currency {
+                  background: #dfefff;
+                }
                 .currency-sign {
                   display: none;
+                }
+                &[rel="EUR"] {
+                  border-bottom: 1px solid #bac5dc;
                 }
                 span {
                   margin-right: 5px;
                   white-space: nowrap;
-                  color: #bac5dc;
+                  color: #55627b;
                   @media (max-width: $mobile) {
                     margin-right: 0;
                     margin-left: 5px;

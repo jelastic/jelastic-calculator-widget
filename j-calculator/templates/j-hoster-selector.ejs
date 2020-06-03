@@ -1,0 +1,234 @@
+<div class="calc-block hoster-selector">
+    <div class="selector-wrapper">
+
+        <p><%= txChoose %></p>
+        <div class="custom-select">
+            <select class="hoster-selector--select">
+                <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) {
+                    var locations = [];
+
+                    delete oHoster.performanceRegions.general;
+                    if (Object.keys(oHoster.performanceRegions).length) {
+                        var out = [],
+                                j = 0;
+                        $.each(oHoster.performanceRegions, function (code, stars) {
+                            var codes = code.split('-'),
+                                    code = codes[0],
+                                    flag = out.indexOf(code);
+                            if (flag < 0) {
+                                locations[j] = code.toLowerCase();
+                                j++;
+                            }
+                        });
+                    } else {
+                        locations[0] = oHoster.countryCode.toLowerCase();
+                    }
+
+
+                if (defHoster == oHoster.keyword) { %>
+                    <option selected value="<%= oHoster.keyword %>"
+                            data-key="<%= oHoster.key %>"
+                            data-location="<%= locations.join(',') %>"><%= oHoster.name %></option>
+                <% } else { %>
+                    <option value="<%= oHoster.keyword %>"
+                            data-key="<%= oHoster.key %>"
+                            data-location="<%= locations.join(',') %>"><%= oHoster.name %></option>
+                <% }
+                } %>
+            </select>
+        </div>
+    </div>
+    <div class="hosting-information">
+        <div class="hosting-information--top">
+            <div class="perfomance">
+                <p><%= txPerfomance %></p>
+                <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) { %>
+                    <% if (defHoster == oHoster.keyword) { %>
+                        <% for (var j = 0; j < 5; j++) { %>
+                            <% var filled = '' %>
+                            <% (j < Math.round(oHoster.performance)) ? filled = 'filled' : filled = '' %>
+                            <i class="blue ico ico--stars <%= filled %>"></i>
+                        <% } %>
+                    <% } %>
+                <% } %>
+            </div>
+            <div class="support">
+                <p><%= txSupport %></p>
+                <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) { %>
+                    <% if (defHoster == oHoster.keyword) { %>
+                        <% if (oHoster.support === 'new') { %>
+                            <i class="ico ico--new"></i>
+                        <% } else { %>
+                            <% var rating %>
+                            <% if ((oHoster.support >= 1) && (oHoster.support <= 4)) { %>
+                                <% rating = 1; %>
+                            <% } else if ((oHoster.support >= 5) && (oHoster.support <= 9)) { %>
+                                <% rating = 2; %>
+                            <% } else if ((oHoster.support >= 10) && (oHoster.support <= 14)) { %>
+                                <% rating = 3; %>
+                            <% } else if ((oHoster.support >= 15) && (oHoster.support <= 17)) { %>
+                                <% rating = 4; %>
+                            <% } if ((oHoster.support >= 18) && (oHoster.support <= 20)) { %>
+                                <% rating = 5; %>
+                            <% } %>
+                            <% for (var j = 0; j < 5; j++) { %>
+                                <% var filled = '' %>
+                                <% (j < rating) ? filled = 'filled' : filled = '' %>
+                                <i class="ico ico--stars <%= filled %>"></i>
+                            <% } %>
+                        <% } %>
+                    <% } %>
+                <% } %>
+            </div>
+            <div class="location">
+                <p><%= txLocation %></p>
+                <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) { %>
+                    <% if (defHoster == oHoster.keyword) { %>
+                        <% delete oHoster.performanceRegions.general %>
+                        <% if (Object.keys(oHoster.performanceRegions).length) { %>
+                            <% var out = [] %>
+                            <% var j = 0; %>
+                            <% $.each(oHoster.performanceRegions, function(code, stars) { %>
+                                <% var codes = code.split('-') %>
+                                <% var code = codes[0] %>
+                                <% var flag = out.indexOf(code) %>
+                                <% if (flag < 0) { %>
+                                    <% out[j] = code %>
+                                    <% j++; %>
+                                <% } %>
+                            <% }); %>
+                            <% $.each(out, function(index, code) { %>
+                                <i class="flag flag-<%= code.toLowerCase() %>"><%= code.toLowerCase() %></i>
+                            <% }); %>
+                        <% } else { %>
+                            <i class="flag flag-<%= oHoster.countryCode.toLowerCase() %>"><%= oHoster.countryCode.toLowerCase() %></i>
+                        <% } %>
+                    <% } %>
+                <% } %>
+            </div>
+        </div>
+        <div class="hosting-information--bottom">
+            <div class="services">
+                <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) {
+                if ((defHoster == oHoster.keyword) && (oHoster.features)) {
+
+                    function capitalizeFirstLetter(string) {
+                        return string.charAt(0).toUpperCase() + string.slice(1);
+                    }
+
+                    var regions = [],
+                            location = oHoster.locationCode,
+                            features = oHoster.features,
+                            aIcons = [], ico;
+
+                    for (var place in location) {
+                        regions.push(place);
+                    }
+                    if (regions.length > 1) {
+                        ico = {
+                            name: 'multiregion',
+                            hint: 'Multi-region availability zones '
+                        };
+                        aIcons.push(ico);
+                    }
+
+                    if ((features.indexOf('VP') != -1) || (features.indexOf('VIP') != -1) || (features.indexOf('VPC') != -1)) {
+                        ico = {
+                            name: 'vip',
+                            hint: 'Virtual Private Cloud with dedicated platform domain and SSL certificates, custom hardware, pricing and quotas'
+                        };
+                        aIcons.push(ico);
+                    }
+
+                    if (features.indexOf('WP') != -1) {
+                        ico = {
+                            name: 'wordpress',
+                            hint: 'Managed WordPress services'
+                        };
+                        aIcons.push(ico);
+                    }
+
+                    if (features.indexOf('MG') != -1) {
+                        ico = {
+                            name: 'magento',
+                            hint: 'Managed Magento services'
+                        };
+                        aIcons.push(ico);
+                    }
+
+                    if ((features.indexOf('KB') != -1) || (features.indexOf('K8B') != -1) || (features.indexOf('K8S') != -1)) {
+                        ico = {
+                            name: 'kubernetes',
+                            hint: 'Managed Kubernetes services'
+                        };
+                        aIcons.push(ico);
+                    }
+
+                    if (features.indexOf('DC') != -1) {
+                        ico = {
+                            name: 'docker',
+                            hint: 'Support of native Docker containers'
+                        };
+                        aIcons.push(ico);
+                    }
+
+                    if (features.indexOf('CDN') != -1) {
+                        ico = {
+                            name: 'cdn',
+                            hint: 'Premium CDN Support'
+                        };
+                        aIcons.push(ico);
+                    }
+
+                    if (features.indexOf('LS') != -1) {
+                        ico = {
+                            name: 'ls',
+                            hint: 'LiteSpeed WS and ADC Support'
+                        };
+                        aIcons.push(ico);
+                    }
+
+
+                    if (features.indexOf('CS') != -1) {
+                        ico = {
+                            name: 'cs',
+                            hint: 'Fault-Tolerant Software-Defined Cloud Storage'
+                        };
+                        aIcons.push(ico);
+                    }
+
+                    if (oHoster.partnership) {
+                        ico = {
+                            name: oHoster.partnership.toLowerCase(),
+                            hint: capitalizeFirstLetter(oHoster.partnership) + ' Partner of Jelastic Union'
+                        };
+                        aIcons.push(ico);
+                    }
+
+                if (aIcons.length > 0) { %>
+
+                    <p><%= txServices %></p>
+                    <div class="icons">
+                        <% for (var j = 0, aIcon; aIcon = aIcons[j]; j++) { %>
+                            <i class="tooltip ico-pecul ico-pecul--<%= aIcon.name.toLowerCase() %>">
+                                <span class="tooltiptext"><%= aIcon.hint %></span>
+                            </i>
+                        <% } %>
+                    </div>
+                <% }
+                }
+                } %>
+            </div>
+            <div class="hoster-logo">
+                <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) { %>
+                    <% if (defHoster == oHoster.keyword) { %>
+                        <img src="//jelastic.com/wp-content/themes/salient/img/hosters/hosters_signin/<%= oHoster.keyword %>.png"
+                             alt="">
+                    <% } %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+
+</div>

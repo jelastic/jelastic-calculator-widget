@@ -2,7 +2,7 @@ jQuery(document).ready(function ($) {
 
         var calculatorTag = $('.j-calculator'),
             sHtml = '',
-            sCurrentHoster = 'servint',
+            sCurrentHoster = 'servnet',
             bInitDefCor,
             fnSetDefault,
             fnInitDefaultHoster,
@@ -10,8 +10,6 @@ jQuery(document).ready(function ($) {
             pricing = '',
             currency = '',
             calculatorsWithSelector = [],
-            hSelectBlockClass = '.hoster-selector',
-            calculatorBlockClass = '.calculator-wrapper',
             sCssLoading = 'loading';
 
         $(calculatorTag).addClass(sCssLoading);
@@ -29,8 +27,7 @@ jQuery(document).ready(function ($) {
                 return 0;
             });
 
-            sHtml = new EJS({url: '/j-calculator/templates/hoster-selector'}).render({
-                hSelectBlockClass: hSelectBlockClass.replace('.', ''),
+            sHtml = new EJS({url: '/j-calculator/templates/j-hoster-selector'}).render({
                 txChoose: 'Choose Service Provider of Jelastic Public Cloud',
                 txPerfomance: 'Perfomance',
                 txSupport: 'Support',
@@ -46,8 +43,8 @@ jQuery(document).ready(function ($) {
                 }
             }
 
-            if ($(el).find(hSelectBlockClass).length > 0) {
-                $(el).find(hSelectBlockClass).replaceWith(sHtml);
+            if ($(el).find('.hoster-selector').length > 0) {
+                $(el).find('.hoster-selector').replaceWith(sHtml);
             } else {
                 $(el).append(sHtml);
             }
@@ -68,9 +65,15 @@ jQuery(document).ready(function ($) {
 
 
                 for (var i = 0; i < numberOfOptions; i++) {
+
+                    var classes = '';
+                    if ($this.children('option').eq(i).text() === $this.children('option:selected').text()) {
+                        classes = 'current-hoster';
+                    }
                     var li = $('<li />', {
                         text: $this.children('option').eq(i).text(),
-                        rel: $this.children('option').eq(i).val()
+                        rel: $this.children('option').eq(i).val(),
+                        class: classes
                     }).appendTo($list);
 
                     var li_flags = $('<span />', {
@@ -119,7 +122,7 @@ jQuery(document).ready(function ($) {
 
         function renderCalculator(el) {
 
-            var oLanguages = $(el).data('languages') || ['java', 'php', 'node', 'ruby', 'python', 'go'],
+            var oLanguages = $(el).data('languages') || ['java', 'php', 'node', 'python', 'go', 'ruby'],
                 fixed = '',
                 dynamic = '',
                 ip = '',
@@ -134,8 +137,23 @@ jQuery(document).ready(function ($) {
             }
 
 
-            sHtml = new EJS({url: '/j-calculator/templates/calculator'}).render({
-                calculatorBlockClass: calculatorBlockClass.replace('.', ''),
+            window.currency.sort(function (a, b) {
+                var nameA = a.code.toLowerCase(),
+                    nameB = b.code.toLowerCase();
+                if (nameA < nameB)
+                    return -1;
+                if (nameA > nameB)
+                    return 1;
+                return 0;
+            });
+
+            $.each(window.currency, function (index) {
+                if (this.code === 'USD' || this.code === 'EUR') {
+                    window.currency.splice(0, 0, window.currency.splice(index, 1)[0]);
+                }
+            });
+
+            sHtml = new EJS({url: '/j-calculator/templates/j-calculator'}).render({
                 oLanguages: oLanguages,
                 id: Math.round(Math.random() * 100000000),
                 currencies: window.currency,
@@ -162,8 +180,8 @@ jQuery(document).ready(function ($) {
                 databaseScaling: parseInt($(el).attr('data-database-scaling')) || 0,
             });
 
-            if ($(el).find(calculatorBlockClass).length > 0) {
-                $(el).find(calculatorBlockClass).replaceWith(sHtml);
+            if ($(el).find('.calculator-wrapper').length > 0) {
+                $(el).find('.calculator-wrapper').replaceWith(sHtml);
             } else {
                 $(el).append(sHtml);
             }
@@ -176,6 +194,9 @@ jQuery(document).ready(function ($) {
 
             var sKey = window.pricing[$(el).attr('data-key')],
                 tariffPlans = sKey.tariffPlans;
+            
+            
+            console.log(window.pricing);
 
             for (var i = 0, oHoster; oHoster = oHosters[i]; i++) {
                 if ($(el).attr('data-key') === oHoster.key) {
@@ -221,9 +242,16 @@ jQuery(document).ready(function ($) {
                 }).insertAfter($styledSelect);
 
                 for (var i = 0; i < numberOfOptions; i++) {
+
+                    var classes = '';
+                    if ($this.children('option').eq(i).text() === $this.children('option:selected').text()) {
+                        classes = 'current-currency';
+                    }
+
                     var li = $('<li />', {
                         text: $this.children('option').eq(i).html(),
-                        rel: $this.children('option').eq(i).val()
+                        rel: $this.children('option').eq(i).val(),
+                        class: classes
                     }).appendTo($list);
 
                     $('<span />', {
@@ -249,6 +277,8 @@ jQuery(document).ready(function ($) {
                 });
 
                 $listItems.click(function (e) {
+                    $list.find('.current-currency').removeClass('current-currency');
+                    $(this).addClass('current-currency');
                     e.stopPropagation();
                     $styledSelect.html($(this).html()).removeClass('active');
                     $this.val($(this).attr('rel')).change();
@@ -310,9 +340,9 @@ jQuery(document).ready(function ($) {
                 "storage": 10,
                 "ip": 1,
                 "traffic": 10,
-                "balancer-nodes": 1,
+                "balancer-nodes": 0,
                 "appserver-nodes": 1,
-                "database-nodes": 1
+                "database-nodes": 0
             };
             $.each(defaultOptions, function (key, value) {
                 var digit = el[0].querySelectorAll('[name=' + key + ']')[0];
@@ -483,9 +513,15 @@ jQuery(document).ready(function ($) {
                                 if (currencyJSON.result === 0) {
                                     window.currency = currencyJSON.response.objects;
 
-                                    JApp.loadHosters(function (hosters) {
-                                        oHosters = hosters;
 
+                                    JApp.loadHosters(function (hosters) {
+                                        $.each(hosters, function (index) {
+                                            if (this.keyword === 'servint') {
+                                                hosters.splice(index, 1);
+                                                return false;
+                                            }
+                                        });
+                                        oHosters = hosters;
                                         if (calculatorTag.length > 0) {
                                             $.each(calculatorTag, function (e) {
                                                 $(this).attr('data-key') ? renderCalculator($(this)) : calculatorsWithSelector.push(this);
@@ -546,7 +582,11 @@ jQuery(document).ready(function ($) {
         function setScalingCloudlets(cloudlets, el, type) {
             if (cloudlets === 0) {
                 $(el).find('label[for*=' + type + ']').removeClass('active');
+                $(el).find('label[for*=' + type + '] .node-count input').val(0).change();
             } else {
+                if (!$(el).find('label[for*=' + type + ']').hasClass('active')) {
+                    $(el).find('label[for*=' + type + '] .node-count input').val(1).change();
+                }
                 $(el).find('label[for*=' + type + ']').addClass('active');
             }
 
@@ -575,13 +615,14 @@ jQuery(document).ready(function ($) {
         function changePricePeriod(sValue, sPeriod) {
             switch (sPeriod) {
                 case 'hourly':
-                    sValue = Math.round(sValue * 1000) / 1000;
+                    sValue = Math.round(sValue * 100000) / 100000;
                     break;
 
                 case 'monthly':
                     sValue = (sValue * 730).toFixed(2);
                     break
             }
+
             return sValue;
         }
 
@@ -598,7 +639,7 @@ jQuery(document).ready(function ($) {
                     if ((tiers[tiers.length - 1].free > 0) && (sValue <= tiers[tiers.length - 1].free)) {
                         return 0;
                     } else {
-                        price = tiers[tiers.length - 1].price;
+                        return (sValue - tiers[tiers.length - 1].free) * tiers[tiers.length - 1].price;
                     }
                 } else {
                     if ((sValue >= tiers[i].value) && (sValue < tiers[i + 1].value)) {
@@ -606,12 +647,12 @@ jQuery(document).ready(function ($) {
                             return 0;
                         } else {
                             price = tiers[i].price;
-                            return sValue * price;
+                            return (sValue - tiers[i].free) * price;
                         }
                     }
                 }
             }
-            return sValue * price;
+
         }
 
         function checkIpPrice(sValue, tiers) {
@@ -689,53 +730,45 @@ jQuery(document).ready(function ($) {
 
         function setPrice(reservedTiers, scalingTiers, el, storageTiers, ipTiers, trafficTiers) {
 
-            var storagePrice = checkStoragePrice($(el).attr('data-storage'), storageTiers),
-                ipPrice = checkIpPrice($(el).attr('data-ip'), ipTiers),
-                trafficPrice = checkTrafficPrice($(el).attr('data-traffic'), trafficTiers);
-
-            var balancerNodes = $(el).attr('data-balancer-nodes'),
-                appServerNodes = $(el).attr('data-appserver-nodes'),
-                databaseNodes = $(el).attr('data-database-nodes');
-
-            var minBalancerPrice = checkPrice(getReservedCloudlets(el, 'balancer'), reservedTiers),
-                minAppserverPrice = checkPrice(getReservedCloudlets(el, 'appserver'), reservedTiers),
-                minDatabasePrice = checkPrice(getReservedCloudlets(el, 'database'), reservedTiers),
-                minPrice = (minBalancerPrice * balancerNodes) + (minAppserverPrice * appServerNodes) + (minDatabasePrice * databaseNodes);
-
-            var currencySettings = '',
-                usdRate = '';
+            var currentCurrency = '',
+                originalCurrency = '';
 
             currency = $(el).find('.current-switcher').val();
             $.each(window.currency, function (index) {
                 if (currency === this.code) {
-                    currencySettings = this;
+                    currentCurrency = this;
                 }
                 if ($(el).attr('data-currency') === this.code) {
-                    usdRate = this.usdRate;
+                    originalCurrency = this;
                 }
             });
-            
 
 
+            var balancerNodes = $(el).attr('data-balancer-nodes'),
+                appServerNodes = $(el).attr('data-appserver-nodes'),
+                databaseNodes = $(el).attr('data-database-nodes'),
+                minBalancerPrice = checkPrice(getReservedCloudlets(el, 'balancer'), reservedTiers),
+                minAppserverPrice = checkPrice(getReservedCloudlets(el, 'appserver'), reservedTiers),
+                minDatabasePrice = checkPrice(getReservedCloudlets(el, 'database'), reservedTiers),
+                maxBalancerPrice = checkMaxPrice(getScalingCloudlets(el, 'balancer'), scalingTiers, getReservedCloudlets(el, 'balancer'), reservedTiers),
+                maxAppserverPrice = checkMaxPrice(getScalingCloudlets(el, 'appserver'), scalingTiers, getReservedCloudlets(el, 'appserver'), reservedTiers),
+                maxDatabasePrice = checkMaxPrice(getScalingCloudlets(el, 'database'), scalingTiers, getReservedCloudlets(el, 'database'), reservedTiers),
+                storagePrice = checkStoragePrice($(el).attr('data-storage'), storageTiers),
+                ipPrice = checkIpPrice($(el).attr('data-ip'), ipTiers),
+                trafficPrice = checkTrafficPrice($(el).attr('data-traffic'), trafficTiers);
+
+            // TRAFFIC
+            trafficPrice = toCurrency(trafficPrice, originalCurrency.rate.USD, currentCurrency.rate.USD);
             if ($(el).attr('data-period') === 'hourly') {
-                trafficPrice = +trafficPrice / 730;
+                trafficPrice = trafficPrice / 730;
             }
 
-            
-            // TO USD
-            trafficPrice = trafficPrice * usdRate;
-            // TO CURRENCY
-            trafficPrice = toCurrency(trafficPrice, currencySettings.usdRate);
-
-
+            // MIN PRICE
+            var minPrice = (minBalancerPrice * balancerNodes) + (minAppserverPrice * appServerNodes) + (minDatabasePrice * databaseNodes);
             minPrice = minPrice + storagePrice + ipPrice;
-            // TO USD
-            minPrice = minPrice * usdRate;
-            // TO CURRENCY
-            minPrice = toCurrency(minPrice, currencySettings.usdRate);
+            minPrice = toCurrency(minPrice, originalCurrency.rate.USD, currentCurrency.rate.USD);
             minPrice = changePricePeriod(minPrice, $(el).attr('data-period'));
             minPrice = +minPrice + +trafficPrice;
-
             switch ($(el).attr('data-period')) {
                 case 'hourly':
                     minPrice = Math.round(minPrice * 1000) / 1000;
@@ -744,29 +777,18 @@ jQuery(document).ready(function ($) {
                     minPrice = (minPrice).toFixed(2);
                     break
             }
-
             $(el).find('.start-price .price').html(minPrice);
 
 
-            var maxBalancerPrice = checkMaxPrice(getScalingCloudlets(el, 'balancer'), scalingTiers, getReservedCloudlets(el, 'balancer'), reservedTiers),
-                maxAppserverPrice = checkMaxPrice(getScalingCloudlets(el, 'appserver'), scalingTiers, getReservedCloudlets(el, 'appserver'), reservedTiers),
-                maxDatabasePrice = checkMaxPrice(getScalingCloudlets(el, 'database'), scalingTiers, getReservedCloudlets(el, 'database'), reservedTiers);
-
+            // MAX PRICE
             var maxPrice = (maxBalancerPrice * balancerNodes) + (maxAppserverPrice * appServerNodes) + (maxDatabasePrice * databaseNodes);
-
             maxPrice = maxPrice + storagePrice + ipPrice;
-
-            // TO USD
-            maxPrice = maxPrice * usdRate;
-            // TO CURRENCY
-            maxPrice = toCurrency(maxPrice, currencySettings.usdRate);
+            maxPrice = toCurrency(maxPrice, originalCurrency.rate.USD, currentCurrency.rate.USD);
             maxPrice = changePricePeriod(maxPrice, $(el).attr('data-period'));
             maxPrice = +maxPrice + +trafficPrice;
-
             if (+maxPrice < +minPrice) {
                 maxPrice = minPrice;
             }
-
             switch ($(el).attr('data-period')) {
                 case 'hourly':
                     maxPrice = Math.round(maxPrice * 1000) / 1000;
@@ -775,16 +797,15 @@ jQuery(document).ready(function ($) {
                     maxPrice = parseFloat(maxPrice).toFixed(2);
                     break
             }
-
             $(el).find('.max-price .price').html(maxPrice);
 
 
-            var reservedBalancerCloudlets = +getReservedCloudlets(el, 'balancer') * balancerNodes;
-            var reservedAppServerCloudlets = +getReservedCloudlets(el, 'appserver') * appServerNodes;
-            var reservedDbCloudlets = +getReservedCloudlets(el, 'database') * databaseNodes;
-
-            var reservedCloudletsMib = convertMib(+reservedBalancerCloudlets + +reservedAppServerCloudlets + +reservedDbCloudlets);
-            var reservedCloudletsGHz = convertMhz(+reservedBalancerCloudlets + +reservedAppServerCloudlets + +reservedDbCloudlets);
+            // RESERVED COUNTS
+            var reservedBalancerCloudlets = +getReservedCloudlets(el, 'balancer') * balancerNodes,
+                reservedAppServerCloudlets = +getReservedCloudlets(el, 'appserver') * appServerNodes,
+                reservedDbCloudlets = +getReservedCloudlets(el, 'database') * databaseNodes,
+                reservedCloudletsMib = convertMib(+reservedBalancerCloudlets + +reservedAppServerCloudlets + +reservedDbCloudlets),
+                reservedCloudletsGHz = convertMhz(+reservedBalancerCloudlets + +reservedAppServerCloudlets + +reservedDbCloudlets);
 
             $(el).find('.reserved-totals .gibs').html(reservedCloudletsMib);
             $(el).find('.reserved-totals .ghz').html(reservedCloudletsGHz);
@@ -800,12 +821,12 @@ jQuery(document).ready(function ($) {
                 $(el).find('.calculator-right').removeClass('new-row');
             }
 
-            var scalingBalancerCloudlets = +getScalingCloudlets(el, 'balancer') * balancerNodes;
-            var scalingAppServerCloudlets = +getScalingCloudlets(el, 'appserver') * appServerNodes;
-            var scalingDbCloudlets = +getScalingCloudlets(el, 'database') * databaseNodes;
-
-            var scalingCloudletsMib = convertMib(+scalingBalancerCloudlets + +scalingAppServerCloudlets + +scalingDbCloudlets);
-            var scalingCloudletsGHz = convertMhz(+scalingBalancerCloudlets + +scalingAppServerCloudlets + +scalingDbCloudlets);
+            // SCALING COUNTS
+            var scalingBalancerCloudlets = +getScalingCloudlets(el, 'balancer') * balancerNodes,
+                scalingAppServerCloudlets = +getScalingCloudlets(el, 'appserver') * appServerNodes,
+                scalingDbCloudlets = +getScalingCloudlets(el, 'database') * databaseNodes,
+                scalingCloudletsMib = convertMib(+scalingBalancerCloudlets + +scalingAppServerCloudlets + +scalingDbCloudlets),
+                scalingCloudletsGHz = convertMhz(+scalingBalancerCloudlets + +scalingAppServerCloudlets + +scalingDbCloudlets);
 
             $(el).find('.scaling-totals .gibs').html(scalingCloudletsMib);
             $(el).find('.scaling-totals .ghz').html(scalingCloudletsGHz);
@@ -865,7 +886,7 @@ jQuery(document).ready(function ($) {
 
             for (var i = 0; i < tiers.length; i++) {
                 if (i !== tiers.length - 1) {
-                    if ((scalingCloudlets >= tiers[i].value) && (scalingCloudlets < tiers[i + 1].value)) {
+                    if ((cloudlets >= tiers[i].value) && (cloudlets < tiers[i + 1].value)) {
                         if (scalingCloudlets <= tiers[i].free) {
                             return reservedPrice;
                         } else {
@@ -882,8 +903,8 @@ jQuery(document).ready(function ($) {
             }
         }
 
-        function toCurrency(sValue, sUsdRate) {
-            return sValue / sUsdRate;
+        function toCurrency(nValue, sFrom, sTo) {
+            return (sFrom / sTo) * nValue;
         }
 
         function setMinValues(el, type) {
