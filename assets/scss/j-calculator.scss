@@ -857,9 +857,9 @@ body {
               &[for*=database] {
                 background: rgba($dbColor, 0.12);
               }
-              &:not(.active) {
-                background: none;
-              }
+              //&:not(.active) {
+              //  background: none;
+              //}
 
             }
           }
@@ -1906,6 +1906,19 @@ body {
           }
         }
       }
+    }
+  }
+}
+
+@media (max-width: $mobile) {
+  .custom-select {
+    .flag {
+      width: 20px;
+      height: 12px;
+      margin-right: 5px;
+    }
+    .flag-ch {
+      width: 12px;
     }
   }
 }
