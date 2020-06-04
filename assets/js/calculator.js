@@ -40,6 +40,8 @@ jQuery(document).ready(function ($) {
             for (var i = 0, oHoster; oHoster = oHosters[i]; i++) {
                 if (sCurrentHoster === oHoster.keyword) {
                     $(el).attr('data-key', oHoster.key);
+                    $(el).attr('data-hoster', oHoster.keyword);
+                    $(el).attr('data-custom-signup', oHoster.customSignUp);
                 }
             }
 
@@ -392,10 +394,10 @@ jQuery(document).ready(function ($) {
                 el[0].setAttribute('data-' + type, this.value);
 
                 if (parseInt(digit.val()) > parseInt(digit.attr('max'))) {
-                    digit.val(digit.attr('max'));
+                    digit.val(digit.attr('max')).change();
                 }
 
-                if (parseInt(digit.val()) < 0) {
+                if (parseInt(digit.val()) < 0 || digit.val() === '') {
                     digit.val(0).change();
                 }
 
@@ -747,12 +749,12 @@ jQuery(document).ready(function ($) {
             var balancerNodes = $(el).attr('data-balancer-nodes'),
                 appServerNodes = $(el).attr('data-appserver-nodes'),
                 databaseNodes = $(el).attr('data-database-nodes'),
-                minBalancerPrice = checkPrice(getReservedCloudlets(el, 'balancer'), reservedTiers),
-                minAppserverPrice = checkPrice(getReservedCloudlets(el, 'appserver'), reservedTiers),
-                minDatabasePrice = checkPrice(getReservedCloudlets(el, 'database'), reservedTiers),
-                maxBalancerPrice = checkMaxPrice(getScalingCloudlets(el, 'balancer'), scalingTiers, getReservedCloudlets(el, 'balancer'), reservedTiers),
-                maxAppserverPrice = checkMaxPrice(getScalingCloudlets(el, 'appserver'), scalingTiers, getReservedCloudlets(el, 'appserver'), reservedTiers),
-                maxDatabasePrice = checkMaxPrice(getScalingCloudlets(el, 'database'), scalingTiers, getReservedCloudlets(el, 'database'), reservedTiers),
+                minBalancerPrice = checkPrice(parseInt(getReservedCloudlets(el, 'balancer')) * parseInt(balancerNodes), reservedTiers),
+                minAppserverPrice = checkPrice(parseInt(getReservedCloudlets(el, 'appserver')) * parseInt(appServerNodes), reservedTiers),
+                minDatabasePrice = checkPrice(parseInt(getReservedCloudlets(el, 'database')) * parseInt(databaseNodes), reservedTiers),
+                maxBalancerPrice = checkMaxPrice(parseInt(getScalingCloudlets(el, 'balancer')) * parseInt(balancerNodes), scalingTiers, parseInt(getReservedCloudlets(el, 'balancer')) * parseInt(balancerNodes), reservedTiers),
+                maxAppserverPrice = checkMaxPrice(parseInt(getScalingCloudlets(el, 'appserver')) * parseInt(appServerNodes), scalingTiers, parseInt(getReservedCloudlets(el, 'appserver')) * parseInt(appServerNodes), reservedTiers),
+                maxDatabasePrice = checkMaxPrice(parseInt(getScalingCloudlets(el, 'database')) * parseInt(databaseNodes), scalingTiers, parseInt(getReservedCloudlets(el, 'database')) * parseInt(databaseNodes), reservedTiers),
                 storagePrice = checkStoragePrice($(el).attr('data-storage'), storageTiers),
                 ipPrice = checkIpPrice($(el).attr('data-ip'), ipTiers),
                 trafficPrice = checkTrafficPrice($(el).attr('data-traffic'), trafficTiers);
@@ -764,7 +766,7 @@ jQuery(document).ready(function ($) {
             }
 
             // MIN PRICE
-            var minPrice = (minBalancerPrice * balancerNodes) + (minAppserverPrice * appServerNodes) + (minDatabasePrice * databaseNodes);
+            var minPrice = minBalancerPrice + minAppserverPrice + minDatabasePrice;
             minPrice = minPrice + storagePrice + ipPrice;
             minPrice = toCurrency(minPrice, originalCurrency.rate.USD, currentCurrency.rate.USD);
             minPrice = changePricePeriod(minPrice, $(el).attr('data-period'));
@@ -781,7 +783,7 @@ jQuery(document).ready(function ($) {
 
 
             // MAX PRICE
-            var maxPrice = (maxBalancerPrice * balancerNodes) + (maxAppserverPrice * appServerNodes) + (maxDatabasePrice * databaseNodes);
+            var maxPrice = maxBalancerPrice + maxAppserverPrice + maxDatabasePrice;
             maxPrice = maxPrice + storagePrice + ipPrice;
             maxPrice = toCurrency(maxPrice, originalCurrency.rate.USD, currentCurrency.rate.USD);
             maxPrice = changePricePeriod(maxPrice, $(el).attr('data-period'));
@@ -801,9 +803,9 @@ jQuery(document).ready(function ($) {
 
 
             // RESERVED COUNTS
-            var reservedBalancerCloudlets = +getReservedCloudlets(el, 'balancer') * balancerNodes,
-                reservedAppServerCloudlets = +getReservedCloudlets(el, 'appserver') * appServerNodes,
-                reservedDbCloudlets = +getReservedCloudlets(el, 'database') * databaseNodes,
+            var reservedBalancerCloudlets = parseInt(getReservedCloudlets(el, 'balancer')) * parseInt(balancerNodes),
+                reservedAppServerCloudlets = parseInt(getReservedCloudlets(el, 'appserver')) * parseInt(appServerNodes),
+                reservedDbCloudlets = parseInt(getReservedCloudlets(el, 'database')) * parseInt(databaseNodes),
                 reservedCloudletsMib = convertMib(+reservedBalancerCloudlets + +reservedAppServerCloudlets + +reservedDbCloudlets),
                 reservedCloudletsGHz = convertMhz(+reservedBalancerCloudlets + +reservedAppServerCloudlets + +reservedDbCloudlets);
 
@@ -822,9 +824,9 @@ jQuery(document).ready(function ($) {
             }
 
             // SCALING COUNTS
-            var scalingBalancerCloudlets = +getScalingCloudlets(el, 'balancer') * balancerNodes,
-                scalingAppServerCloudlets = +getScalingCloudlets(el, 'appserver') * appServerNodes,
-                scalingDbCloudlets = +getScalingCloudlets(el, 'database') * databaseNodes,
+            var scalingBalancerCloudlets = parseInt(getScalingCloudlets(el, 'balancer')) * parseInt(balancerNodes),
+                scalingAppServerCloudlets = parseInt(getScalingCloudlets(el, 'appserver')) * parseInt(appServerNodes),
+                scalingDbCloudlets = parseInt(getScalingCloudlets(el, 'database')) * parseInt(databaseNodes),
                 scalingCloudletsMib = convertMib(+scalingBalancerCloudlets + +scalingAppServerCloudlets + +scalingDbCloudlets),
                 scalingCloudletsGHz = convertMhz(+scalingBalancerCloudlets + +scalingAppServerCloudlets + +scalingDbCloudlets);
 

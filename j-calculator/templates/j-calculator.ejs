@@ -298,36 +298,38 @@
         <div class="calc-block calculator-right">
             <div class="calculator-right-top">
                 <p class="total">Total Cloudlets:</p>
-                <div class="totals reserved-totals">
-                    <div class="totals-left">
-                        <span class="totals-title">Reserved</span>
-                        <span class="gibs">0</span>,
-                        <span class="ghz">0</span>
+                <div class="totals-wrapper">
+                    <div class="totals reserved-totals">
+                        <div class="totals-left">
+                            <span class="totals-title">Reserved</span>
+                            <span class="gibs">0</span>,
+                            <span class="ghz">0</span>
+                        </div>
+                        <div class="totals-right">
+                            <span class="balancer">0</span>
+                            +
+                            <span class="appserver">0</span>
+                            +
+                            <span class="database">0</span>
+                            =
+                            <span class="cloudlets-total">0</span>
+                        </div>
                     </div>
-                    <div class="totals-right">
-                        <span class="balancer">0</span>
-                        +
-                        <span class="appserver">0</span>
-                        +
-                        <span class="database">0</span>
-                        =
-                        <span class="cloudlets-total">0</span>
-                    </div>
-                </div>
-                <div class="totals scaling-totals">
-                    <div class="totals-left">
-                        <span class="totals-title">Scaling Limit</span>
-                        <span class="gibs">0</span>,
-                        <span class="ghz">0</span>
-                    </div>
-                    <div class="totals-right">
-                        <span class="balancer">0</span>
-                        +
-                        <span class="appserver">0</span>
-                        +
-                        <span class="database">0</span>
-                        =
-                        <span class="cloudlets-total">0</span>
+                    <div class="totals scaling-totals">
+                        <div class="totals-left">
+                            <span class="totals-title">Scaling Limit</span>
+                            <span class="gibs">0</span>,
+                            <span class="ghz">0</span>
+                        </div>
+                        <div class="totals-right">
+                            <span class="balancer">0</span>
+                            +
+                            <span class="appserver">0</span>
+                            +
+                            <span class="database">0</span>
+                            =
+                            <span class="cloudlets-total">0</span>
+                        </div>
                     </div>
                 </div>
                 <div class="currency-period">
@@ -340,7 +342,8 @@
                     <div class="current-switcher-wrapper">
                         <select class="current-switcher">
                             <% for (var i = 0, currency; currency = currencies[i]; i++) { %>
-                                <option value="<%= currency.code %>" data-name="<%= currency.name %>" data-sign="<%= currency.sign %>"><%= currency.code %></option>
+                                <option value="<%= currency.code %>" data-name="<%= currency.name %>"
+                                        data-sign="<%= currency.sign %>"><%= currency.code %></option>
                             <% } %>
                         </select>
                     </div>

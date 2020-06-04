@@ -21,11 +21,13 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    margin-right: 30px;
+    margin-right: 10px;
     margin-bottom: 10px;
 
     @media (max-width: $laptop) {
-      margin-right: 15px;
+      width: 45px;
+      height: 45px;
+      margin-right: 5px;
     }
     @media (max-width: $tablet) {
       width: 39px;

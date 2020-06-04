@@ -108,105 +108,108 @@
             </div>
         </div>
         <div class="hosting-information--bottom">
-            <div class="services">
-                <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) {
-                if ((defHoster == oHoster.keyword) && (oHoster.features)) {
 
-                    function capitalizeFirstLetter(string) {
-                        return string.charAt(0).toUpperCase() + string.slice(1);
-                    }
-
-                    var regions = [],
-                            location = oHoster.locationCode,
-                            features = oHoster.features,
-                            aIcons = [], ico;
-
-                    for (var place in location) {
-                        regions.push(place);
-                    }
-                    if (regions.length > 1) {
-                        ico = {
-                            name: 'multiregion',
-                            hint: 'Multi-region availability zones '
-                        };
-                        aIcons.push(ico);
-                    }
-
-                    if ((features.indexOf('VP') != -1) || (features.indexOf('VIP') != -1) || (features.indexOf('VPC') != -1)) {
-                        ico = {
-                            name: 'vip',
-                            hint: 'Virtual Private Cloud with dedicated platform domain and SSL certificates, custom hardware, pricing and quotas'
-                        };
-                        aIcons.push(ico);
-                    }
-
-                    if (features.indexOf('WP') != -1) {
-                        ico = {
-                            name: 'wordpress',
-                            hint: 'Managed WordPress services'
-                        };
-                        aIcons.push(ico);
-                    }
-
-                    if (features.indexOf('MG') != -1) {
-                        ico = {
-                            name: 'magento',
-                            hint: 'Managed Magento services'
-                        };
-                        aIcons.push(ico);
-                    }
-
-                    if ((features.indexOf('KB') != -1) || (features.indexOf('K8B') != -1) || (features.indexOf('K8S') != -1)) {
-                        ico = {
-                            name: 'kubernetes',
-                            hint: 'Managed Kubernetes services'
-                        };
-                        aIcons.push(ico);
-                    }
-
-                    if (features.indexOf('DC') != -1) {
-                        ico = {
-                            name: 'docker',
-                            hint: 'Support of native Docker containers'
-                        };
-                        aIcons.push(ico);
-                    }
-
-                    if (features.indexOf('CDN') != -1) {
-                        ico = {
-                            name: 'cdn',
-                            hint: 'Premium CDN Support'
-                        };
-                        aIcons.push(ico);
-                    }
-
-                    if (features.indexOf('LS') != -1) {
-                        ico = {
-                            name: 'ls',
-                            hint: 'LiteSpeed WS and ADC Support'
-                        };
-                        aIcons.push(ico);
-                    }
+            <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) {
+            if ((defHoster == oHoster.keyword) && (oHoster.features)) {
 
 
-                    if (features.indexOf('CS') != -1) {
-                        ico = {
-                            name: 'cs',
-                            hint: 'Fault-Tolerant Software-Defined Cloud Storage'
-                        };
-                        aIcons.push(ico);
-                    }
 
-                    if (oHoster.partnership) {
-                        ico = {
-                            name: oHoster.partnership.toLowerCase(),
-                            hint: capitalizeFirstLetter(oHoster.partnership) + ' Partner of Jelastic Union'
-                        };
-                        aIcons.push(ico);
-                    }
+                function capitalizeFirstLetter(string) {
+                    return string.charAt(0).toUpperCase() + string.slice(1);
+                }
 
-                if (aIcons.length > 0) { %>
+                var regions = [],
+                        location = oHoster.locationCode,
+                        features = oHoster.features,
+                        aIcons = [], ico;
 
+                for (var place in location) {
+                    regions.push(place);
+                }
+                if (regions.length > 1) {
+                    ico = {
+                        name: 'multiregion',
+                        hint: 'Multi-region availability zones '
+                    };
+                    aIcons.push(ico);
+                }
+
+                if ((features.indexOf('VP') != -1) || (features.indexOf('VIP') != -1) || (features.indexOf('VPC') != -1)) {
+                    ico = {
+                        name: 'vip',
+                        hint: 'Virtual Private Cloud with dedicated platform domain and SSL certificates, custom hardware, pricing and quotas'
+                    };
+                    aIcons.push(ico);
+                }
+
+                if (features.indexOf('WP') != -1) {
+                    ico = {
+                        name: 'wordpress',
+                        hint: 'Managed WordPress services'
+                    };
+                    aIcons.push(ico);
+                }
+
+                if (features.indexOf('MG') != -1) {
+                    ico = {
+                        name: 'magento',
+                        hint: 'Managed Magento services'
+                    };
+                    aIcons.push(ico);
+                }
+
+                if ((features.indexOf('KB') != -1) || (features.indexOf('K8B') != -1) || (features.indexOf('K8S') != -1)) {
+                    ico = {
+                        name: 'kubernetes',
+                        hint: 'Managed Kubernetes services'
+                    };
+                    aIcons.push(ico);
+                }
+
+                if (features.indexOf('DC') != -1) {
+                    ico = {
+                        name: 'docker',
+                        hint: 'Support of native Docker containers'
+                    };
+                    aIcons.push(ico);
+                }
+
+                if (features.indexOf('CDN') != -1) {
+                    ico = {
+                        name: 'cdn',
+                        hint: 'Premium CDN Support'
+                    };
+                    aIcons.push(ico);
+                }
+
+                if (features.indexOf('LS') != -1) {
+                    ico = {
+                        name: 'ls',
+                        hint: 'LiteSpeed WS and ADC Support'
+                    };
+                    aIcons.push(ico);
+                }
+
+
+                if (features.indexOf('CS') != -1) {
+                    ico = {
+                        name: 'cs',
+                        hint: 'Fault-Tolerant Software-Defined Cloud Storage'
+                    };
+                    aIcons.push(ico);
+                }
+
+                if (oHoster.partnership && oHoster.partnership.toLowerCase() !== 'member') {
+                    ico = {
+                        name: oHoster.partnership.toLowerCase(),
+                        hint: capitalizeFirstLetter(oHoster.partnership) + ' Partner of Jelastic Union'
+                    };
+                    aIcons.push(ico);
+                }
+
+
+            if (aIcons.length > 0) { %>
+                <div class="services">
                     <p><%= txServices %></p>
                     <div class="icons">
                         <% for (var j = 0, aIcon; aIcon = aIcons[j]; j++) { %>
@@ -215,11 +218,16 @@
                             </i>
                         <% } %>
                     </div>
-                <% }
-                }
-                } %>
-            </div>
-            <div class="hoster-logo">
+                </div>
+            <% }
+            }
+            }
+            var classes = 'hoster-logo';
+            if (!aIcons) {
+                classes += ' center';
+            }
+            %>
+            <div class="<%= classes %>">
                 <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) { %>
                     <% if (defHoster == oHoster.keyword) { %>
                         <img src="//jelastic.com/wp-content/themes/salient/img/hosters/hosters_signin/<%= oHoster.keyword %>.png"
