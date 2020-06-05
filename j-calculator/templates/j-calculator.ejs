@@ -341,9 +341,14 @@
                     </div>
                     <div class="current-switcher-wrapper">
                         <select class="current-switcher">
-                            <% for (var i = 0, currency; currency = currencies[i]; i++) { %>
+                            <% for (var i = 0, currency; currency = currencies[i]; i++) {
+                                var selected = '';
+                                if (currency.code === startCurrency) {
+                                    selected = 'selected';
+                                }
+                            %>
                                 <option value="<%= currency.code %>" data-name="<%= currency.name %>"
-                                        data-sign="<%= currency.sign %>"><%= currency.code %></option>
+                                        data-sign="<%= currency.sign %>" <%= selected %>><%= currency.code %></option>
                             <% } %>
                         </select>
                     </div>

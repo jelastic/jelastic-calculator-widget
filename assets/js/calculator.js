@@ -130,7 +130,8 @@ jQuery(document).ready(function ($) {
                 ip = '',
                 network = '',
                 storage = '',
-                period = $(el).attr('data-period') || 'hourly';
+                period = $(el).attr('data-period') || 'hourly',
+                startCurrency = $(el).attr('data-start-currency') || 'USD';
 
             if (!Array.isArray(oLanguages)) {
                 oLanguages = oLanguages.split(",").map(function (item) {
@@ -159,6 +160,7 @@ jQuery(document).ready(function ($) {
                 oLanguages: oLanguages,
                 id: Math.round(Math.random() * 100000000),
                 currencies: window.currency,
+                startCurrency: startCurrency,
 
                 balancerNodes: parseInt($(el).attr('data-balancer-nodes')) || 1,
                 balancerMin: parseInt($(el).attr('data-balancer-min')) || 0,
@@ -196,9 +198,6 @@ jQuery(document).ready(function ($) {
 
             var sKey = window.pricing[$(el).attr('data-key')],
                 tariffPlans = sKey.tariffPlans;
-            
-            
-            console.log(window.pricing);
 
             for (var i = 0, oHoster; oHoster = oHosters[i]; i++) {
                 if ($(el).attr('data-key') === oHoster.key) {
@@ -517,6 +516,7 @@ jQuery(document).ready(function ($) {
 
 
                                     JApp.loadHosters(function (hosters) {
+
                                         $.each(hosters, function (index) {
                                             if (this.keyword === 'servint') {
                                                 hosters.splice(index, 1);
@@ -733,9 +733,9 @@ jQuery(document).ready(function ($) {
         function setPrice(reservedTiers, scalingTiers, el, storageTiers, ipTiers, trafficTiers) {
 
             var currentCurrency = '',
-                originalCurrency = '';
+                originalCurrency = '',
+                currency = $(el).find('.current-switcher').val();
 
-            currency = $(el).find('.current-switcher').val();
             $.each(window.currency, function (index) {
                 if (currency === this.code) {
                     currentCurrency = this;
