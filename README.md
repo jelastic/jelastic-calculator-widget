@@ -4,22 +4,22 @@
 
 Widget addition to your site can be accomplished in a few simple steps:
 
-1. You need to upload the `j-calculator.min.css` styles with the `j-calculator.min.js` and `ejs.js` scripts to your server. These files are required by the widget to define its styles and behavior, the default ones can be downloaded from the [repository](https://github.com/jelastic/jelastic-calculator-widget) or linked in code directly:
-
-    - https://raw.githubusercontent.com/jelastic/jelastic-calculator-widget/j-calculator/3dparty/ejs.js
-    - https://raw.githubusercontent.com/jelastic/jelastic-calculator-widget/j-calculator/j-calculator.min.js
-    - https://raw.githubusercontent.com/jelastic/jelastic-calculator-widget/j-calculator/j-calculator.min.css
-    
-    `Tip: If you want to customize the widget appearance, refer to the linked section and adjust these files up to your needs.`
-
-2. Add the j-calculator folder with the files to the root folder of your site and insert the following lines between the `<head>` and `</body>` tags of the required page:
+1. All the required scripts and styles for the pricing calculator widget are stored in the dedicated `j-calculator` directory. You can get this folder from the appropriate [repository](https://github.com/jelastic/jelastic-calculator-widget). For example, with the following command:
 
     ```html
-    <script src={siteUrl}/j-calculator/3dparty/ejs.js"></script>
+    git clone https://github.com/jelastic/jelastic-calculator-widget.git
+    ```
+    
+    `Tip: If you want to customize the widget appearance, refer to the linked section and adjust files within the directory up to your needs.`
+
+2. Add the `j-calculator` folder downloaded in the previous step to your site's root folder and insert the following lines between the `<head>` and `</body>` tags of the required page:
+
+    ```html
+    <script src="{siteUrl}/j-calculator/3dparty/ejs.js"></script>
     <script src="{siteUrl}/j-calculator/j-calculator.min.js"></script>
     <link rel="stylesheet" href="{siteUrl}/j-calculator/j-calculator.min.css">
     ```
-    Don’t forget to correctly substitute the **{siteUrl}** placeholder.
+    Don’t forget to correctly substitute your ***{siteUrl}*** placeholder.
 
 3. Now, insert the following block at the position the widget should be displayed at:
 
@@ -35,7 +35,7 @@ The default ready-to-work pricing calculator widget looks as follows:
 
 ![Jelastic marketplace screenshot](screenshot.png)
 
-If needed, you can adjust the widget by tuning predefined ranges and values or customize the whole widget by taking a look at its source code
+If needed, you can adjust the widget by tuning predefined ranges and values or customize the whole widget by adjusting its source code.
 
 ###Customize Widget Parameters
 
@@ -64,6 +64,7 @@ data-database-max | The maximum cloudlets consumption per database. 128 if not s
 data-database-reserved | The default number of fixed (reserved) cloudlets per database. 0 if not specified. | {number}
 data-database-scaling | The default number of flexible (dynamic) cloudlets per database. 0 if not specified. | {number}
 data-period | The default period (hourly/monthly) for the price estimation. Hourly if not specified. | hourly/monthly
+data-start-currency	 | A code of the currency that should be displayed by default. USD if not specified. | USD / INR / EUR / etc.
 
 These properties can be provided in the following way:
 
@@ -90,8 +91,10 @@ These properties can be provided in the following way:
         data-database-reserved="200"
         data-database-scaling="210"
         data-period="monthly"
+        data-start-currency="EUR"
     ></div>
 ```
+
 
 ### Customize Widget Layout
 
