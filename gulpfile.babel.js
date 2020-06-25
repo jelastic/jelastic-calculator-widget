@@ -132,32 +132,47 @@ gulp.task('images', function () {
 });
 
 // Optimize script
-
+const j_scripts = [
+    'assets/js/3dparty/Obj.min.js',
+    'assets/js/data/countries.js',
+    'assets/js/data/regions.js',
+    'assets/js/data/features.js',
+    'assets/js/JApp.js',
+    'assets/js/hoster-selector.js',
+    'assets/js/calculator.js',
+    'assets/js/3dparty/sliders.js',
+];
 gulp.task('scripts', function () {
-    return gulp.src([
-        // 'assets/js/3dparty/ejs.js',
-        'assets/js/3dparty/Obj.min.js',
-        'assets/js/data/countries.js',
-        'assets/js/data/regions.js',
-        'assets/js/data/features.js',
-        'assets/js/JApp.js',
-        'assets/js/calculator.js',
-    ])
-        .pipe(plugins.concat('j-calculator.min.js'))
-        .pipe(customPlumber('Error Running Scripts'))
+    return gulp
+        .src(j_scripts)
         .pipe(plugins.newer(config.path.scripts.dest))
         .pipe(customPlumber('Error Compiling Scripts'))
-        .pipe(plugins.babel({
-            presets: ['env']
-        }))
+        .pipe(plugins.concat('j-calculator.min.js'))
         .pipe(gulp.dest(config.path.scripts.dest))
-        .pipe(plugins.filter('**/*.js'))
         .pipe(plugins.size({
             showFiles: true,
-            title: 'task:scripts:'
+            title: 'task:scripts >> jelastic_base'
         }))
         .pipe(browserSync.reload({stream: true}));
 });
+//
+// gulp.task('scripts', function () {
+//     return gulp
+//         .src(j_scripts)
+//         .pipe(plugins.concat('j-calculator.min.js'))
+//         .pipe(customPlumber('Error Running Scripts'))
+//         .pipe(plugins.newer(config.path.scripts.dest))
+//         .pipe(customPlumber('Error Compiling Scripts'))
+//         .pipe(plugins.babel({
+//             presets: ['env']
+//         }))
+//         .pipe(gulp.dest(config.path.scripts.dest))
+//         .pipe(plugins.size({
+//             showFiles: true,
+//             title: 'task:scripts:'
+//         }))
+//         .pipe(browserSync.reload({stream: true}));
+// });
 
 gulp.task('task:images', gulp.series('images'));
 gulp.task('task:images-styles', gulp.series('task:images', 'styles'));

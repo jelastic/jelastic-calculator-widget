@@ -409,6 +409,20 @@ JApp.utils.reCaptcha = (function () {
     };
 }());
 
+JApp.utils.uniqid = (function (a = "", b = false) {
+    var c = Date.now() / 1000;
+    var d = c.toString(16).split(".").join("");
+    while (d.length < 14) {
+        d += "0";
+    }
+    var e = "";
+    if (b) {
+        e = ".";
+        var f = Math.round(Math.random() * 100000000);
+        e += f;
+    }
+    return a + d + e;
+});
 
 JApp.utils.Modal = (function (that) {
 
