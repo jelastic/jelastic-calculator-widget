@@ -68,6 +68,9 @@ $add.SliderObj = function (settings) {
         set: function (newVal) {
 
             var self = this;
+            
+            console.log(self);
+            console.log(this);
             this._settings.value = newVal;
 
             this._elements.find(".addui-slider-input").val(this._settings.value);
@@ -110,8 +113,10 @@ $add.SliderObj = function (settings) {
                         $el.find(".addui-slider-distance").css("width", "calc(" + (100 - hPer) + "% + 31px)");
                     }
 
-                    $('.' + type + '-range .reserved-cloudlets').html(toFunc(self._settings.formatter).call(self, l) + ' cloudlets');
-                    $('.' + type + '-range .scaling-cloudlets').html(toFunc(self._settings.formatter).call(self, h) + ' cloudlets');
+                    var cloudlets = $(calc).attr('data-cloudlets-tx') || 'cloudlets';
+
+                    $('.' + type + '-range .reserved-cloudlets').html(toFunc(self._settings.formatter).call(self, l) + ' ' + cloudlets);
+                    $('.' + type + '-range .scaling-cloudlets').html(toFunc(self._settings.formatter).call(self, h) + ' ' + cloudlets);
 
 
                     setReservedCloudlets(l, calc, type);

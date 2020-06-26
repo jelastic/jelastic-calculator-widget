@@ -492,10 +492,36 @@ function renderCalculator(el) {
     });
 
     sHtml = new EJS({url: '/j-calculator/templates/j-calculator'}).render({
+
+        balancerTxt: $(el).attr('data-balancer-tx') || 'Balancer',
+        AppServerTxt: $(el).attr('data-appserver-tx') || 'App Server',
+        DatabaseTxt: $(el).attr('data-db-tx') || 'Database',
+
+        DiskTxt: $(el).attr('data-disk-tx') || 'Disk Space, GB',
+        IpTxt: $(el).attr('data-ip-tx') || 'Public IP',
+        TrafficTxt: $(el).attr('data-traffic-tx') || 'External Traffic, GB',
+        TrafficTooltipTxt: $(el).attr('data-traffic-tooltip-tx') || 'Amount of external traffic <br> spent per month.',
+
+        ReservedTxt: $(el).attr('data-reserved-tx') || 'Reserved',
+        ReservedCloudletsTxt: $(el).attr('data-reserved-cloudlets-tx') || 'Reserved Cloudlets',
+        ReservedDescriptionTxt: $(el).attr('data-reserved-tooltip-tx') || 'Reserve the cloudlets to pay a fixed price. The more you reserve, the bigger the discount is!',
+
+        ScalingLimitTxt: $(el).attr('data-scaling-limit-tx') || 'Scaling Limit',
+        ScalingDescriptionTxt: $(el).attr('data-scaling-tooltip-tx') || 'Define the maximum amount of resources for automatic vertical scaling based on load changes',
+
+        totalTxt: $(el).attr('data-total-tx') || 'Total Cloudlets',
+        hourlyTxt: $(el).attr('data-hourly-tx') || 'Per Hour',
+        monthlyTxt: $(el).attr('data-monthly-tx') || 'Per Month',
+
+        priceMinTxt: $(el).attr('data-price-min-tx') || 'Starting Price',
+        priceMaxTxt: $(el).attr('data-price-max-tx') || 'Maximum Price',
+        priceMaxDescrTxt: $(el).attr('data-price-max-descr-tx') || 'if all resources are fully used up to Scaling Limit',
+
         oLanguages: oLanguages,
         id: Math.round(Math.random() * 100000000),
         currencies: window.currency,
         startCurrency: startCurrency,
+
 
         balancerNodes: parseInt($(el).attr('data-balancer-nodes')) || 1,
         balancerMin: parseInt($(el).attr('data-balancer-min')) || 0,
@@ -504,12 +530,14 @@ function renderCalculator(el) {
         balancerReserved: parseInt($(el).attr('data-balancer-reserved')) || 0,
         balancerScaling: parseInt($(el).attr('data-balancer-scaling')) || 0,
 
+
         appServerNodes: parseInt($(el).attr('data-appserver-nodes')) || 1,
         appServerMin: parseInt($(el).attr('data-appserver-min')) || 0,
         appServerMax: parseInt($(el).attr('data-appserver-max')) || 128,
 
         appServerReserved: parseInt($(el).attr('data-appserver-reserved')) || 1,
         appServerScaling: parseInt($(el).attr('data-appserver-scaling')) || 64,
+
 
         databaseNodes: parseInt($(el).attr('data-database-nodes')) || 1,
         databaseMin: parseInt($(el).attr('data-database-min')) || 0,
@@ -864,9 +892,6 @@ jQuery(document).ready(function ($) {
         success: function (currencyJSON) {
             if (currencyJSON.result === 0) {
                 window.currency = currencyJSON.response.objects;
-                
-                console.log(currencyJSON.response.objects);
-
                 if (calculatorTag.length > 0) {
                     $.each(calculatorTag, function (e) {
                         if ($(this).attr('data-key')) {

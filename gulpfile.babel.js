@@ -134,9 +134,6 @@ gulp.task('images', function () {
 // Optimize script
 const j_scripts = [
     'assets/js/3dparty/Obj.min.js',
-    'assets/js/data/countries.js',
-    'assets/js/data/regions.js',
-    'assets/js/data/features.js',
     'assets/js/JApp.js',
     'assets/js/hoster-selector.js',
     'assets/js/calculator.js',
