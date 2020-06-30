@@ -1,3 +1,12 @@
+var jCalculator = window.jCalculator || {};
+$ = $ || jQuery;
+
+window.jCalculator = (function (that) {
+
+
+
+});
+
 var calculatorTag = $('.j-calculator'),
     sHtml = '',
     sCurrentHoster = 'servnet',
