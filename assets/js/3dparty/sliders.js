@@ -68,9 +68,8 @@ $add.SliderObj = function (settings) {
         set: function (newVal) {
 
             var self = this;
-            
-            console.log(self);
-            console.log(this);
+
+
             this._settings.value = newVal;
 
             this._elements.find(".addui-slider-input").val(this._settings.value);
@@ -119,10 +118,10 @@ $add.SliderObj = function (settings) {
                     $('.' + type + '-range .scaling-cloudlets').html(toFunc(self._settings.formatter).call(self, h) + ' ' + cloudlets);
 
 
-                    setReservedCloudlets(l, calc, type);
-                    setScalingCloudlets(h, calc, type);
+                    jCalculator.setReservedCloudlets(l, calc, type);
+                    jCalculator.setScalingCloudlets(h, calc, type);
                     setTimeout(function () {
-                        setPrice(self._settings.fixed.tiers, self._settings.dynamic.tiers, calc, self._settings.storage.tiers, self._settings.ip.tiers, self._settings.network.tiers);
+                        jCalculator.setPrice(self._settings.fixed.tiers, self._settings.dynamic.tiers, calc, self._settings.storage.tiers, self._settings.ip.tiers, self._settings.network.tiers);
                     }, 100)
                 });
             }
