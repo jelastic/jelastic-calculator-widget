@@ -135,9 +135,8 @@ gulp.task('images', function () {
 const j_scripts = [
     'assets/js/3dparty/Obj.min.js',
     'assets/js/JApp.js',
-    'assets/js/hoster-selector.js',
     'assets/js/calculator.js',
-    'assets/js/3dparty/sliders.js',
+    'assets/js/sliders.js',
 ];
 gulp.task('scripts', function () {
     return gulp

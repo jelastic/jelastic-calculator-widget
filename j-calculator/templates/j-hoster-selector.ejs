@@ -1,7 +1,7 @@
 <div class="calc-block hoster-selector">
     <div class="selector-wrapper">
 
-        <p><%= txChoose %></p>
+        <p><%= localization.txChoose %></p>
         <div class="custom-select">
             <select class="hoster-selector--select">
                 <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) {
@@ -41,7 +41,7 @@
     <div class="hosting-information">
         <div class="hosting-information--top">
             <div class="perfomance">
-                <p><%= txPerfomance %></p>
+                <p><%= localization.txPerfomance %></p>
                 <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) { %>
                     <% if (defHoster == oHoster.keyword) { %>
                         <% for (var j = 0; j < 5; j++) { %>
@@ -53,7 +53,7 @@
                 <% } %>
             </div>
             <div class="support">
-                <p><%= txSupport %></p>
+                <p><%= localization.txSupport %></p>
                 <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) { %>
                     <% if (defHoster == oHoster.keyword) { %>
                         <% if (oHoster.support === 'new') { %>
@@ -81,7 +81,7 @@
                 <% } %>
             </div>
             <div class="location">
-                <p><%= txLocation %></p>
+                <p><%= localization.txLocation %></p>
                 <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) { %>
                     <% if (defHoster == oHoster.keyword) { %>
                         <% delete oHoster.performanceRegions.general %>
@@ -210,7 +210,7 @@
 
             if (aIcons.length > 0) { %>
                 <div class="services">
-                    <p><%= txServices %></p>
+                    <p><%= localization.txServices %></p>
                     <div class="icons">
                         <% for (var j = 0, aIcon; aIcon = aIcons[j]; j++) { %>
                             <i class="tooltip ico-pecul ico-pecul--<%= aIcon.name.toLowerCase() %>">

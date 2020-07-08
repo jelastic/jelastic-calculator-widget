@@ -9,7 +9,7 @@ $add.SliderObj = function (settings) {
 
     function betterParseFloat(t) {
         return isNaN(parseFloat(t)) && t.length > 0 ? betterParseFloat(t.substr(1)) : parseFloat(t)
-    };
+    }
 
     this._settings = {
         direction: "horizontal",
@@ -48,7 +48,9 @@ $add.SliderObj = function (settings) {
         class: "",
         fixed: "",
         dynamic: "",
+        calculator: ""
     };
+
     Object.defineProperty(this, "settings", {
         get: function () {
             this.trigger("getsetting settings", this._settings);
@@ -97,7 +99,6 @@ $add.SliderObj = function (settings) {
 
                 this._elements.each(function (i, el) {
                     var $el = $(el),
-                        calc = $el.closest('.j-calculator'),
                         type = $($el.closest('[class*="-range"'))[0].className.replace('-range', '');
 
                     if (self._settings.direction == "vertical") {
@@ -112,17 +113,14 @@ $add.SliderObj = function (settings) {
                         $el.find(".addui-slider-distance").css("width", "calc(" + (100 - hPer) + "% + 31px)");
                     }
 
-                    var cloudlets = $(calc).attr('data-cloudlets-tx') || 'cloudlets';
+                    var cloudlets = $(self._settings.calculator.element).attr('data-cloudlets-tx') || 'cloudlets';
 
                     $('.' + type + '-range .reserved-cloudlets').html(toFunc(self._settings.formatter).call(self, l) + ' ' + cloudlets);
                     $('.' + type + '-range .scaling-cloudlets').html(toFunc(self._settings.formatter).call(self, h) + ' ' + cloudlets);
 
-
-                    jCalculator.setReservedCloudlets(l, calc, type);
-                    jCalculator.setScalingCloudlets(h, calc, type);
-                    setTimeout(function () {
-                        jCalculator.setPrice(self._settings.fixed.tiers, self._settings.dynamic.tiers, calc, self._settings.storage.tiers, self._settings.ip.tiers, self._settings.network.tiers);
-                    }, 100)
+                    self._settings.calculator.setReservedCloudlets(l, type);
+                    self._settings.calculator.setScalingCloudlets(h, type);
+                    self._settings.calculator.setPrice();
                 });
             }
         }
