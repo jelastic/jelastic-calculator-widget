@@ -22,10 +22,11 @@ JApp.pricing.Calculator = function (config) {
         balancerTxt: self.element.getAttribute('data-balancer-tx') || 'Balancer',
         AppServerTxt: self.element.getAttribute('data-appserver-tx') || 'App Server',
         DatabaseTxt: self.element.getAttribute('data-db-tx') || 'Database',
-        DiskTxt: self.element.getAttribute('data-disk-tx') || 'Disk Space, GB',
+        DiskTxt: self.element.getAttribute('data-disk-tx') || 'Disk Space<span class="small">GB / hour</span>',
+        DiscTooltipTxt: self.element.getAttribute('data-disk-tooltip-tx') || 'Amount of disk space consumed per hour. While checking per month price, the calculator considers that you use the stated number of GB every hour during the whole period. The platform will count only consumed resources on hourly basis, so the total price can be lower.',
         IpTxt: self.element.getAttribute('data-ip-tx') || 'Public IP',
-        TrafficTxt: self.element.getAttribute('data-traffic-tx') || 'External Traffic, GB',
-        TrafficTooltipTxt: self.element.getAttribute('data-traffic-tooltip-tx') || 'Amount of external traffic <br> spent per month.',
+        TrafficTxt: self.element.getAttribute('data-traffic-tx') || 'External Traffic<span class="small">GB / hour</span>',
+        TrafficTooltipTxt: self.element.getAttribute('data-traffic-tooltip-tx') || 'Amount of external traffic consumed per hour. While checking per month price, the calculator considers that you use the stated number of GB every hour during the whole period. The platform will count only consumed resources on hourly basis, so the total price can be lower.',
         ReservedTxt: self.element.getAttribute('data-reserved-tx') || 'Reserved',
         ReservedCloudletsTxt: self.element.getAttribute('data-reserved-cloudlets-tx') || 'Reserved Cloudlets',
         ReservedDescriptionTxt: self.element.getAttribute('data-reserved-tooltip-tx') || 'Reserve the cloudlets to pay a fixed price. The more you reserve, the bigger the discount is!',
@@ -82,7 +83,11 @@ JApp.pricing.Calculator = function (config) {
             $(self.element).find('label[for*=' + type + '] .node-count input').val(0).change();
         } else {
             if (!$(self.element).find('label[for*=' + type + ']').hasClass('active')) {
-                $(self.element).find('label[for*=' + type + '] .node-count input').val(self.cloudlets[type].nodes).change();
+                if (self.cloudlets[type].nodes === 0) {
+                    $(self.element).find('label[for*=' + type + '] .node-count input').val(1).change();
+                } else {
+                    $(self.element).find('label[for*=' + type + '] .node-count input').val(self.cloudlets[type].nodes).change();
+                }
             }
             $(self.element).find('label[for*=' + type + ']').addClass('active');
         }
@@ -103,9 +108,10 @@ JApp.pricing.Calculator = function (config) {
     };
 
     self.changePricePeriod = function (sValue) {
+
         switch (self.period) {
             case 'hourly':
-                sValue = Math.round(sValue * 100000) / 100000;
+                sValue = Math.round(sValue * 1000) / 1000;
                 break;
 
             case 'monthly':
@@ -247,50 +253,26 @@ JApp.pricing.Calculator = function (config) {
             ipPrice = self.checkIpPrice(),
             trafficPrice = self.checkTrafficPrice();
 
-        // TRAFFIC
-        trafficPrice = self.toCurrency(trafficPrice, originalCurrency, currentCurrency);
-        if (self.period === 'hourly') {
-            trafficPrice = trafficPrice / 730;
-        }
-
 
         // MIN PRICE
         var minPrice = minBalancerPrice + minAppserverPrice + minDatabasePrice;
 
 
-        minPrice = minPrice + storagePrice + ipPrice;
+        minPrice = minPrice + storagePrice + ipPrice + trafficPrice;
 
         minPrice = self.toCurrency(minPrice, originalCurrency, currentCurrency);
 
         minPrice = self.changePricePeriod(minPrice);
-        minPrice = +minPrice + +trafficPrice;
-        switch (self.period) {
-            case 'hourly':
-                minPrice = Math.round(minPrice * 1000) / 1000;
-                break;
-            case 'monthly':
-                minPrice = (minPrice).toFixed(2);
-                break
-        }
 
         $(self.element).find('.start-price .price').html(minPrice);
 
         // MAX PRICE
         var maxPrice = maxBalancerPrice + maxAppserverPrice + maxDatabasePrice;
-        maxPrice = maxPrice + storagePrice + ipPrice;
+        maxPrice = maxPrice + storagePrice + ipPrice + trafficPrice;
         maxPrice = self.toCurrency(maxPrice, originalCurrency, currentCurrency);
         maxPrice = self.changePricePeriod(maxPrice);
-        maxPrice = +maxPrice + +trafficPrice;
         if (+maxPrice < +minPrice) {
             maxPrice = minPrice;
-        }
-        switch (self.period) {
-            case 'hourly':
-                maxPrice = Math.round(maxPrice * 1000) / 1000;
-                break;
-            case 'monthly':
-                maxPrice = parseFloat(maxPrice).toFixed(2);
-                break
         }
         $(self.element).find('.max-price .price').html(maxPrice);
 
@@ -607,7 +589,6 @@ JApp.pricing.Calculator = function (config) {
         });
     };
 
-
     self.renderCalculator = function () {
 
         var tariffPlans = self.pricing[self.sKey].tariffPlans;
@@ -832,7 +813,7 @@ JApp.pricing.Calculator = function (config) {
 
     self.getAllData = function () {
 
-        var sHosterCriteria = JApp.utils.uniqid();
+        var sHosterCriteria = Math.round(Math.random() * 100000000);
 
         // load all hosters
         if (JApp.isLoadedHosters()) {

@@ -1187,9 +1187,10 @@ body {
       .calculator-left-bottom {
         display: flex;
         justify-content: space-between;
+        align-items: flex-end;
         margin: 0 -10px;
         .calculator-left-bottom-block {
-          margin-top: 50px;
+          margin-top: 30px;
           width: 100%;
           font-size: 22px;
           max-width: 220px;
@@ -1199,13 +1200,21 @@ body {
             font-size: 18px;
           }
           @media (max-width: $tablet) {
-            margin-top: 30px;
-            font-size: 13px;
+            font-size: 16px;
           }
           @media (max-width: $extraSmall) {
-            font-size: 10px;
+            font-size: 12px;
             padding: 0 1px;
           }
+
+          .small {
+            display: block;
+            font-size: 14px;
+            @media (max-width: $extraSmall) {
+              font-size: 10px;
+            }
+          }
+
           p {
             margin-bottom: 20px;
             @media (max-width: $laptop) {
@@ -1216,6 +1225,22 @@ body {
             }
             @media (max-width: $extraSmall) {
               margin-bottom: 10px;
+            }
+
+            > span {
+              display: inline-block;
+            }
+            &.ip-title {
+              margin-bottom: 30px;
+              @media (max-width: $laptop) {
+                margin-bottom: 30px;
+              }
+              @media (max-width: $tablet) {
+                margin-bottom: 25px;
+              }
+              @media (max-width: $extraSmall) {
+                margin-bottom: 20px;
+              }
             }
           }
 
@@ -1228,8 +1253,8 @@ body {
             align-items: center;
             justify-content: center;
             position: absolute;
-            right: -10px;
-            top: -10px;
+            right: -15px;
+            top: -5px;
             z-index: 2;
             border-radius: 50%;
             font-size: 11px;
@@ -1240,7 +1265,7 @@ body {
               top: -8px;
             }
             @media (max-width: $extraSmall) {
-              right: -3px;
+              right: -13px;
               top: -13px;
             }
             &:hover {
@@ -1254,11 +1279,12 @@ body {
           .tooltip-wrapper {
             width: 200px;
             position: absolute;
-            left: calc(100% + 20px);
-            top: -18px;
+            left: calc(100% + 25px);
+            top: -13px;
             display: none;
             border-radius: 10px;
             box-shadow: 0 0 10px 0 rgba(0, 132, 245, .15);
+            line-height: 1.7;
 
             @media (max-width: $laptop) {
               width: 200px;
@@ -1267,7 +1293,8 @@ body {
               width: 200px;
             }
             @media (max-width: $extraSmall) {
-              left: 25px;
+              width: 160px;
+              right: 25px;
               top: -20px;
             }
 
@@ -1278,7 +1305,7 @@ body {
                 top: -15px;
               }
               @media (max-width: $extraSmall) {
-                right: 20px;
+                right: 15px;
                 top: -20px;
               }
               &:before {

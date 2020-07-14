@@ -257,17 +257,28 @@
             </div>
             <div class="calculator-left-bottom">
                 <div class="calculator-left-bottom-block">
-                    <p><%= localization.DiskTxt %></p>
+                    <p class="digit-wrapper">
+                        <span class="j-relative">
+                            <%= localization.DiskTxt %>
+                            <span class="tooltip-button">i</span>
+                            <span class="tooltip-wrapper">
+                                <span class="tooltip-inner">
+                                    <span class="title"><%= localization.DiscTooltipTxt %></span>
+                                </span>
+                            </span>
+                        </span>
+                    </p>
                     <div class="inner">
                         <span class="minus"></span>
                         <label class="count">
-                            <input type="number" class="digit" value="<%= cloudlets.storage %>" name="storage" max="99999">
+                            <input type="number" class="digit" value="<%= cloudlets.storage %>" name="storage"
+                                   max="99999">
                         </label>
                         <span class="plus"></span>
                     </div>
                 </div>
                 <div class="calculator-left-bottom-block">
-                    <p><%= localization.IpTxt %></p>
+                    <p class="digit-wrapper ip-title"><%= localization.IpTxt %></p>
                     <div class="inner">
                         <span class="minus"></span>
                         <label class="count">
@@ -277,18 +288,22 @@
                     </div>
                 </div>
                 <div class="calculator-left-bottom-block">
-                    <p class="j-relative"><%= localization.TrafficTxt %>
-                        <span class="tooltip-button max">i</span>
-                        <span class="tooltip-wrapper max">
-                            <span class="tooltip-inner">
-                                <span class="title"><%= localization.TrafficTooltipTxt %></span>
+                    <p class="digit-wrapper">
+                        <span class="j-relative">
+                            <%= localization.TrafficTxt %>
+                            <span class="tooltip-button max">i</span>
+                            <span class="tooltip-wrapper max">
+                                <span class="tooltip-inner">
+                                    <span class="title"><%= localization.TrafficTooltipTxt %></span>
+                                </span>
                             </span>
                         </span>
                     </p>
                     <div class="inner">
                         <span class="minus"></span>
                         <label class="count">
-                            <input type="number" class="digit" value="<%= cloudlets.traffic %>" name="traffic" max="99999">
+                            <input type="number" class="digit" value="<%= cloudlets.traffic %>" name="traffic"
+                                   max="99999">
                         </label>
                         <span class="plus"></span>
                     </div>
@@ -334,9 +349,11 @@
                 </div>
                 <div class="currency-period">
                     <div class="radio-block">
-                        <input type="radio" id="hour<%= id %>" name="price<%= id %>" value="hourly" <%= period === 'hourly' ? 'checked' : '' %>>
+                        <input type="radio" id="hour<%= id %>" name="price<%= id %>"
+                               value="hourly" <%= period === 'hourly' ? 'checked' : '' %>>
                         <label for="hour<%= id %>"><%= localization.hourlyTxt %></label>
-                        <input type="radio" id="month<%= id %>" name="price<%= id %>" value="monthly" <%= period === 'monthly' ? 'checked' : '' %>>
+                        <input type="radio" id="month<%= id %>" name="price<%= id %>"
+                               value="monthly" <%= period === 'monthly' ? 'checked' : '' %>>
                         <label for="month<%= id %>"><%= localization.monthlyTxt %></label>
                     </div>
                     <div class="current-switcher-wrapper">
@@ -347,8 +364,8 @@
                                     selected = 'selected';
                                 }
                             %>
-                                <option value="<%= currency.code %>" data-name="<%= currency.name %>"
-                                        data-sign="<%= currency.sign %>" <%= selected %>><%= currency.code %></option>
+                            <option value="<%= currency.code %>" data-name="<%= currency.name %>"
+                                    data-sign="<%= currency.sign %>" <%= selected %>><%= currency.code %></option>
                             <% } %>
                         </select>
                     </div>

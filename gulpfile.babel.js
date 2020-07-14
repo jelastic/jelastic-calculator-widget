@@ -143,6 +143,7 @@ gulp.task('scripts', function () {
         .src(j_scripts)
         .pipe(plugins.newer(config.path.scripts.dest))
         .pipe(customPlumber('Error Compiling Scripts'))
+        .pipe(plugins.if('*.js', plugins.uglify()))
         .pipe(plugins.concat('j-calculator.min.js'))
         .pipe(gulp.dest(config.path.scripts.dest))
         .pipe(plugins.size({
@@ -151,24 +152,6 @@ gulp.task('scripts', function () {
         }))
         .pipe(browserSync.reload({stream: true}));
 });
-//
-// gulp.task('scripts', function () {
-//     return gulp
-//         .src(j_scripts)
-//         .pipe(plugins.concat('j-calculator.min.js'))
-//         .pipe(customPlumber('Error Running Scripts'))
-//         .pipe(plugins.newer(config.path.scripts.dest))
-//         .pipe(customPlumber('Error Compiling Scripts'))
-//         .pipe(plugins.babel({
-//             presets: ['env']
-//         }))
-//         .pipe(gulp.dest(config.path.scripts.dest))
-//         .pipe(plugins.size({
-//             showFiles: true,
-//             title: 'task:scripts:'
-//         }))
-//         .pipe(browserSync.reload({stream: true}));
-// });
 
 gulp.task('task:images', gulp.series('images'));
 gulp.task('task:images-styles', gulp.series('task:images', 'styles'));
