@@ -4,6 +4,7 @@ JApp.pricing.Calculator = function (config) {
 
     var self = this;
 
+    self.loaded = false;
     self.sCurrentHoster = 'servnet';
     self.oHosters = [];
     self.pricing = {};
@@ -38,12 +39,12 @@ JApp.pricing.Calculator = function (config) {
         priceMinTxt: self.element.getAttribute('data-price-min-tx') || 'Starting Price',
         priceMaxTxt: self.element.getAttribute('data-price-max-tx') || 'Maximum Price',
         priceMaxDescrTxt: self.element.getAttribute('data-price-max-descr-tx') || 'if all resources are fully used up to Scaling Limit',
-        balancerMin: +self.element.getAttribute('data-balancer-min') || 0,
-        balancerMax: +self.element.getAttribute('data-balancer-max') || 128,
-        appServerMin: +self.element.getAttribute('data-appserver-min') || 0,
-        appServerMax: +self.element.getAttribute('data-appserver-max') || 128,
-        databaseMin: +self.element.getAttribute('data-database-min') || 0,
-        databaseMax: +self.element.getAttribute('data-database-max') || 128,
+        balancerMin: self.element.getAttribute('data-balancer-min') || 0,
+        balancerMax: self.element.getAttribute('data-balancer-max') || 128,
+        appServerMin: self.element.getAttribute('data-appserver-min') || 0,
+        appServerMax: self.element.getAttribute('data-appserver-max') || 128,
+        databaseMin: self.element.getAttribute('data-database-min') || 0,
+        databaseMax: self.element.getAttribute('data-database-max') || 128,
     };
     self.fixed = '';
     self.dynamic = '';
@@ -53,23 +54,23 @@ JApp.pricing.Calculator = function (config) {
     self.period = '';
     self.cloudlets = {
         balancer: {
-            reserved: +self.element.getAttribute('data-balancer-reserved') || 0,
-            scaling: +self.element.getAttribute('data-balancer-scaling') || 0,
-            nodes: +self.element.getAttribute('data-balancer-nodes') || 1,
+            reserved: self.element.getAttribute('data-balancer-reserved') || 0,
+            scaling: self.element.getAttribute('data-balancer-scaling') || 0,
+            nodes: self.element.getAttribute('data-balancer-nodes') || 1,
         },
         appserver: {
-            reserved: +self.element.getAttribute('data-appserver-reserved') || 1,
-            scaling: +self.element.getAttribute('data-appserver-scaling') || 64,
-            nodes: +self.element.getAttribute('data-appserver-nodes') || 1,
+            reserved: self.element.getAttribute('data-appserver-reserved') || 1,
+            scaling: self.element.getAttribute('data-appserver-scaling') || 64,
+            nodes: self.element.getAttribute('data-appserver-nodes') || 1,
         },
         database: {
-            reserved: +self.element.getAttribute('data-database-reserved') || 0,
-            scaling: +self.element.getAttribute('data-database-scaling') || 0,
-            nodes: +self.element.getAttribute('data-database-nodes') || 1,
+            reserved: self.element.getAttribute('data-database-reserved') || 0,
+            scaling: self.element.getAttribute('data-database-scaling') || 0,
+            nodes: self.element.getAttribute('data-database-nodes') || 1,
         },
-        storage: +self.element.getAttribute('data-storage') || 10,
-        ip: +self.element.getAttribute('data-ip') || 1,
-        traffic: +self.element.getAttribute('data-traffic') || 10,
+        storage: self.element.getAttribute('data-storage') || 10,
+        ip: self.element.getAttribute('data-ip') || 1,
+        traffic: self.element.getAttribute('data-traffic') || 10,
     };
 
     self.setReservedCloudlets = function (cloudlets, type) {
@@ -514,6 +515,8 @@ JApp.pricing.Calculator = function (config) {
 
     self.renderHosterSelector = function () {
 
+        self.loaded = false;
+
         sHtml = new EJS({url: '/j-calculator/templates/j-hoster-selector'}).render({
             localization: self.localization,
             defHoster: self.sCurrentHoster,
@@ -809,6 +812,8 @@ JApp.pricing.Calculator = function (config) {
 
         $('.j-calculator').removeClass('loading');
 
+        self.loaded = true;
+
     };
 
     self.getAllData = function () {
@@ -948,8 +953,10 @@ jQuery(document).ready(function ($) {
 
     $(window).resize(function () {
         $(ojelasticCalculators).each(function () {
-            this.setMinValues(this.element.getAttribute('data-mode'));
-            this.setMaxValues(this.element.getAttribute('data-mode'));
+            if (this.loaded) {
+                this.setMinValues(this.element.getAttribute('data-mode'));
+                this.setMaxValues(this.element.getAttribute('data-mode'));
+            }
         });
     });
 
