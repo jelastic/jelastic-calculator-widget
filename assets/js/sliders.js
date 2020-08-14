@@ -99,7 +99,7 @@ $add.SliderObj = function (settings) {
 
                 this._elements.each(function (i, el) {
                     var $el = $(el),
-                        type = $($el.closest('[class*="-range"'))[0].className.replace('-range', '');
+                        type = $($el.closest('[class*="-range"]'))[0].className.replace('-range', '');
 
                     if (self._settings.direction == "vertical") {
                         $el.find(".addui-slider-handle").eq(0).css("bottom", lPer + "%");
