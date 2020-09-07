@@ -369,7 +369,7 @@ JApp.pricing.Calculator = function (config) {
 
         for (var i = 0; i < tiers.length; i++) {
             if (i !== tiers.length - 1) {
-                if ((cloudlets >= tiers[i].value) && (cloudlets < tiers[i + 1].value)) {
+                if ((scalingCloudlets >= tiers[i].value) && (scalingCloudlets < tiers[i + 1].value)) {
                     if (scalingCloudlets <= tiers[i].free) {
                         return reservedPrice;
                     } else {
@@ -874,7 +874,8 @@ JApp.pricing.Calculator = function (config) {
                         dataType: "json",
                         success: function (hosterSettingsJSON) {
                             if (hosterSettingsJSON.result === 0 && hosterSettingsJSON.response.settingsCurrencyCode) {
-                                self.hosterCurrency = hosterSettingsJSON.response.settingsCurrencyCode;
+                                self.hosterCurrency = self.element.getAttribute('data-hoster-currency') || hosterSettingsJSON.response.settingsCurrencyCode;
+                                console.log();
                                 self.renderCalculator();
                             } else {
                                 throw new Error('Can not get hoster default currency');
