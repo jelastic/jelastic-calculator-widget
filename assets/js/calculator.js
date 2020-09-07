@@ -46,6 +46,12 @@ JApp.pricing.Calculator = function (config) {
         databaseMin: self.element.getAttribute('data-database-min') || 0,
         databaseMax: self.element.getAttribute('data-database-max') || 128,
     };
+    self.loadedComponents = {
+        pricing: false,
+        currencies: false,
+        hosters: false,
+        defaultHoster: false
+    };
     self.fixed = '';
     self.dynamic = '';
     self.ip = '';
@@ -71,6 +77,20 @@ JApp.pricing.Calculator = function (config) {
         storage: self.element.getAttribute('data-storage') || 10,
         ip: self.element.getAttribute('data-ip') || 1,
         traffic: self.element.getAttribute('data-traffic') || 10,
+    };
+
+    self.setLoaded = function (sKey) {
+        self.loadedComponents[sKey] = true;
+
+        if (!self.sKey) {
+            if (self.loadedComponents.currencies && self.loadedComponents.defaultHoster && self.loadedComponents.hosters && self.loadedComponents.pricing) {
+                self.getAllData();
+            }
+        } else {
+            if (self.loadedComponents.currencies && self.loadedComponents.defaultHoster && self.loadedComponents.pricing) {
+                self.renderCalculator();
+            }
+        }
     };
 
     self.setReservedCloudlets = function (cloudlets, type) {
@@ -818,35 +838,6 @@ JApp.pricing.Calculator = function (config) {
 
     self.getAllData = function () {
 
-        var sHosterCriteria = Math.round(Math.random() * 100000000);
-
-        // load all hosters
-        if (JApp.isLoadedHosters()) {
-            self.oHosters = JApp.getHosters();
-        } else {
-            JApp.loadHosters(function (response) {
-                self.oHosters = response;
-            });
-        }
-
-        // init default user hoster
-        if (JApp.isLoadedDefHoster()) {
-            self.sCurrentHoster = JApp.getDefaultHoster();
-        } else {
-            JApp.loadDefaultHoster(function (response) {
-                self.sCurrentHoster = response;
-            }, sHosterCriteria);
-        }
-
-        // load all pricing models
-        if (JApp.pricing.isLoadedPricing()) {
-            self.pricing = JApp.pricing.getPricing();
-        } else {
-            JApp.pricing.loadPricings(function (response) {
-                self.pricing = response;
-            });
-        }
-
         // init hoster keyword
         $.each(self.oHosters, function (index, hoster) {
             if (hoster.keyword === self.sCurrentHoster) {
@@ -860,51 +851,17 @@ JApp.pricing.Calculator = function (config) {
 
     };
 
-    self.getHosterData = function () {
-        $.ajax({
-            type: "GET",
-            url: 'https://' + self.sKey + '/auth/GetDefaultPricingModels',
-            dataType: "json",
-            success: function (hosterPricingJSON) {
-                if (hosterPricingJSON.result === 0 && hosterPricingJSON.response.models[0]) {
-                    self.pricing[self.sKey] = hosterPricingJSON.response.models[0];
-                    $.ajax({
-                        type: "GET",
-                        url: 'https://' + self.sKey + '/settings/GetHosterSettings',
-                        dataType: "json",
-                        success: function (hosterSettingsJSON) {
-                            if (hosterSettingsJSON.result === 0 && hosterSettingsJSON.response.settingsCurrencyCode) {
-                                self.hosterCurrency = self.element.getAttribute('data-hoster-currency') || hosterSettingsJSON.response.settingsCurrencyCode;
-                                console.log();
-                                self.renderCalculator();
-                            } else {
-                                throw new Error('Can not get hoster default currency');
-                            }
-                        },
-                        error: function (response) {
-                            throw new Error(response);
-                        }
-                    });
-                } else {
-                    throw new Error('Can not get hoster pricing model');
-                }
-            },
-            error: function (response) {
-                throw new Error(response);
-            }
-        });
-    };
-
-
     if (self.element) {
 
         // load currencies dependencies
         if (JApp.pricing.isLoadedCurrencies()) {
             self.currencies = JApp.pricing.getCurrecies();
+            self.setLoaded('currencies');
         } else {
             JApp.pricing.loadCurrencies(function (response) {
                 self.currencies = response;
-            })
+                self.setLoaded('currencies');
+            });
         }
 
         // programming languages
@@ -923,11 +880,81 @@ JApp.pricing.Calculator = function (config) {
 
         // load hoster/hosters data
         if (self.sKey) {
-            self.getHosterData();
-        } else {
-            self.getAllData();
-        }
 
+            $.ajax({
+                type: "GET",
+                url: 'https://' + self.sKey + '/auth/GetDefaultPricingModels',
+                dataType: "json",
+                async: true,
+                success: function (hosterPricingJSON) {
+                    if (hosterPricingJSON.result === 0 && hosterPricingJSON.response.models[0]) {
+                        self.pricing[self.sKey] = hosterPricingJSON.response.models[0];
+                        self.setLoaded('pricing');
+                    } else {
+                        throw new Error('Can not get hoster pricing model');
+                    }
+                },
+                error: function (response) {
+                    throw new Error(response);
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: 'https://' + self.sKey + '/settings/GetHosterSettings',
+                dataType: "json",
+                async: true,
+                success: function (hosterSettingsJSON) {
+                    if (hosterSettingsJSON.result === 0 && hosterSettingsJSON.response.settingsCurrencyCode) {
+                        self.hosterCurrency = self.element.getAttribute('data-hoster-currency') || hosterSettingsJSON.response.settingsCurrencyCode;
+                        self.setLoaded('defaultHoster');
+                    } else {
+                        throw new Error('Can not get hoster default currency');
+                    }
+                },
+                error: function (response) {
+                    throw new Error(response);
+                }
+            });
+
+        } else {
+
+            var sHosterCriteria = Math.round(Math.random() * 100000000);
+
+            // load all hosters
+            if (JApp.isLoadedHosters()) {
+                self.oHosters = JApp.getHosters();
+                self.setLoaded('hosters');
+            } else {
+                JApp.loadHosters(function (response) {
+                    self.oHosters = response;
+                    self.setLoaded('hosters');
+                });
+            }
+
+            // init default user hoster
+            if (JApp.isLoadedDefHoster()) {
+                self.sCurrentHoster = JApp.getDefaultHoster();
+                self.setLoaded('defaultHoster');
+            } else {
+                JApp.loadDefaultHoster(function (response) {
+                    self.sCurrentHoster = response;
+                    self.setLoaded('defaultHoster');
+                }, sHosterCriteria);
+            }
+
+            // load all pricing models
+            if (JApp.pricing.isLoadedPricing()) {
+                self.pricing = JApp.pricing.getPricing();
+                self.setLoaded('pricing');
+            } else {
+                JApp.pricing.loadPricings(function (response) {
+                    self.pricing = response;
+                    self.setLoaded('pricing');
+                });
+            }
+
+        }
     } else {
         throw new Error('Ooops! Something was wrong!');
     }

@@ -51,7 +51,7 @@ window.JApp = (function (that) {
         $.ajax({
             type: "GET",
             url: JApp.url.getHosters(),
-            async: false,
+            async: true,
             success: function (response) {
                 var oResp = '';
                 if (response.result === 0 && response.hosters) {
@@ -151,7 +151,7 @@ JApp.pricing = (function (that) {
             type: "GET",
             url: JApp.url.getCurrecies(),
             dataType: "json",
-            async: false,
+            async: true,
             success: function (currencyJSON) {
                 if (currencyJSON.result === 0) {
 
@@ -189,7 +189,7 @@ JApp.pricing = (function (that) {
             type: "GET",
             url: JApp.url.getPrices(),
             dataType: "json",
-            async: false,
+            async: true,
             success: function (pricingJSON) {
                 if (pricingJSON.result === 0) {
                     oPricing = pricingJSON.response.pricings;
