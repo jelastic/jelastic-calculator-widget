@@ -56,13 +56,17 @@ window.JApp = (function (that) {
                 var oResp = '';
                 if (response.result === 0 && response.hosters) {
                     oLoadedHosters = response.hosters;
-
+                    
                     $.each(oLoadedHosters, function (index) {
-                        if (this.keyword === 'servint') {
-                            oLoadedHosters.splice(index, 1);
-                            return false;
+
+                        if (this.keyword === 'servint' || this.hasSignup === false || this.hasSignup === undefined|| !this.hasSignup) {
+                            delete oLoadedHosters[index];
                         }
+
                     });
+
+                    oLoadedHosters = oLoadedHosters.filter(val => val);
+                    
 
                     oLoadedHosters.sort(function (a, b) {
                         var nameA = a.keyword.toLowerCase(),
@@ -73,6 +77,8 @@ window.JApp = (function (that) {
                             return 1;
                         return 0;
                     });
+
+
 
                     if (fnCallback) {
                         fnCallback(oLoadedHosters);
