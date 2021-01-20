@@ -922,22 +922,22 @@ JApp.pricing.Calculator = function (config) {
             var sHosterCriteria = Math.round(Math.random() * 100000000);
 
             // load all hosters
-            if (JApp.isLoadedHosters()) {
-                self.oHosters = JApp.getHosters();
+            if (JApp.pricing.isLoadedHosters()) {
+                self.oHosters = JApp.pricing.getHosters();
                 self.setLoaded('hosters');
             } else {
-                JApp.loadHosters(function (response) {
+                JApp.pricing.loadHosters(function (response) {
                     self.oHosters = response;
                     self.setLoaded('hosters');
                 });
             }
 
             // init default user hoster
-            if (JApp.isLoadedDefHoster()) {
-                self.sCurrentHoster = JApp.getDefaultHoster();
+            if (JApp.pricing.isLoadedDefHoster()) {
+                self.sCurrentHoster = JApp.pricing.getDefaultHoster();
                 self.setLoaded('defaultHoster');
             } else {
-                JApp.loadDefaultHoster(function (response) {
+                JApp.pricing.loadDefaultHoster(function (response) {
                     self.sCurrentHoster = response;
                     self.setLoaded('defaultHoster');
                 }, sHosterCriteria);

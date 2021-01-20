@@ -1,27 +1,13 @@
 var JApp = window.JApp || {};
 $ = $ || jQuery;
 
-window.JApp = (function (that) {
-    var sDefaultHoster = "eapps",
+JApp.pricing = (function (that) {
+
+    var oPricing = {},
+        oCurrencies = {},
+        sDefaultHoster = "eapps",
         sLoadedDefHoster = '',
         oLoadedHosters = {};
-
-    that.getDefaultHoster = function () {
-        return sLoadedDefHoster || sDefaultHoster;
-    };
-
-    that.isLoadedDefHoster = function () {
-        return sLoadedDefHoster.length !== 0;
-    };
-
-    that.getHosters = function () {
-        return oLoadedHosters;
-    };
-
-    that.isLoadedHosters = function () {
-        return Object.keys(oLoadedHosters).length !== 0;
-    };
-
 
     that.url = {
 
@@ -47,95 +33,6 @@ window.JApp = (function (that) {
 
     };
 
-    that.loadHosters = function (fnCallback) {
-        $.ajax({
-            type: "GET",
-            url: JApp.url.getHosters(),
-            async: true,
-            success: function (response) {
-                var oResp = '';
-                if (response.result === 0 && response.hosters) {
-                    oLoadedHosters = response.hosters;
-                    
-                    $.each(oLoadedHosters, function (index) {
-
-                        if (this.keyword === 'servint' || this.hasSignup === false || this.hasSignup === undefined|| !this.hasSignup) {
-                            delete oLoadedHosters[index];
-                        }
-
-                    });
-
-                    oLoadedHosters = oLoadedHosters.filter(val => val);
-                    
-
-                    oLoadedHosters.sort(function (a, b) {
-                        var nameA = a.keyword.toLowerCase(),
-                            nameB = b.keyword.toLowerCase();
-                        if (nameA < nameB)
-                            return -1;
-                        if (nameA > nameB)
-                            return 1;
-                        return 0;
-                    });
-
-
-
-                    if (fnCallback) {
-                        fnCallback(oLoadedHosters);
-                    }
-
-                } else {
-                    throw new Error('Can not get hosters');
-                }
-
-
-            }
-        });
-    };
-
-    that.loadDefaultHoster = function (fnCallback, oCriteria) {
-
-        oCriteria = oCriteria || {};
-
-        $.ajax({
-            type: "POST",
-            url: JApp.url.getUserDefHosterURL(),
-            data: {
-                criteria: JSON.stringify(oCriteria)
-            },
-            async: false,
-            success: function (response) {
-                var oResp = jQuery.parseJSON(response) || {};
-
-                if (oResp.result === 0 && oResp.response) {
-                    oResp = oResp.response;
-                }
-
-                sLoadedDefHoster = oResp.hoster;
-
-                if (fnCallback) {
-                    fnCallback(sLoadedDefHoster);
-                }
-
-            },
-
-            error: function (jqXHR, textStatus, errorThrown) {
-                sLoadedDefHoster = sDefaultHoster;
-                if (fnCallback) {
-                    fnCallback();
-                }
-            }
-        });
-    };
-
-    return that;
-}(window.JApp || {}));
-
-JApp.pricing = (function (that) {
-
-    var oPricing = {},
-        oCurrencies = {};
-
     that.getPricing = function () {
         return oPricing;
     };
@@ -155,7 +52,7 @@ JApp.pricing = (function (that) {
     that.loadCurrencies = function (fnCallback) {
         $.ajax({
             type: "GET",
-            url: JApp.url.getCurrecies(),
+            url: JApp.pricing.url.getCurrecies(),
             dataType: "json",
             async: true,
             success: function (currencyJSON) {
@@ -193,7 +90,7 @@ JApp.pricing = (function (that) {
     that.loadPricings = function (fnCallback) {
         $.ajax({
             type: "GET",
-            url: JApp.url.getPrices(),
+            url: JApp.pricing.url.getPrices(),
             dataType: "json",
             async: true,
             success: function (pricingJSON) {
@@ -210,6 +107,103 @@ JApp.pricing = (function (that) {
             },
             error: function (response) {
                 throw new Error(response);
+            }
+        });
+    };
+
+    that.getDefaultHoster = function () {
+        return sLoadedDefHoster || sDefaultHoster;
+    };
+
+    that.isLoadedDefHoster = function () {
+        return sLoadedDefHoster.length !== 0;
+    };
+
+    that.getHosters = function () {
+        return oLoadedHosters;
+    };
+
+    that.isLoadedHosters = function () {
+        return Object.keys(oLoadedHosters).length !== 0;
+    };
+
+    that.loadHosters = function (fnCallback) {
+        $.ajax({
+            type: "GET",
+            url: JApp.pricing.url.getHosters(),
+            async: true,
+            success: function (response) {
+                var oResp = '';
+                if (response.result === 0 && response.hosters) {
+                    oLoadedHosters = response.hosters;
+
+                    $.each(oLoadedHosters, function (index) {
+
+                        if (this.keyword === 'servint' || this.hasSignup === false || this.hasSignup === undefined|| !this.hasSignup) {
+                            delete oLoadedHosters[index];
+                        }
+
+                    });
+
+                    oLoadedHosters = oLoadedHosters.filter(val => val);
+
+
+                    oLoadedHosters.sort(function (a, b) {
+                        var nameA = a.keyword.toLowerCase(),
+                            nameB = b.keyword.toLowerCase();
+                        if (nameA < nameB)
+                            return -1;
+                        if (nameA > nameB)
+                            return 1;
+                        return 0;
+                    });
+
+
+
+                    if (fnCallback) {
+                        fnCallback(oLoadedHosters);
+                    }
+
+                } else {
+                    throw new Error('Can not get hosters');
+                }
+
+
+            }
+        });
+    };
+
+    that.loadDefaultHoster = function (fnCallback, oCriteria) {
+
+        oCriteria = oCriteria || {};
+
+        $.ajax({
+            type: "POST",
+            url: JApp.pricing.url.getUserDefHosterURL(),
+            data: {
+                criteria: JSON.stringify(oCriteria)
+            },
+            async: false,
+            success: function (response) {
+                var oResp = jQuery.parseJSON(response) || {};
+
+                if (oResp.result === 0 && oResp.response) {
+                    oResp = oResp.response;
+                }
+
+                sLoadedDefHoster = oResp.hoster;
+
+                if (fnCallback) {
+                    fnCallback(sLoadedDefHoster);
+                }
+
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+                sLoadedDefHoster = sDefaultHoster;
+                if (fnCallback) {
+                    fnCallback();
+                }
             }
         });
     };
