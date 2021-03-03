@@ -5,7 +5,7 @@ JApp.pricing.Calculator = function (config) {
     var self = this;
 
     self.loaded = false;
-    self.sCurrentHoster = 'servnet';
+    self.sCurrentHoster = false;
     self.oHosters = [];
     self.pricing = {};
     self.currencies = '';
@@ -84,6 +84,9 @@ JApp.pricing.Calculator = function (config) {
 
         if (!self.sKey) {
             if (self.loadedComponents.currencies && self.loadedComponents.defaultHoster && self.loadedComponents.hosters && self.loadedComponents.pricing) {
+                if (self.loadedComponents.defaultHoster && !self.sCurrentHoster && $.isArray(self.oHosters)) {
+                    self.sCurrentHoster = self.oHosters[0].keyword;
+                }
                 self.getAllData();
             }
         } else {
@@ -938,7 +941,9 @@ JApp.pricing.Calculator = function (config) {
                 self.setLoaded('defaultHoster');
             } else {
                 JApp.pricing.loadDefaultHoster(function (response) {
-                    self.sCurrentHoster = response;
+                    if(response) {
+                        self.sCurrentHoster = response;
+                    }
                     self.setLoaded('defaultHoster');
                 }, sHosterCriteria);
             }
