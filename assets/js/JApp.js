@@ -15,20 +15,24 @@ JApp.pricing = (function (that) {
             return "//platforms-info.jelastic.com";
         },
 
+        getCloudHost: function () {
+            return "//jelastic.cloud";
+        },
+
         getUserDefHosterURL: function () {
             return that.url.getPlatformsInfoHost() + "/api/user/getdefhoster";
         },
 
         getHosters: function () {
-            return "//platforms-info.jelastic.com/api/site/GetHosters";
+            return that.url.getCloudHost() + "/wp-json/jelastic/hosters/";
         },
 
         getPrices: function () {
-            return "//platforms-info.jelastic.com/api/GetPricings";
+            return that.url.getCloudHost() + "/wp-json/jelastic/pricing/";
         },
 
         getCurrecies: function () {
-            return "//platforms-info.jelastic.com/api/GetCurrency";
+            return that.url.getCloudHost() + "/wp-json/jelastic/pricing/currency/";
         }
 
     };
@@ -56,9 +60,9 @@ JApp.pricing = (function (that) {
             dataType: "json",
             async: true,
             success: function (currencyJSON) {
-                if (currencyJSON.result === 0) {
+                if (currencyJSON.response) {
 
-                    oCurrencies = currencyJSON.response.objects;
+                    oCurrencies = currencyJSON.response;
 
                     oCurrencies.sort(function (a, b) {
                         var nameA = a.code.toLowerCase(),
@@ -94,8 +98,8 @@ JApp.pricing = (function (that) {
             dataType: "json",
             async: true,
             success: function (pricingJSON) {
-                if (pricingJSON.result === 0) {
-                    oPricing = pricingJSON.response.pricings;
+                if (pricingJSON.response) {
+                    oPricing = pricingJSON.response;
 
                     if (fnCallback) {
                         fnCallback(oPricing);
@@ -133,20 +137,15 @@ JApp.pricing = (function (that) {
             url: JApp.pricing.url.getHosters(),
             async: true,
             success: function (response) {
-                var oResp = '';
-                if (response.result === 0 && response.hosters) {
-                    oLoadedHosters = response.hosters;
 
-                    $.each(oLoadedHosters, function (index) {
+                if (response.response) {
+                    oLoadedHosters = [];
 
-                        if (this.keyword === 'servint' || this.hasSignup === false || this.hasSignup === undefined|| !this.hasSignup) {
-                            delete oLoadedHosters[index];
+                    $.each(response.response, function (index) {
+                        if (this.keyword !== 'servint' && this.hasSignup === true) {
+                            oLoadedHosters.push(this);
                         }
-
                     });
-
-                    oLoadedHosters = oLoadedHosters.filter(val => val);
-
 
                     oLoadedHosters.sort(function (a, b) {
                         var nameA = a.keyword.toLowerCase(),
@@ -157,8 +156,6 @@ JApp.pricing = (function (that) {
                             return 1;
                         return 0;
                     });
-
-
 
                     if (fnCallback) {
                         fnCallback(oLoadedHosters);

@@ -257,11 +257,12 @@ JApp.pricing.Calculator = function (config) {
             currency = $(self.element).find('.current-switcher').val();
 
         $.each(self.currencies, function (index) {
+
             if (currency === this.code) {
-                currentCurrency = this.rate.USD;
+                currentCurrency = this.usd_rate;
             }
             if (self.hosterCurrency === this.code) {
-                originalCurrency = this.rate.USD;
+                originalCurrency = this.usd_rate;
             }
         });
 
@@ -844,7 +845,7 @@ JApp.pricing.Calculator = function (config) {
         // init hoster keyword
         $.each(self.oHosters, function (index, hoster) {
             if (hoster.keyword === self.sCurrentHoster) {
-                self.sKey = hoster.key;
+                self.sKey = hoster.app;
                 return false;
             }
         });
