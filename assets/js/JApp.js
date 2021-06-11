@@ -12,11 +12,11 @@ JApp.pricing = (function (that) {
     that.url = {
 
         getPlatformsInfoHost: function () {
-            return "https://platforms-info.jelastic.com";
+            return "//platforms-info.jelastic.com";
         },
 
         getCloudHost: function () {
-            return "https://jelastic.cloud";
+            return "//jelastic.cloud";
         },
 
         getUserDefHosterURL: function () {
