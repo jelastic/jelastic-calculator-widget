@@ -56,7 +56,7 @@
                 <p><%= localization.txSupport %></p>
                 <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) { %>
                     <% if (defHoster == oHoster.keyword) { %>
-                        <% if (oHoster.support === 'new') { %>
+                        <% if (oHoster.support === 'new' || oHoster.support == 0) { %>
                             <i class="ico ico--new"></i>
                         <% } else { %>
                             <% var rating %>
@@ -118,15 +118,11 @@
                     return string.charAt(0).toUpperCase() + string.slice(1);
                 }
 
-                var regions = [],
-                        location = oHoster.locationCode,
-                        features = oHoster.features,
+                var features = oHoster.features,
                         aIcons = [], ico;
 
-                for (var place in location) {
-                    regions.push(place);
-                }
-                if (regions.length > 1) {
+
+                if (Object.keys(oHoster.performanceRegions).length > 1) {
                     ico = {
                         name: 'multiregion',
                         hint: 'Multi-region availability zones '
@@ -238,7 +234,7 @@
             <div class="<%= classes %>">
                 <% for (var i = 0, oHoster; oHoster = hosters[i]; i++) { %>
                     <% if (defHoster == oHoster.keyword) { %>
-                        <img src="//jelastic.com/wp-content/themes/salient/img/hosters/hosters_signin/<%= oHoster.keyword %>.png"
+                        <img src="<%= oHoster.logo %>"
                              alt="">
                     <% } %>
                 <% } %>
