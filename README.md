@@ -64,6 +64,7 @@ data-database-max | The maximum cloudlets consumption per database. 128 if not s
 data-database-reserved | The default number of fixed (reserved) cloudlets per database. 0 if not specified. | {number}
 data-database-scaling | The default number of flexible (dynamic) cloudlets per database. 0 if not specified. | {number}
 data-period | The default period (hourly/monthly) for the price estimation. Hourly if not specified. | hourly/monthly
+data-currencies | A comma-separated list of the currencies that can be selected in the widget. All currencies are displayed if the parameter is not specified. | USD,EUR,INR
 data-start-currency	 | A code of the currency that should be displayed by default. USD if not specified. | USD / INR / EUR / etc.
 
 These properties can be provided in the following way:
@@ -91,6 +92,7 @@ These properties can be provided in the following way:
         data-database-reserved="200"
         data-database-scaling="210"
         data-period="monthly"
+        data-currencies="USD,EUR"
         data-start-currency="EUR"
     ></div>
 ```

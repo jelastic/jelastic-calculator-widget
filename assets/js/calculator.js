@@ -14,6 +14,7 @@ JApp.pricing.Calculator = function (config) {
     self.hosterCurrency = 'USD';
     self.oLanguages = [];
     self.startCurrency = '';
+    self.allowCurrencies = false;
     self.localization = {
         txChoose: 'Choose Service Provider of Jelastic Public Cloud',
         txPerfomance: 'Perfomance',
@@ -647,7 +648,8 @@ JApp.pricing.Calculator = function (config) {
             currencies: self.currencies,
             startCurrency: self.startCurrency,
             period: self.period,
-            cloudlets: self.cloudlets
+            cloudlets: self.cloudlets,
+            allowCurrencies: self.allowCurrencies
         });
 
         if ($(self.element).find('.calculator-wrapper').length > 0) {
@@ -881,6 +883,9 @@ JApp.pricing.Calculator = function (config) {
 
         // start currency
         self.startCurrency = self.element.getAttribute('data-start-currency') || 'USD';
+        if (self.element.getAttribute('data-currencies')) {
+            self.allowCurrencies =  self.element.getAttribute('data-currencies').split(',');
+        }
 
         // load hoster/hosters data
         if (self.sKey) {
