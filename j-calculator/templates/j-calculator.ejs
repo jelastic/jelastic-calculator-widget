@@ -363,10 +363,14 @@
                                 if (currency.code === startCurrency) {
                                     selected = 'selected';
                                 }
-                            %>
-                            <option value="<%= currency.code %>" data-name="<%= currency.name %>"
-                                    data-sign="<%= currency.sign %>" <%= selected %>><%= currency.code %></option>
-                            <% } %>
+                                if (allowCurrencies) {
+                                    if  (allowCurrencies.includes(currency.code)) { %>
+                                        <option value="<%= currency.code %>" data-name="<%= currency.name %>" data-sign="<%= currency.sign %>" <%= selected %>><%= currency.code %></option>
+                                    <% }
+                                } else { %>
+                                    <option value="<%= currency.code %>" data-name="<%= currency.name %>" data-sign="<%= currency.sign %>" <%= selected %>><%= currency.code %></option>
+                                <% }
+                            } %>
                         </select>
                     </div>
                 </div>
