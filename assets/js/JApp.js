@@ -16,7 +16,7 @@ JApp.pricing = (function (that) {
         },
 
         getCloudHost: function () {
-            return "https://jelastic.cloud";
+            return "https://www.virtuozzo.com/application-platform-partners";
         },
 
         getUserDefHosterURL: function () {
