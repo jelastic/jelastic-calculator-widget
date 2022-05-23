@@ -37,6 +37,7 @@ JApp.pricing.Calculator = function (config) {
     totalTxt: self.element.getAttribute('data-total-tx') || 'Total Cloudlets',
     hourlyTxt: self.element.getAttribute('data-hourly-tx') || 'Per Hour',
     monthlyTxt: self.element.getAttribute('data-monthly-tx') || 'Per Month',
+    priceSeparator: self.element.getAttribute('data-price-separator') || '.',
     priceMinTxt: self.element.getAttribute('data-price-min-tx') || 'Starting Price',
     priceMaxTxt: self.element.getAttribute('data-price-max-tx') || 'Maximum Price',
     priceMaxDescrTxt: self.element.getAttribute('data-price-max-descr-tx') || 'if all resources are fully used up to Scaling Limit',
@@ -260,6 +261,10 @@ JApp.pricing.Calculator = function (config) {
     }
   };
 
+  self.parseLocalNum = function(nValue) {
+    return nValue.toString().replace(".", self.localization.priceSeparator);
+  }
+
   self.setPrice = function () {
 
     var currentCurrency = '',
@@ -298,7 +303,7 @@ JApp.pricing.Calculator = function (config) {
     minPrice = self.toCurrency(minPrice, originalCurrency, currentCurrency);
 
     minPrice = self.changePricePeriod(minPrice);
-
+    minPrice = self.parseLocalNum(minPrice);
     $(self.element).find('.start-price .price').html(minPrice);
 
     // MAX PRICE
@@ -309,6 +314,7 @@ JApp.pricing.Calculator = function (config) {
     if (+maxPrice < +minPrice) {
       maxPrice = minPrice;
     }
+    maxPrice = self.parseLocalNum(maxPrice);
     $(self.element).find('.max-price .price').html(maxPrice);
 
 
@@ -648,8 +654,6 @@ JApp.pricing.Calculator = function (config) {
           self.ip = this;
         }
       });
-
-      console.log(self.fixed);
     }
 
     var sHtml = new EJS({url: '/j-calculator/templates/j-calculator'}).render({
@@ -901,7 +905,6 @@ JApp.pricing.Calculator = function (config) {
             if (!self.pricing[self.sKey]) {
               self.pricing[self.sKey] = hosterPricingJSON.response.models[0];
             }
-            console.log(self.pricing[self.sKey]);
             self.setLoaded('pricing');
           } else {
             throw new Error('Can not get hoster pricing model');

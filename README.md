@@ -53,7 +53,7 @@ data-balancer-min | The minimum cloudlets consumption per load balancer. 0 if no
 data-balancer-max | The maximum cloudlets consumption per load balancer. 128 if not specified. | {number}
 data-balancer-reserved | The default number of fixed (reserved) cloudlets per load balancer. 0 if not specified. | {number}
 data-balancer-scaling | The default number of flexible (dynamic) cloudlets per load balancer. 0 if not specified. | {number}
- data-appserver-nodes | The number of application servers enabled by default (in the 0-99 range). 1 if not specified. | {number}
+data-appserver-nodes | The number of application servers enabled by default (in the 0-99 range). 1 if not specified. | {number}
 data-appserver-min | The minimum cloudlets consumption per application server. 0 if not specified. | {number}
 data-appserver-max | The maximum cloudlets consumption per application server. 128 if not specified. | {number}
 data-appserver-reserved | The default number of fixed (reserved) cloudlets per application server. 1 if not specified. | {number}
