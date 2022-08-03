@@ -37,7 +37,7 @@ The default ready-to-work pricing calculator widget looks as follows:
 
 If needed, you can adjust the widget by tuning predefined ranges and values or customize the whole widget by adjusting its source code.
 
-###Customize Widget Parameters
+### Customize Widget Parameters
 
 The widget is provided with multiple out-of-box arguments that allow you to customize resource ranges and the default values (i.e. the state of parameters right after the widget is loaded) up to your needs.
 
