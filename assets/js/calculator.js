@@ -557,7 +557,7 @@ JApp.pricing.Calculator = function (config) {
     self.renderHosterSelector = function () {
 
         self.loaded = false;
-        
+
         console.log(self.baseUrl);
 
         sHtml = new EJS({url: self.baseUrl + 'j-calculator/templates/j-hoster-selector'}).render({
@@ -667,7 +667,8 @@ JApp.pricing.Calculator = function (config) {
             startCurrency: self.startCurrency,
             period: self.period,
             cloudlets: self.cloudlets,
-            allowCurrencies: self.allowCurrencies
+            allowCurrencies: self.allowCurrencies,
+            baseUrl: self.baseUrl
         });
 
         if ($(self.element).find('.calculator-wrapper').length > 0) {
