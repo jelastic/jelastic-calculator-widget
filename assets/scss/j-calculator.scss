@@ -326,9 +326,9 @@ body {
           margin: 40px 0;
         }
         @media (max-width: $tablet) {
-        flex-direction: column;
-        margin: 30px 0 0;
-      }
+          flex-direction: column;
+          margin: 30px 0 0;
+        }
         @media (max-width: $extraSmall) {
           margin: 20px 0 0;
         }
@@ -680,6 +680,9 @@ body {
     justify-content: space-between;
     @media (max-width: $mobile) {
       flex-wrap: wrap;
+    }
+    .calc-block {
+      margin-bottom: 0;
     }
     .calculator-left {
       width: 60%;
