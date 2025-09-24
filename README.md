@@ -41,31 +41,33 @@ If needed, you can adjust the widget by tuning predefined ranges and values or c
 
 The widget is provided with multiple out-of-box arguments that allow you to customize resource ranges and the default values (i.e. the state of parameters right after the widget is loaded) up to your needs.
 
-Parameter | Description | Example Value
------------- | ------------- | -------------
-data-languages | A comma-separated string of the programming languages displayed within the widget. | java, php, node, python, go, ruby
-data-key | Define this parameter to show prices for the particular hosting provider only. Otherwise, a platform selector list will be displayed. | app.{[hoster_domain](https://docs.jelastic.com/jelastic-hoster-info)}
-data-storage | The default amount of storage space for the environment in GB (in the 0-99999 range). 10 if not specified. | {number}
-data-ip | The default number of external IP addresses for the environment  (in the 0-10 range). 1 if not specified. | {number}
-data-traffic | The default amount of external traffic for the environment per month in GB (in the 0-99999 range). 10 if not specified. | {number}
-data-balancer-nodes | The number of the load balancer nodes enabled by default (in the 0-99 range). 0 if not specified. | {number}
-data-balancer-min | The minimum cloudlets consumption per load balancer. 0 if not specified. | {number}
-data-balancer-max | The maximum cloudlets consumption per load balancer. 128 if not specified. | {number}
-data-balancer-reserved | The default number of fixed (reserved) cloudlets per load balancer. 0 if not specified. | {number}
-data-balancer-scaling | The default number of flexible (dynamic) cloudlets per load balancer. 0 if not specified. | {number}
-data-appserver-nodes | The number of application servers enabled by default (in the 0-99 range). 1 if not specified. | {number}
-data-appserver-min | The minimum cloudlets consumption per application server. 0 if not specified. | {number}
-data-appserver-max | The maximum cloudlets consumption per application server. 128 if not specified. | {number}
-data-appserver-reserved | The default number of fixed (reserved) cloudlets per application server. 1 if not specified. | {number}
-data-appserver-scaling | The default number of flexible (dynamic) cloudlets per application server. 64 if not specified. | {number}
-data-database-nodes | The number of the database nodes enabled by default (in the 0-99 range). 0 if not specified. | {number}
-data-database-min | The minimum cloudlets consumption per database. 0 if not specified. | {number}
-data-database-max | The maximum cloudlets consumption per database. 128 if not specified. | {number}
-data-database-reserved | The default number of fixed (reserved) cloudlets per database. 0 if not specified. | {number}
-data-database-scaling | The default number of flexible (dynamic) cloudlets per database. 0 if not specified. | {number}
-data-period | The default period (hourly/monthly) for the price estimation. Hourly if not specified. | hourly/monthly
+Parameter | Description                                                                                                                                  | Example Value
+------------ |----------------------------------------------------------------------------------------------------------------------------------------------| -------------
+data-languages | A comma-separated string of the programming languages displayed within the widget.                                                           | java, php, node, python, go, ruby
+data-key | Define this parameter to show prices for the particular hosting provider only. Otherwise, a platform selector list will be displayed.        | app.{[hoster_domain](https://docs.jelastic.com/jelastic-hoster-info)}
+data-storage | The default amount of storage space for the environment in GB (in the 0-99999 range). 10 if not specified.                                   | {number}
+data-ip | The default number of external IP addresses for the environment  (in the 0-10 range). 1 if not specified.                                    | {number}
+data-traffic | The default amount of external traffic for the environment per month in GB (in the 0-99999 range). 10 if not specified.                      | {number}
+data-mib | The default amount of RAM in MiB. 128 if not specified.                                                                                      | {number}
+data-mhz | The default amount of CPU in MiB. 400 if not specified.                                                                                      | {number}
+data-balancer-nodes | The number of the load balancer nodes enabled by default (in the 0-99 range). 0 if not specified.                                            | {number}
+data-balancer-min | The minimum cloudlets consumption per load balancer. 0 if not specified.                                                                     | {number}
+data-balancer-max | The maximum cloudlets consumption per load balancer. 128 if not specified.                                                                   | {number}
+data-balancer-reserved | The default number of fixed (reserved) cloudlets per load balancer. 0 if not specified.                                                      | {number}
+data-balancer-scaling | The default number of flexible (dynamic) cloudlets per load balancer. 0 if not specified.                                                    | {number}
+data-appserver-nodes | The number of application servers enabled by default (in the 0-99 range). 1 if not specified.                                                | {number}
+data-appserver-min | The minimum cloudlets consumption per application server. 0 if not specified.                                                                | {number}
+data-appserver-max | The maximum cloudlets consumption per application server. 128 if not specified.                                                              | {number}
+data-appserver-reserved | The default number of fixed (reserved) cloudlets per application server. 1 if not specified.                                                 | {number}
+data-appserver-scaling | The default number of flexible (dynamic) cloudlets per application server. 64 if not specified.                                              | {number}
+data-database-nodes | The number of the database nodes enabled by default (in the 0-99 range). 0 if not specified.                                                 | {number}
+data-database-min | The minimum cloudlets consumption per database. 0 if not specified.                                                                          | {number}
+data-database-max | The maximum cloudlets consumption per database. 128 if not specified.                                                                        | {number}
+data-database-reserved | The default number of fixed (reserved) cloudlets per database. 0 if not specified.                                                           | {number}
+data-database-scaling | The default number of flexible (dynamic) cloudlets per database. 0 if not specified.                                                         | {number}
+data-period | The default period (hourly/monthly) for the price estimation. Hourly if not specified.                                                       | hourly/monthly
 data-currencies | A comma-separated list of the currencies that can be selected in the widget. All currencies are displayed if the parameter is not specified. | USD,EUR,INR
-data-start-currency	 | A code of the currency that should be displayed by default. USD if not specified. | USD / INR / EUR / etc.
+data-start-currency	 | A code of the currency that should be displayed by default. USD if not specified.                                                            | USD / INR / EUR / etc.
 
 These properties can be provided in the following way:
 
@@ -76,6 +78,8 @@ These properties can be provided in the following way:
         data-storage="25"
         data-ip="2"
         data-traffic="25"
+        data-mib="128"
+        data-mhz="400"
         data-balancer-nodes="0"
         data-balancer-min="10"
         data-balancer-max="512"
