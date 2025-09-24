@@ -15,6 +15,8 @@ JApp.pricing.Calculator = function (config) {
     self.oLanguages = [];
     self.startCurrency = '';
     self.allowCurrencies = false;
+    self.mhz = self.element.getAttribute('data-mhz') || 400;
+    self.mib = self.element.getAttribute('data-mib') || 128;
     self.localization = {
         txChoose: 'Choose Service Provider of Jelastic Public Cloud',
         txPerfomance: 'Perfomance',
@@ -134,12 +136,12 @@ JApp.pricing.Calculator = function (config) {
     };
 
     self.convertMib = function (value) {
-        value *= 128;
+        value *= parseInt(self.mib);
         return value > 1000 ? parseFloat(value / 1024).toFixed(2) + " GiB" : value + " MiB";
     };
 
     self.convertMhz = function (value) {
-        value *= 400;
+        value *= parseInt(self.mhz);
         return value > 1000 ? parseFloat(value / 1000).toFixed(2) + " GHz" : value + " MHz";
     };
 
