@@ -560,8 +560,6 @@ JApp.pricing.Calculator = function (config) {
 
         self.loaded = false;
 
-        console.log(self.baseUrl);
-
         sHtml = new EJS({url: self.baseUrl + 'j-calculator/templates/j-hoster-selector'}).render({
             localization: self.localization,
             defHoster: self.sCurrentHoster,
