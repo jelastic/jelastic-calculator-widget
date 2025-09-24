@@ -5,8 +5,8 @@
             <div class="language">
                 <label class="calc-block">
                     <input type="radio" name="language<%= id %>" <%= i == 0 ? 'checked' : '' %>>
-                    <img src="/j-calculator/img/languages/<%= language %>-active.svg" alt="<%= language %>">
-                    <img src="/j-calculator/img/languages/<%= language %>-mute.svg" alt="<%= language %>">
+                    <img src="<%= baseUrl %>/j-calculator/img/languages/<%= language %>-active.svg" alt="<%= language %>">
+                    <img src="<%= baseUrl %>/j-calculator/img/languages/<%= language %>-mute.svg" alt="<%= language %>">
                 </label>
             </div>
         <% } %>
@@ -62,7 +62,7 @@
                                         <span class="description">
                                             <%= localization.ReservedDescriptionTxt %>
                                         </span>
-                                        <img src="/j-calculator/img/cld-fixed-hybrid.svg" alt="Reserved Cloudlets">
+                                        <img src="<%= baseUrl %>/j-calculator/img/cld-fixed-hybrid.svg" alt="Reserved Cloudlets">
                                     </span>
                                 </span>
                                 <div class="inner">
@@ -91,7 +91,7 @@
                                     <span class="description">
                                         <%= localization.ScalingDescriptionTxt %>
                                     </span>
-                                    <img src="/j-calculator/img/cld-flex-hybrid.svg" alt="Scaling Limit">
+                                    <img src="<%= baseUrl %>/j-calculator/img/cld-flex-hybrid.svg" alt="Scaling Limit">
                                     </span>
                                 </span>
                                 <div class="inner">
@@ -131,7 +131,7 @@
                                     <span class="description">
                                        <%= localization.ReservedDescriptionTxt %>
                                     </span>
-                                    <img src="/j-calculator/img/cld-fixed-hybrid.svg" alt="Reserved Cloudlets">
+                                    <img src="<%= baseUrl %>/j-calculator/img/cld-fixed-hybrid.svg" alt="Reserved Cloudlets">
                                 </span>
                             </span>
                                 <div class="inner">
@@ -158,7 +158,7 @@
                                 <span class="description">
                                     <%= localization.ScalingDescriptionTxt %>
                                 </span>
-                                <img src="/j-calculator/img/cld-flex-hybrid.svg" alt="Scaling Limit">
+                                <img src="<%= baseUrl %>/j-calculator/img/cld-flex-hybrid.svg" alt="Scaling Limit">
                                 </span>
                             </span>
                                 <div class="inner">
@@ -198,7 +198,7 @@
                                 <span class="description">
                                     <%= localization.ReservedDescriptionTxt %>
                                 </span>
-                                <img src="/j-calculator/img/cld-fixed-hybrid.svg" alt="Reserved Cloudlets">
+                                <img src="<%= baseUrl %>/j-calculator/img/cld-fixed-hybrid.svg" alt="Reserved Cloudlets">
                             </span>
                         </span>
                                 <div class="inner">
@@ -227,7 +227,7 @@
                             <span class="description">
                                 <%= localization.ScalingDescriptionTxt %>
                             </span>
-                            <img src="/j-calculator/img/cld-flex-hybrid.svg" alt="Scaling Limit">
+                            <img src="<%= baseUrl %>/j-calculator/img/cld-flex-hybrid.svg" alt="Scaling Limit">
                             </span>
                         </span>
                                 <div class="inner">
