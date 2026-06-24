@@ -16,7 +16,7 @@ JApp.pricing = (function (that) {
     },
 
     getCloudHost: function () {
-      return "https://www.virtuozzo.com/application-platform-partners";
+      return "https://www.virtuozzo.com/paas-partners";
     },
 
     getUserDefHosterURL: function () {
