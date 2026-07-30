@@ -1,6 +1,6 @@
-# Jelastic Pricing Calculator Widget
+# Virtuozzo Cloud Pricing Calculator Widget
 
-[Jelastic Pricing Calculator](https://jelastic.com/pay-per-use/#cloud-pricing-calculator) widget is an interactive tool that estimates the environment cost based on the configured topology. It is based on the standard HTML, js, and CSS technologies supported by all modern browsers, which ensures easy installation on any page without any additional requirements. Also, the initialization is performed in the background and does not affect the page loading speed.
+[Virtuozzo Cloud Pricing Calculator](https://www.virtuozzo.com/pay-per-use/#calculator) widget is an interactive tool that estimates the environment cost based on the configured topology. It is based on the standard HTML, js, and CSS technologies supported by all modern browsers, which ensures easy installation on any page without any additional requirements. Also, the initialization is performed in the background and does not affect the page loading speed.
 
 Widget addition to your site can be accomplished in a few simple steps:
 
@@ -33,7 +33,7 @@ Widget addition to your site can be accomplished in a few simple steps:
     
 The default ready-to-work pricing calculator widget looks as follows:
 
-![Jelastic marketplace screenshot](screenshot.png)
+![Virtuozzo Cloud Pricing Calculator screenshot](screenshot.png)
 
 If needed, you can adjust the widget by tuning predefined ranges and values or customize the whole widget by adjusting its source code.
 
@@ -44,7 +44,7 @@ The widget is provided with multiple out-of-box arguments that allow you to cust
 Parameter | Description                                                                                                                                  | Example Value
 ------------ |----------------------------------------------------------------------------------------------------------------------------------------------| -------------
 data-languages | A comma-separated string of the programming languages displayed within the widget.                                                           | java, php, node, python, go, ruby
-data-key | Define this parameter to show prices for the particular hosting provider only. Otherwise, a platform selector list will be displayed.        | app.{[hoster_domain](https://docs.jelastic.com/jelastic-hoster-info)}
+data-key | Define this parameter to show prices for the particular hosting provider only. Otherwise, a platform selector list will be displayed.        | app.{[hoster_domain](https://www.virtuozzo.com/application-management-docs/hosting-providers/)}
 data-storage | The default amount of storage space for the environment in GB (in the 0-99999 range). 10 if not specified.                                   | {number}
 data-ip | The default number of external IP addresses for the environment  (in the 0-10 range). 1 if not specified.                                    | {number}
 data-traffic | The default amount of external traffic for the environment per month in GB (in the 0-99999 range). 10 if not specified.                      | {number}
@@ -167,4 +167,4 @@ In order to perform customization to the project, you’ll need a [Node.js](http
     
 7. Additionally, for the best performance, some images are saved in the SVG format, optimized with the [svgomg](https://jakearchibald.github.io/svgomg/) service and included in CSS/SCSS with the BASE64 technology via [base64encode.org](https://www.base64encode.org/). Non-converted images can be located in the __assets/img/__ folder.
 
-Now, you have all the required information to customize (if needed) and integrate the Jelastic Pricing Calculator widget to your website.
+Now, you have all the required information to customize (if needed) and integrate the Virtuozzo Cloud Pricing Calculator widget to your website.

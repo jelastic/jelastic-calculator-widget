@@ -18,7 +18,7 @@ JApp.pricing.Calculator = function (config) {
     self.mhz = self.element.getAttribute('data-mhz') || 400;
     self.mib = self.element.getAttribute('data-mib') || 128;
     self.localization = {
-        txChoose: 'Choose Service Provider of Jelastic Public Cloud',
+        txChoose: 'Choose Virtuozzo Service Provider',
         txPerfomance: 'Perfomance',
         txSupport: 'Support',
         txLocation: 'Location',
